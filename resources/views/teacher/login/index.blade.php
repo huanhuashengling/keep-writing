@@ -7,7 +7,7 @@
 
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">登陆</div>
+                <div class="panel-heading">教师登陆</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('teacher.login') }}">
                         {{ csrf_field() }}
@@ -15,7 +15,7 @@
                             <label for="phone_number" class="col-md-4 control-label">手机号</label>
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="13487564267" required autofocus>
+                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="" required autofocus>
 
                                 @if ($errors->has('phone_number'))
                                     <span class="help-block">
@@ -29,7 +29,7 @@
                             <label for="password" class="col-md-4 control-label">密码</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" value="123456" class="form-control" name="password" required>
+                                <input id="password" type="password" value="" class="form-control" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">

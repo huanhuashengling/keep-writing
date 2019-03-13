@@ -63,7 +63,6 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <!-- <li><a href="{{ url('/teacher/info') }}"><i class="fa fa-btn fa-sign-out"></i>个人信息</a></li> -->
-                                    <li><a href="" onclick="location.reload()"><i class="fa fa-btn fa-sign-out"></i>强制刷新</a></li>
                                     <li><a href="{{ url('/teacher/reset') }}"><i class="fa fa-btn fa-sign-out"></i>修改密码</a></li>
                                     <li><a href="{{ url('/teacher/logout') }}"><i class="fa fa-btn fa-sign-out"></i>{{ trans("layouts.logout") }}</a></li>
                                 </ul>

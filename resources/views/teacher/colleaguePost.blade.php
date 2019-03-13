@@ -81,5 +81,5 @@
     <!-- <script type="text/javascript" src="/scratch/swfobject.js"></script> -->
     <link href="/css/bootstrap-switch.css" rel="stylesheet">
     <script src="/js/bootstrap-switch.min.js"></script>
-    <script src="/js/teacher/colleague-post.js"></script>
+    <script src="/js/teacher/colleague-post.js?v={{rand()}}"></script>
 @endsection

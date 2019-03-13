@@ -42,7 +42,7 @@
 @endsection
 
 @section('scripts')
-    <script src="/js/school/keep-record.js"></script>
+    <script src="/js/school/keep-record.js?v={{rand()}}"></script>
 
     <script src="/js/FileSaver.js"></script>
     <script src="/js/bootstrap-table-export.js"></script>

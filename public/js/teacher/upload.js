@@ -44,7 +44,7 @@ $(document).ready(function() {
                 	
 				    $("#input-zh").fileinput({
 						language: "zh", 
-						allowedFileExtensions: ["jpg", "png", "gif", "bmp"], 
+						allowedFileExtensions: ["jpg", "png", "gif", "bmp", "jpeg"], 
 						// uploadAsync: true
 						overwriteInitial: true,
 						initialPreview: [

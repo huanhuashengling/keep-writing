@@ -12,6 +12,7 @@ $(document).ready(function() {
 		initialPreview: [
 			$("#posted-path").val(),
 	    ],
+	    msgPlaceholder: "选择文件或拍照...",
 	    initialPreviewShowDelete: false,
 	    initialPreviewAsData: true, // 特别重要
 	});
@@ -35,6 +36,7 @@ $(document).ready(function() {
 						language: "zh", 
 						allowedFileExtensions: ["jpg", "png", "gif", "bmp"], 
 						// uploadAsync: true
+						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,
 					    initialPreviewShowDelete: false,
 					    initialPreviewAsData: true, // 特别重要
@@ -46,6 +48,7 @@ $(document).ready(function() {
 						language: "zh", 
 						allowedFileExtensions: ["jpg", "png", "gif", "bmp", "jpeg"], 
 						// uploadAsync: true
+						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,
 						initialPreview: [
 							data.storage_name,

@@ -62,14 +62,32 @@
                 <h4 class="modal-title" id="myModalLabel">增加教师</h4>
             </div>
             <div class="modal-body">
-              <div class="form-group">
-                <label>教师姓名</label>
-                <input type="text" class="form-control" name="teacherName" id="teacher-name" required="">
-              </div>
-              <div class="form-group">
-                <label>教师邮箱</label>
-                <input type="text" class="form-control" name="email" id="email" required="">
-              </div>
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">教师姓名</label>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="teacherName" id="teacher-name" required=""></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">性别</label>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="sex" id="sex" required=""></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">出生日期</label>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="birthDate" id="birth-date" required=""></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">手机号码</label>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="phoneNumber" id="phone-number" required=""></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">任教学科</label>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="subjectName" id="subject-name" required=""></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">邮箱地址</label>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="email" id="email" required=""></div>
+                </div>
+              </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

@@ -33,8 +33,14 @@ class PostController extends Controller
 
         $id = \Auth::guard("teacher")->id();
         $teacher = Teacher::find($id);
-        $posts = Post::where("teachers_id", "=", $id)->orderBy("writing_date", "ASC")->get();
-        
+        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'posts.writing_types_id', 'teachers.username', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+                // ->where('posts.students_id', '<>', $id)
+                ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
+                ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
+                ->where('teachers.schools_id', '=', $teacher->schools_id)
+                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id')
+                ->orderby("posts.writing_date", "ASC")->get();
+        // dd($posts);
         return $this->buildPostListHtml($posts);
     }
 
@@ -49,7 +55,7 @@ class PostController extends Controller
         if (isset($post)) {
             $writeDate = substr($post["writing_date"], 4, 2) . "月" . substr($post["writing_date"], 6, 2) . "日";
             return ["filetype"=>"img", 
-                    "storage_name" => getThumbnail($post['storage_name'], 360, 576, $this->getSchoolCode(), 'fit', $post['file_ext']), 
+                    "storage_name" => getThumbnail($post['storage_name'], 330, 530, $this->getSchoolCode(), 'fit', $post['file_ext']), 
                     "username" => $post["username"],
                     "writingType" => $post["name"],
                     "writingDate" => $writeDate,
@@ -66,7 +72,8 @@ class PostController extends Controller
         foreach ($posts as $key => $post) {
             $writeDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2) . "日";
             $writeType = WritingType::find($post->writing_types_id);
-            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style='padding-left: 5px; padding-right: 5px;'><div class='alert alert-info' style='padding: 5px;'><div><img class='img-responsive post-btn center-block' value='". $post->id . "' src='" . getThumbnail($post->storage_name, 100, 160, $this->getSchoolCode(), 'fit', $post->file_ext) . "' alt=''></div><div><h5 style='margin-top: 10px;'>" . $writeDate ." ". $writeType->name." 3个赞</h5></div></div></div>";
+            $markStr = isset($post->mark_num)?$post->mark_num ."个赞":"";
+            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style='padding-left: 5px; padding-right: 5px;'><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 100, 160, $this->getSchoolCode(), 'fit', $post->file_ext) . "' alt=''><div><h5 style='margin-top: 10px; text-align: center'>" . $writeDate ." ". $writeType->name." ". $markStr ."</h5></div></div></div>";
         }
         return $resultHtml;
     }

@@ -74,7 +74,7 @@ class PostController extends Controller
             $writeDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2) . "日";
             $writeType = WritingType::find($post->writing_types_id);
             $markStr = isset($post->mark_num)?$post->mark_num ."个赞":"";
-            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style='padding-left: 5px; padding-right: 5px;'><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 100, 160, $this->getSchoolCode(), 'fit', $post->file_ext) . "' alt=''><div><h5 style='margin-top: 10px; text-align: center'>" . $writeDate ." ". $writeType->name." ". $markStr ."</h5></div></div></div>";
+            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 120, 170, $this->getSchoolCode(), 'fit', $post->file_ext) . "' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $writeType->name." ". $markStr ."</small></h5></div></div></div>";
         }
         return $resultHtml;
     }

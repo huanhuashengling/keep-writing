@@ -62,7 +62,7 @@ class ColleagueController extends Controller
                 ->where('teachers.schools_id', '=', $schoolsId)
                 ->where('teachers.id', '=', $id)
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
-                ->orderby("posts.writing_date", "ASC")->paginate(24);
+                ->orderby("posts.writing_date", "ASC")->paginate(12);
         return $posts;
     }
 
@@ -74,7 +74,7 @@ class ColleagueController extends Controller
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
                 ->where('teachers.schools_id', '=', $schoolsId)
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
-                ->orderby("posts.writing_date", "ASC")->paginate(24);
+                ->orderby("posts.writing_date", "ASC")->paginate(12);
         return $posts;
     }
 
@@ -92,7 +92,7 @@ class ColleagueController extends Controller
                 ->where('terms.is_current', '=', 1)
                 ->where('sclasses.id', '=', $student->sclasses_id)
                 ->groupBy('posts.id', 'sclasses.class_title', 'terms.grade_key', 'post_rates.rate', 'posts.file_ext', 'posts.storage_name', 'students.username', 'comments.content')
-                ->orderby("posts.writing_date", "ASC")->paginate(24);
+                ->orderby("posts.writing_date", "ASC")->paginate(12);
         return $posts;
     }
 
@@ -113,7 +113,7 @@ class ColleagueController extends Controller
                 ->where('sclasses.enter_school_year', '=', $sclass->enter_school_year)
                 ->where('sclasses.schools_id', '=', $schoolsId)
                 ->groupBy('posts.id', 'sclasses.class_title', 'terms.grade_key', 'post_rates.rate', 'posts.file_ext', 'posts.storage_name', 'students.username', 'comments.content')
-                ->orderby("posts.writing_date", "ASC")->paginate(24);
+                ->orderby("posts.writing_date", "ASC")->paginate(12);
         return $posts;
     }
 
@@ -130,7 +130,7 @@ class ColleagueController extends Controller
                 ->where('marks.teachers_id', '=', $id)
                 ->where('marks.state_code', '=', 1)
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
-                ->orderby("posts.writing_date", "ASC")->paginate(24);
+                ->orderby("posts.writing_date", "ASC")->paginate(12);
                 // dd($posts);
         return $posts;
 
@@ -147,7 +147,7 @@ class ColleagueController extends Controller
         //         ->where('terms.is_current', '=', 1)
         //         ->where('marks.students_id', '=', $id)
         //         ->groupBy('posts.id', 'sclasses.class_title', 'terms.grade_key', 'post_rates.rate', 'posts.file_ext', 'posts.storage_name', 'students.username', 'comments.content')
-        //         ->orderby("posts.id", "DESC")->paginate(24);
+        //         ->orderby("posts.id", "DESC")->paginate(12);
         // return $posts;
     }
 
@@ -165,7 +165,7 @@ class ColleagueController extends Controller
                 ->where('terms.is_current', '=', 1)
                 ->where('sclasses.schools_id', '=', $schoolsId)
                 ->groupBy('posts.id', 'sclasses.class_title', 'terms.grade_key', 'post_rates.rate', 'posts.file_ext', 'posts.storage_name', 'students.username', 'comments.content')
-                ->orderby("mark_num", "DESC")->paginate(24);
+                ->orderby("mark_num", "DESC")->paginate(12);
         return $posts;
     }
 
@@ -183,7 +183,7 @@ class ColleagueController extends Controller
                 ->where('terms.is_current', '=', 1)
                 ->where('sclasses.schools_id', '=', $schoolsId)
                 ->groupBy('posts.id', 'sclasses.class_title', 'terms.grade_key', 'post_rates.rate', 'posts.file_ext', 'posts.storage_name', 'students.username', 'comments.id', 'comments.content')
-                ->orderby("cid", "DESC")->paginate(24);
+                ->orderby("cid", "DESC")->paginate(12);
         return $posts;
     }
 
@@ -200,7 +200,7 @@ class ColleagueController extends Controller
                 ->where('sclasses.schools_id', '=', $schoolsId)
                 ->where('students.username', 'like', '%'.$searchName.'%')
                 ->groupBy('posts.id', 'sclasses.class_title', 'terms.grade_key', 'post_rates.rate', 'posts.file_ext', 'posts.storage_name', 'students.username', 'comments.id', 'comments.content')
-                ->orderby("cid", "DESC")->paginate(24);
+                ->orderby("cid", "DESC")->paginate(12);
         return $posts;
     }
 

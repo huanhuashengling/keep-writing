@@ -3,19 +3,21 @@
 @section('content')
 
 <div class="container" style="padding-left: 0px; padding-right: 0px">
-    <div class="col-md-2 col-xs-12" >
-        <div class="col-md-12 col-xs-3"><button class="btn btn-info btn-sm form-control" id="my-posts-btn">我的</button></div>
-        <!-- <div class="col-md-12 col-xs-3"><button class="btn btn-info btn-sm form-control" id="same-sclass-posts-btn">同学科</button></div> -->
-        <!-- <div class="col-md-12 col-xs-3"><button class="btn btn-info btn-sm form-control" id="same-grade-posts-btn">同性别</button></div> -->
-        
-        <div class="col-md-12 col-xs-3"><button class="btn btn-info btn-sm form-control" id="my-marked-posts-btn">我点赞</button></div>
-        <!-- <div class="col-md-12 col-xs-3"><button class="btn btn-info btn-sm form-control" id="most-marked-posts-btn">最多赞</button></div> -->
-        <!-- <div class="col-md-12 col-xs-3"><button class="btn btn-info btn-sm form-control" id="has-comment-posts-btn">有评语</button></div> -->
-        <div class="col-md-12 col-xs-3"><button class="btn btn-info btn-sm form-control" id="all-posts-btn">全部</button></div>
-        <!-- <div class="col-md-12 col-xs-3"><input type="text" name="" id="search-name" class="form-control input-sm" placeholder="姓名"> -->
-        <!-- <button class="btn btn-info btn-sm form-control" id="name-search-btn">搜索</button></div> -->
-        <!-- <div class="col-md-12 col-xs-3"><button class="btn btn-default btn-sm form-control">分{{ $posts->lastPage() }}页</button> -->
-        <!-- <button class="btn btn-default btn-sm form-control">{{ $posts->total() }}份</button></div> -->
+    <div class="col-md-2 col-xs-12" style="margin-bottom: 10px">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-info btn-sm" id="my-posts-btn">我的</button>
+            <!-- <button class="btn btn-info btn-sm" id="same-sclass-posts-btn">同学科</button> -->
+            <!-- <button class="btn btn-info btn-sm" id="same-grade-posts-btn">同性别</button> -->
+            
+            <button class="btn btn-info btn-sm" id="my-marked-posts-btn">我点赞</button>
+            <!-- <button class="btn btn-info btn-sm" id="most-marked-posts-btn">最多赞</button> -->
+            <!-- <button class="btn btn-info btn-sm" id="has-comment-posts-btn">有评语</button> -->
+            <button class="btn btn-info btn-sm" id="all-posts-btn">全部</button>
+            <!-- <input type="text" name="" id="search-name" class="form-control input-sm" placeholder="姓名"> -->
+            <!-- <button class="btn btn-info btn-sm" id="name-search-btn">搜索</button> -->
+            <!-- <button class="btn btn-default btn-sm">分{{ $posts->lastPage() }}页</button> -->
+            <!-- <button class="btn btn-default btn-sm">{{ $posts->total() }}份</button> -->
+        </div>
     </div>
     <div class="col-md-10" id="posts-list">
     @foreach($posts as $key=>$post)
@@ -29,12 +31,12 @@
                 $markstr = "";
             }
         @endphp
-        <div class="col-md-2 col-sm-3 col-xs-4" style="padding-left: 5px; padding-right: 5px;">
+        <div class="col-md-2 col-sm-4 col-xs-6" style="padding-left: 5px; padding-right: 5px;">
             <div class="alert alert-info" style="padding: 10px; text-align: center">
                 <!--<div class="text-center"><img height="140px" value="{{ $post['pid'] }}" src="/imager?src={{$post_storage_name}}"></div>-->
 
-                <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 100, 160, $schoolCode, 'fit', $post->file_ext) }}" alt="">
-                <div><h5 style="margin-top: 10px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{ $markstr}}</small></h5>  </div>
+                <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 120, 170, $schoolCode, 'fit', $post->file_ext) }}" alt="">
+                <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{ $markstr}}</small></h5>  </div>
             </div>
         </div>
     @endforeach

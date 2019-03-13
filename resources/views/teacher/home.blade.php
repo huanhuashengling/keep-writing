@@ -3,10 +3,10 @@
 @section('content')
 
 <div class="container">
-  <form class="form-inline">
+  <form class="form-inline col-xs-6">
     <div class="form-group">
         <label>选择书写类型：</label>
-        <select class="form-control" id="writing-type-selection">
+        <select class="form-control" id="writing-type-selection" disabled>
           <?php foreach ($writingTypes as $key => $writingType): ?>
           <option value="{{$writingType->id}}">{{$writingType->name}}</option>
           <?php endforeach ?>
@@ -14,10 +14,11 @@
       </div>
     </form>
     <?php 
-    // echo $carbonYear;
+    // echo $selectedWritingTypesId;
+    // echo $selectedWritingDate;
           // dd($dateItem);
           ?>
-  <form class="form-inline">
+  <form class="form-inline col-xs-6">
     <div class="form-group">
         <label>选择打卡时间：</label>
         <select class="form-control" id="writing-date-selection">
@@ -45,8 +46,8 @@
               @endif
 
               {!! Form::open(array('url'=>'teacher/upload','method'=>'POST', 'files'=>true)) !!}
-                <input type="hidden" name="writing_types_id" value="1">
-                <input type="hidden" name="writing_date" value="20190312">
+                <input type="hidden" name="writing_types_id" id="writing_types_id" value="{{$selectedWritingTypesId}}">
+                <input type="hidden" name="writing_date" id="writing_date" value="{{$selectedWritingDate}}">
                 {!! Form::file('source', ['id' => 'input-zh']) !!}
               {!! Form::close() !!}
             </div>

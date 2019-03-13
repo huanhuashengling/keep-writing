@@ -16,17 +16,19 @@ $(document).ready(function() {
 	    initialPreviewAsData: true, // 特别重要
 	});
 
-    // $('#writing-type-selection').on('click', function (e) {
-    //     top.location='/student/classmate?type=my'; 
-    // });
+    $('#writing-type-selection').on('change', function (e) {
+		$('#writing_types_id').val($('#writing-type-selection').val());
+    });
 
 	$('#writing-date-selection').on('change', function (e) {
+		$('#writing_types_id').val($('#writing-type-selection').val());
+        $('#writing_date').val($(this).val());
 		$.ajax({
             type: "POST",
             url: '/teacher/getOnePost',
             data: {writing_date : $(this).val(), writing_types_id : $('#writing-type-selection').val(),},
             success: function( data ) {
-                console.log(data);
+                // console.log(data);
                 if ("false" == data) {
                 	$('#input-zh').fileinput('destroy');
                 	$("#input-zh").fileinput({
@@ -39,6 +41,7 @@ $(document).ready(function() {
 					});
                 } else {
                 	$('#input-zh').fileinput('destroy');
+                	
 				    $("#input-zh").fileinput({
 						language: "zh", 
 						allowedFileExtensions: ["jpg", "png", "gif", "bmp"], 

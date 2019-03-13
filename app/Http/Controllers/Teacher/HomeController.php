@@ -27,54 +27,80 @@ use EndaEditor;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {   
         $middir = "/posts/" . $this->getSchoolCode() . "/";
         $id = auth()->guard("teacher")->id();
         $teacher = Teacher::find($id);
         $writingTypes = WritingType::all();
-        $carbonNow = Carbon::now('Asia/Shanghai');
         
-        $dateStr = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
-        $post = Post::where(['writing_types_id' => 1, 'teachers_id' => $id, "writing_date" => $dateStr])->first();
+        $carbonNow = Carbon::now('Asia/Shanghai');
+        $selectedWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        $selectedWritingTypesId = 1;
+        
+
+        if ($request->session()->has('writingTypesId')) {
+            $selectedWritingTypesId = $request->session()->get('writingTypesId');
+        }
+
+        if ($request->session()->has('writingDate')) {
+            $selectedWritingDate = $request->session()->get('writingDate');
+        }
+        
+        $post = Post::where(['writing_types_id' => $selectedWritingTypesId, 'teachers_id' => $id, "writing_date" => $selectedWritingDate])->first();
         if ($post) {
           $post->storage_name = env('APP_URL'). $middir .$post->storage_name;
         };
         $writingDates = [];
+
+
         $carbonNow = Carbon::now('Asia/Shanghai');
         $carbonNow = $carbonNow->subDays(2);
+        $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "前天 - ".$carbonNow->month . "月" . $carbonNow->day,
-                          "value" => $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day),
-                            "selected" =>""
+                          "value" => $tWritingDate,
+                            "selected" => $selected
                           ];
+
 
         $carbonNow = Carbon::now('Asia/Shanghai');
         $carbonNow = $carbonNow->subDay();
+        $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "昨天 - ".$carbonNow->month . "月" . $carbonNow->day,
-                          "value" => $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day),
-                            "selected" =>""
+                          "value" => $tWritingDate,
+                            "selected" => $selected
                           ];
 
+
         $carbonNow = Carbon::now('Asia/Shanghai');
+        $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "今天 - ".$carbonNow->month . "月" . $carbonNow->day,
-                  "value" => $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day),
-                  "selected" =>"selected"
+                  "value" => $tWritingDate,
+                  "selected" => $selected
                 ];
 
         $carbonNow = Carbon::now('Asia/Shanghai');
         $carbonNow = $carbonNow->addDay();
+        $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "明天 - ".$carbonNow->month . "月" . $carbonNow->day,
-                          "value" => $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day),
-                            "selected" =>""
-                          ];
-        $carbonNow = Carbon::now('Asia/Shanghai');
-        $carbonNow = $carbonNow->addDays(2);
-        $writingDates[] = ["label" => "后天 - ".$carbonNow->month . "月" . $carbonNow->day,
-                          "value" => $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day),
-                            "selected" =>""
+                          "value" => $tWritingDate,
+                            "selected" => $selected
                           ];
 
-        return view('teacher/home', compact('writingTypes', 'post', 'writingDates', 'carbonNow'));
+        $carbonNow = Carbon::now('Asia/Shanghai');
+        $carbonNow = $carbonNow->addDays(2);
+        $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
+        $writingDates[] = ["label" => "后天 - ".$carbonNow->month . "月" . $carbonNow->day,
+                          "value" => $tWritingDate,
+                            "selected" => $selected
+                          ];
+
+        return view('teacher/home', compact('writingTypes', 'post', 'writingDates', 'selectedWritingTypesId', 'selectedWritingDate'));
     }
 
     public function addZero($str) 
@@ -99,6 +125,10 @@ class HomeController extends Controller
       
       $writingTypesId = $request->get('writing_types_id');
       $writingDate = $request->get('writing_date');
+
+      $request->session()->put('writingTypesId', $writingTypesId);
+      $request->session()->put('writingDate', $writingDate);
+
       $oldPost = Post::where(['writing_types_id' => $writingTypesId, 'teachers_id' => $teachersId, "writing_date" => $writingDate])->orderBy('id', 'desc')->first();
 
       if ($file->isValid()) {
@@ -116,8 +146,26 @@ class HomeController extends Controller
 
         $uniqid = uniqid();
         $filename = $originalName . '-' . $uniqid . '.' . $ext;
+        $img = \Image::make($realPath);
+        $img->orientate();
+        // $image = imagecreatefromstring(file_get_contents($realPath));
+        // $exif = @exif_read_data($realPath, 'IFD0');
+        // if(!empty($exif['Orientation'])) {
+        //     switch($exif['Orientation']) {
+        //         case 8:
+        //             $image = imagerotate($image,90,0);
+        //             break;
+        //         case 3:
+        //             $image = imagerotate($image,180,0);
+        //             break;
+        //         case 6:
+        //             $image = imagerotate($image,-90,0);
+        //             break;
+        //     }
+        // }
 
-        $bool = Storage::disk($this->getSchoolCode() . 'posts')->put($filename, file_get_contents($realPath)); 
+        $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
+        // $bool = Storage::disk($this->getSchoolCode() . 'posts')->put($filename, $img); 
         //TDDO update these new or update code
         if($oldPost) {
           $oldFilename = $oldPost->storage_name;
@@ -130,7 +178,8 @@ class HomeController extends Controller
           if ($oldPost->update()) {
             $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldFilename); 
 
-            // Session::flash('success', '作业提交成功'); 
+            // Session::flash('success', '打卡成功！'); 
+            // return Redirect::to('teacher');
             return Redirect::to('teacher')->with('success', '恭喜！打卡成功！');
           } else {
             return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
@@ -147,7 +196,8 @@ class HomeController extends Controller
           $post->post_code = $uniqid;
           $post->writing_date = $writingDate;
           if ($post->save()) {
-            // Session::flash('success', '作业提交成功'); 
+            // Session::flash('success', '打卡成功！'); 
+            // return Redirect::to('teacher');
             return Redirect::to('teacher')->with('success', '打卡成功！');
           } else {
             return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
@@ -262,6 +312,9 @@ class HomeController extends Controller
 
     public function getOnePost(Request $request)
     {
+        $request->session()->put('writingTypesId', $request->input('writing_types_id'));
+        $request->session()->put('writingDate', $request->input('writing_date'));
+
         $middir = "/posts/" . $this->getSchoolCode() . "/";
         $imgTypes = ['jpg', 'jpeg', 'bmp', 'gif', 'png'];
         $post = Post::where("posts.writing_date", "=", $request->input('writing_date'))

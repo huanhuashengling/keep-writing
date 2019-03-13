@@ -33,7 +33,7 @@ class PostController extends Controller
 
         $id = \Auth::guard("teacher")->id();
         $teacher = Teacher::find($id);
-        $posts = Post::where("teachers_id", "=", $id)->get();
+        $posts = Post::where("teachers_id", "=", $id)->orderBy("writing_date", "ASC")->get();
         
         return $this->buildPostListHtml($posts);
     }
@@ -49,10 +49,11 @@ class PostController extends Controller
         if (isset($post)) {
             $writeDate = substr($post["writing_date"], 4, 2) . "月" . substr($post["writing_date"], 6, 2) . "日";
             return ["filetype"=>"img", 
-                    "storage_name" => getThumbnail($post['storage_name'], 600, 900, $this->getSchoolCode(), 'fit', $post['file_ext']), 
+                    "storage_name" => getThumbnail($post['storage_name'], 600, 800, $this->getSchoolCode(), 'fit', $post['file_ext']), 
                     "username" => $post["username"],
                     "writingType" => $post["name"],
                     "writingDate" => $writeDate,
+                    "filePath" => env('APP_URL'). $middir . $post['storage_name'],
                 ];
         } else {
             return "false";

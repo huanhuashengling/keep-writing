@@ -18,20 +18,21 @@
             </div>
             <div class="modal-body">
       <!-- <iframe src='https://docview.mingdao.com/op/embed.aspx?src=http://www.ccut.edu.tw/teachers/cskuan/downloads/ed01-ch01.ppt' width='800px' height='600px' frameborder='0'>This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Web Apps</a>.</iframe> -->
-                <img src="" id='1post-show' width="800px" height="600px">
+                <img src="" id='post-show' width="600px" height="800">
         <!-- https://docview.mingdao.com/op/generate.aspx -->
         <!-- <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://www.ccut.edu.tw/teachers/cskuan/downloads/ed01-ch01.ppt' width='800px' height='600px' frameborder='0'> -->
         <!-- <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://www.lf1.cuni.cz/zfisar/psychiatry/Child%20Psychiatry.ppt' width='800px' height='600px' frameborder='0'> -->
         <!-- </iframe> -->
                 <hr>
                 <div class="form-group">
-                    <h4>该作业被评为:<b><label id="1rate-label"></label></b></h4>
-                    <h4>点赞：<small>刘奥，刘胜翔</small></h4>
+                    <a href="" id="post-download">文件下载</a>
+                    <!-- <h4>该作业被评为:<b><label id="1rate-label"></label></b></h4> -->
+                    <!-- <h4>点赞：<small>刘奥，刘胜翔</small></h4> -->
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <h4>老师评语：</h4>
                     <textarea rows='3' id="1post-comment" class="form-control" readonly="readonly"  value=''></textarea>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

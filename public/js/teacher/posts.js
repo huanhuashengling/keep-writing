@@ -13,78 +13,72 @@ $(document).ready(function() {
 	  }
 	});
 
-    $("#term-selection").change(function(e){
-        refreshPostList();
-    })
     refreshPostList();
     $(document)
-	   .on('click', '.panel-title', function (e) {
+	   .on('click', '.post-btn', function (e) {
+        // alert($(this).attr("value"));
             if ($(this).attr("value")) {
+
+                $.ajax({
+                    type: "POST",
+                    url: '/teacher/getOnePostById',
+                    data: {posts_id: $(this).attr("value")},
+                    success: function( data ) {
+                        //console.log(data);
+                        if ("false" == data) {
+
+                        } else {
+                            $('#post-show').attr("src", data.storage_name);
+                            $("#myModalLabel").html("您"+data.writingDate+" "+data.writingType+" 打卡作品");
+                            $('#post-download').attr("href", data.filePath);
+                            
+                        }
+                    }
+                });
+                $("#myPostModal").modal();
+                // var postsId = $(this).attr("value").split(',')[0]; 
+                // var filePath = $(this).attr("value").split(',')[1]; 
+                // var filetype = $(this).attr("value").split(',')[2]; 
+                // var previewPath = $(this).attr("value").split(',')[3]; 
+
+                // e.preventDefault();
+                // $.ajax({
+                //     type: "POST",
+                //     url: '/teacher/getPostRate',
+                //     data: {posts_id : postsId},
+                //     success: function( data ) {
+                //         //console.log(data);
+                //         var rateStr = "暂无等第";
+                //         if ("false" != data) {
+                //            rateStr = "等第：" + data;
+                //         }
+                //         $('#rate-label-'+postsId).text(rateStr);
+                //     }
+                // });
 
                 // $.ajax({
                 //     type: "POST",
-                //     url: '/student/getOnePost',
-                //     data: {posts_id: postsId},
+                //     url: '/teacher/getCommentByPostsId',
+                //     data: {posts_id : postsId},
                 //     success: function( data ) {
-                //         // console.log(data);
-                //         if ("false" == data) {
-
-                //         } else {
-                //             if ("doc" == data.filetype) {
-                //                 $('#doc-preview').html(OnCreateUrl(data.storage_name));
-                //             } else if ("img" == data.filetype) {
-                //                 $('#classmate-post-show').attr("src", data.storage_name);
-                //             }
-                //             // $('#classmate-post-show').attr("src", data.storage_name);
-                //             $("#classmate-post-modal-label").html(data.username+" 同学在 "+data.lessontitle+"<small>"+data.lessonsubtitle+"</small> 课上提交的作品");
+                //         var conmmentStr = "暂无评语";
+                //         if ("false" != data) {
+                //             conmmentStr = "老师评语：" + JSON.parse(data)['content'];
+                //         // console.log(JSON.parse(data));
                 //         }
+                //         $('#post-comment-'+postsId).text(conmmentStr);
                 //     }
                 // });
-                
-                var postsId = $(this).attr("value").split(',')[0]; 
-                var filePath = $(this).attr("value").split(',')[1]; 
-                var filetype = $(this).attr("value").split(',')[2]; 
-                var previewPath = $(this).attr("value").split(',')[3]; 
 
-                e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: '/student/getPostRate',
-                    data: {posts_id : postsId},
-                    success: function( data ) {
-                        //console.log(data);
-                        var rateStr = "暂无等第";
-                        if ("false" != data) {
-                           rateStr = "等第：" + data;
-                        }
-                        $('#rate-label-'+postsId).text(rateStr);
-                    }
-                });
-
-                $.ajax({
-                    type: "POST",
-                    url: '/student/getCommentByPostsId',
-                    data: {posts_id : postsId},
-                    success: function( data ) {
-                        var conmmentStr = "暂无评语";
-                        if ("false" != data) {
-                            conmmentStr = "老师评语：" + JSON.parse(data)['content'];
-                        // console.log(JSON.parse(data));
-                        }
-                        $('#post-comment-'+postsId).text(conmmentStr);
-                    }
-                });
-
-                $('#posts-id').val(postsId);
-                if ("doc" == filetype) {
+                $('#posts-id').val($(this).attr("value"));
+                // if ("doc" == filetype) {
                     // console.log(OnCreateUrl(previewPath));
                     // console.log((previewPath));
-                    $('#doc-preview-'+postsId).html(OnCreateUrl(previewPath));
-                } else if ("img" == filetype) {
-                    $('#post-show-'+postsId).attr("src", filePath);
-                }
+                    // $('#doc-preview-'+postsId).html(OnCreateUrl(previewPath));
+                // } else if ("img" == filetype) {
+                    // $('#post-show-'+postsId).attr("src", filePath);
+                // }
                 // $('#post-show-'+postsId).attr("src", filePath);
-                $('#post-download-'+postsId).attr("href", filePath);
                 // $('#post-show-'+postsId).attr("href", filePath);
                 //$('#myModal').modal();
             }

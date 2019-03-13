@@ -114,7 +114,8 @@ class HomeController extends Controller
 
     public function upload(Request $request)
     {
-
+      $id = auth()->guard("teacher")->id();
+      $teacher = Teacher::find($id);
       $file = $request->file('source');
       // $redirectUrl = ($request->input('url'))?("/" . $request->input('url')):"";
       if(!$file) {
@@ -145,7 +146,7 @@ class HomeController extends Controller
         $realPath = $file->getRealPath();
 
         $uniqid = uniqid();
-        $filename = $originalName . '-' . $uniqid . '.' . $ext;
+        $filename = $teacher->username . '-' . $uniqid . '.' . $ext;
         $img = \Image::make($realPath);
         $img->orientate();
         // $image = imagecreatefromstring(file_get_contents($realPath));

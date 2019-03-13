@@ -49,7 +49,7 @@ class PostController extends Controller
         if (isset($post)) {
             $writeDate = substr($post["writing_date"], 4, 2) . "月" . substr($post["writing_date"], 6, 2) . "日";
             return ["filetype"=>"img", 
-                    "storage_name" => getThumbnail($post['storage_name'], 600, 800, $this->getSchoolCode(), 'fit', $post['file_ext']), 
+                    "storage_name" => getThumbnail($post['storage_name'], 360, 576, $this->getSchoolCode(), 'fit', $post['file_ext']), 
                     "username" => $post["username"],
                     "writingType" => $post["name"],
                     "writingDate" => $writeDate,

@@ -38,6 +38,7 @@ class PostController extends Controller
                 ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
                 ->where('teachers.schools_id', '=', $teacher->schools_id)
+                ->where('teachers.id', '=', $id)
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id')
                 ->orderby("posts.writing_date", "ASC")->get();
         // dd($posts);

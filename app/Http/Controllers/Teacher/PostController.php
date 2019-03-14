@@ -40,7 +40,7 @@ class PostController extends Controller
                 ->where('teachers.schools_id', '=', $teacher->schools_id)
                 ->where('teachers.id', '=', $id)
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id')
-                ->orderby("posts.writing_date", "ASC")->get();
+                ->orderby("posts.writing_date", "DESC")->get();
         // dd($posts);
         return $this->buildPostListHtml($posts);
     }

@@ -175,47 +175,56 @@ class HomeController extends Controller
         //             break;
         //     }
         // }
-
-        $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
+        try {
+          $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
+        } catch (\Exception $e) {
+             $e->getMessage();
+            return Redirect::to('teacher')->with('danger', '操作失败，请稍后重试或联系技术支持！');
+             //TODO remove once tested
+             // return false;
+         }
         // $bool = Storage::disk($this->getSchoolCode() . 'posts')->put($filename, $img); 
         //TDDO update these new or update code
-        if($oldPost) {
-          $oldFilename = $oldPost->storage_name;
-          $oldPost->storage_name = $filename;
-          $oldPost->original_name = $originalName;
-          $oldPost->file_ext = $ext;
-          $oldPost->mime_type = $type;
-          $oldPost->post_code = $uniqid;
-          $oldPost->writing_date = $writingDate;
-          if ($oldPost->update()) {
-            $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldFilename); 
+        if ($img) {
+          if($oldPost) {
+            $oldFilename = $oldPost->storage_name;
+            $oldPost->storage_name = $filename;
+            $oldPost->original_name = $originalName;
+            $oldPost->file_ext = $ext;
+            $oldPost->mime_type = $type;
+            $oldPost->post_code = $uniqid;
+            $oldPost->writing_date = $writingDate;
+            if ($oldPost->update()) {
+              $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldFilename); 
 
-            // Session::flash('success', '打卡成功！'); 
-            // return Redirect::to('teacher');
-            return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
+              // Session::flash('success', '打卡成功！'); 
+              // return Redirect::to('teacher');
+              return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
+            } else {
+              return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
+              // Session::flash('error', '作业提交失败'); 
+            }
           } else {
-            return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
-            // Session::flash('error', '作业提交失败'); 
-          }
-        } else {
-          $post = new Post();
-          $post->teachers_id = $teachersId;
-          $post->writing_types_id = $writingTypesId;
-          $post->storage_name = $filename;
-          $post->original_name = $originalName;
-          $post->file_ext = $ext;
-          $post->mime_type = $type;
-          $post->post_code = $uniqid;
-          $post->writing_date = $writingDate;
-          if ($post->save()) {
-            // Session::flash('success', '打卡成功！'); 
-            // return Redirect::to('teacher');
-            return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
-          } else {
-            return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
-            // Session::flash('error', '作业提交失败'); 
+            $post = new Post();
+            $post->teachers_id = $teachersId;
+            $post->writing_types_id = $writingTypesId;
+            $post->storage_name = $filename;
+            $post->original_name = $originalName;
+            $post->file_ext = $ext;
+            $post->mime_type = $type;
+            $post->post_code = $uniqid;
+            $post->writing_date = $writingDate;
+            if ($post->save()) {
+              // Session::flash('success', '打卡成功！'); 
+              // return Redirect::to('teacher');
+              return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
+            } else {
+              return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
+              // Session::flash('error', '作业提交失败'); 
+            }
           }
         }
+        
       } else {
         return Redirect::to('teacher')->with('danger', '文件上传失败，请确认是否文件过大？');
       }

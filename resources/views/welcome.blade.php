@@ -68,7 +68,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    燕山教师Keep书写
+                    Keep书写
                 </div>
 
                 <div class="links">

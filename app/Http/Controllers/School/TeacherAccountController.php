@@ -112,6 +112,7 @@ class TeacherAccountController extends Controller
         $data["birth_date"] = $request->get('birth_date');
         $data["subjects_id"] = $request->get('subjects_id');
         $data["phone_number"] = $request->get('phone_number');
+        $data["is_formal"] = $request->get('is_formal');
         $data["schools_id"] = \Auth::guard("school")->id();
         return $this->createTeacherAccount($data);
     }
@@ -128,6 +129,7 @@ class TeacherAccountController extends Controller
                 'phone_number' => $data['phone_number'],
                 'schools_id' => \Auth::guard("school")->id(),
                 'is_lock' => 0,
+                'is_formal' => $data['is_formal'],
                 'remember_token' => str_random(10),
             ]);
         } catch (Exception $e) {

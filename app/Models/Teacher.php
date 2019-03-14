@@ -16,7 +16,7 @@ class Teacher extends Model implements AuthenticatableContract, CanResetPassword
     protected $table = 'teachers';  
 
     protected $fillable = [
-        'username', 'phone_number', 'sex', 'birth_date', 'subjects_id', 'email', 'password', 'schools_id', 'remember_token', 'is_lock'
+        'username', 'phone_number', 'sex', 'birth_date', 'subjects_id', 'email', 'password', 'schools_id', 'remember_token', 'is_lock', 'is_formal'
     ];
 
     protected $hidden = [

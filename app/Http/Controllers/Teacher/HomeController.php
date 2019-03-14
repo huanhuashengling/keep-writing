@@ -313,18 +313,21 @@ class HomeController extends Controller
 
     public function getOnePost(Request $request)
     {
+        $userId = auth()->guard('teacher')->id();
         $request->session()->put('writingTypesId', $request->input('writing_types_id'));
         $request->session()->put('writingDate', $request->input('writing_date'));
 
         $middir = "/posts/" . $this->getSchoolCode() . "/";
         $imgTypes = ['jpg', 'jpeg', 'bmp', 'gif', 'png'];
-        $post = Post::where("posts.writing_date", "=", $request->input('writing_date'))
+        $post = Post::leftjoin('teachers', 'teachers.id', '=', "posts.teachers_id")
+                ->where("posts.writing_date", "=", $request->input('writing_date'))
                 ->where("posts.writing_types_id", "=", $request->input('writing_types_id'))
-                ->leftjoin('teachers', 'teachers.id', '=', "posts.teachers_id")->first();
+                ->where("teachers.id", "=", $userId)
+                ->first();
                 // return var_dump($post);
         if (isset($post)) {
             return ["filetype"=>"img", 
-                    "storage_name" => getThumbnail($post['storage_name'], 800, 600, $this->getSchoolCode(), 'fit', $post['file_ext']), ];
+                    "storage_name" => getThumbnail($post['storage_name'], 300, 500, $this->getSchoolCode(), 'fit', $post['file_ext']), ];
         } else {
             return "false";
         }

@@ -19,7 +19,7 @@
             <!-- <button class="btn btn-default btn-sm">{{ $posts->total() }}份</button> -->
         </div>
     </div>
-    <div class="col-md-10" id="posts-list">
+    <div class="col-md-10 col-xs-12" id="posts-list">
     @foreach($posts as $key=>$post)
         @php
             $post_storage_name = "posts/" . $schoolCode . "/" .$post->storage_name;

@@ -6,7 +6,7 @@ $(document).ready(function() {
 	});
     $("#input-zh").fileinput({
 		language: "zh", 
-		allowedFileExtensions: ["jpg", "png", "gif", "bmp"], 
+		allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp"], 
 		// uploadAsync: true
 		overwriteInitial: true,
 		initialPreview: [
@@ -34,7 +34,7 @@ $(document).ready(function() {
                 	$('#input-zh').fileinput('destroy');
                 	$("#input-zh").fileinput({
 						language: "zh", 
-						allowedFileExtensions: ["jpg", "png", "gif", "bmp"], 
+						allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp"], 
 						// uploadAsync: true
 						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,

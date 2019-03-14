@@ -3,23 +3,23 @@
 @section('content')
 
 <div class="container" style="padding-left: 0px; padding-right: 0px">
-    <div class="col-md-2 col-xs-12" style="margin-bottom: 10px">
+    <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
         <div class="btn-group" role="group" aria-label="...">
             <button class="btn btn-info btn-sm" id="my-posts-btn">我的</button>
-            <!-- <button class="btn btn-info btn-sm" id="same-sclass-posts-btn">同学科</button> -->
+            <button class="btn btn-info btn-sm" id="same-subject-posts-btn">同学科</button>
             <!-- <button class="btn btn-info btn-sm" id="same-grade-posts-btn">同性别</button> -->
             
             <button class="btn btn-info btn-sm" id="my-marked-posts-btn">我点赞</button>
-            <!-- <button class="btn btn-info btn-sm" id="most-marked-posts-btn">最多赞</button> -->
+            <button class="btn btn-info btn-sm" id="most-marked-posts-btn">最多赞</button>
             <!-- <button class="btn btn-info btn-sm" id="has-comment-posts-btn">有评语</button> -->
             <button class="btn btn-info btn-sm" id="all-posts-btn">全部</button>
             <!-- <input type="text" name="" id="search-name" class="form-control input-sm" placeholder="姓名"> -->
             <!-- <button class="btn btn-info btn-sm" id="name-search-btn">搜索</button> -->
-            <!-- <button class="btn btn-default btn-sm">分{{ $posts->lastPage() }}页</button> -->
-            <!-- <button class="btn btn-default btn-sm">{{ $posts->total() }}份</button> -->
+            <button class="btn btn-default btn-sm">{{ $posts->lastPage() }}页{{ $posts->total() }}份</button>
+            <!-- <button class="btn btn-default btn-sm"></button> -->
         </div>
     </div>
-    <div class="col-md-10 col-xs-12" id="posts-list">
+    <div class="col-md-12 col-xs-12" id="posts-list">
     @foreach($posts as $key=>$post)
         @php
             $post_storage_name = "posts/" . $schoolCode . "/" .$post->storage_name;

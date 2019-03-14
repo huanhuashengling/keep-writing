@@ -61,8 +61,8 @@ $(document).ready(function() {
         top.location='/teacher/colleague?type=all'; 
     });
 
-    $('#same-sclass-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=same-sclass'; 
+    $('#same-subject-posts-btn').on('click', function (e) {
+        top.location='/teacher/colleague?type=same-subject'; 
     });
 
     $('#same-grade-posts-btn').on('click', function (e) {

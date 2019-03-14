@@ -112,6 +112,15 @@ class HomeController extends Controller
       }
     }
 
+    public function removeZero($str) 
+    {
+      if (1 == strlen($str)) {
+        return "0" . $str;
+      } else {
+        return $str;
+      }
+    }
+
     public function upload(Request $request)
     {
       $id = auth()->guard("teacher")->id();
@@ -129,6 +138,8 @@ class HomeController extends Controller
 
       $request->session()->put('writingTypesId', $writingTypesId);
       $request->session()->put('writingDate', $writingDate);
+            
+      $tWriteDate = substr($writingDate, 4, 2) . "月" . substr($writingDate, 6, 2) . "日";
 
       $oldPost = Post::where(['writing_types_id' => $writingTypesId, 'teachers_id' => $teachersId, "writing_date" => $writingDate])->orderBy('id', 'desc')->first();
 
@@ -181,7 +192,7 @@ class HomeController extends Controller
 
             // Session::flash('success', '打卡成功！'); 
             // return Redirect::to('teacher');
-            return Redirect::to('teacher')->with('success', '恭喜！打卡成功！');
+            return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
           } else {
             return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
             // Session::flash('error', '作业提交失败'); 
@@ -199,7 +210,7 @@ class HomeController extends Controller
           if ($post->save()) {
             // Session::flash('success', '打卡成功！'); 
             // return Redirect::to('teacher');
-            return Redirect::to('teacher')->with('success', '打卡成功！');
+            return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
           } else {
             return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
             // Session::flash('error', '作业提交失败'); 

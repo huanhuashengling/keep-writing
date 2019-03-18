@@ -38,6 +38,9 @@
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ trans("layouts.project_name") }}
+                    @if (!Auth::guard("teacher")->guest())
+                    -<small>{{ Auth::guard("teacher")->user()->username }}</small>
+                    @endif
                 </a>
             </div>
 
@@ -51,6 +54,7 @@
                             <li><a href="{{ url('/teacher') }}">Keep打卡</a></li>
                             <li><a href="{{ url('/teacher/posts') }}">打卡记录</a></li>
                             <li><a href="{{ url('/teacher/colleague') }}">同事打卡</a></li>
+                            <li><a href="{{ url('/teacher/resources') }}">学习资源</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->

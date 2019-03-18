@@ -135,7 +135,11 @@ class HomeController extends Controller
                         ->where('posts.writing_date', '=', $writingDate)
                         ->where('posts.writing_types_id', '=', $writingTypesId)
                         ->count();
-      return ($postsNum/$teachersNum)*100;
+      if (0 == $teachersNum) {
+        return 0;
+      } else {
+        return ($postsNum/$teachersNum)*100;
+      }
     }
 
     public function upload(Request $request)

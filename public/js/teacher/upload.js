@@ -17,6 +17,8 @@ $(document).ready(function() {
 	    initialPreviewAsData: true, // 特别重要
 	});
 
+	getCurrentWritingDatePostRate();
+
     $('#writing-type-selection').on('change', function (e) {
 		$('#writing_types_id').val($('#writing-type-selection').val());
     });
@@ -59,5 +61,22 @@ $(document).ready(function() {
                 }
             }
         });
+
+        getCurrentWritingDatePostRate();
     });
 });
+
+function getCurrentWritingDatePostRate(){
+	$.ajax({
+        type: "POST",
+        url: '/teacher/getCurrentWritingDatePostRate',
+        data: {writing_date : $('#writing_date').val(), writing_types_id : $('#writing-type-selection').val(),},
+        success: function( data ) {
+        	$("#current-date-type-post-progress").attr("style", "width: "+data+"%")
+            // console.log(data);
+            if ("false" == data) {
+            } else {
+            }
+        }
+    });
+}

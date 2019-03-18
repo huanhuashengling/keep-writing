@@ -13,6 +13,6 @@ return [
     |
     */
 
-    'title' => '燕山教师Keep书写',
+    'title' => '燕山Keep书写',
 
 ];

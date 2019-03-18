@@ -42,10 +42,6 @@ Route::group(['middleware' => 'auth.district:district, district/login', 'prefix'
     $router->get('schools', 'SchoolController@index');
     $router->post('getSchoolsAccountData', 'SchoolController@getSchoolsData');
 
-
-
-
-
     $router->post('importStudents', 'HomeController@importStudents');
     $router->post('updateStudentEmail', 'HomeController@updateStudentEmail');
     $router->post('getStudentsData', 'HomeController@getStudentsData');
@@ -251,9 +247,12 @@ Route::group(['middleware' => 'auth.teacher', 'prefix' => 'teacher','namespace' 
     $router->post('getMarkNumByPostsId', 'HomeController@getMarkNumByPostsId');
     $router->post('getIsMarkedByMyself', 'HomeController@getIsMarkedByMyself');
     $router->post('updateMarkState', 'HomeController@updateMarkState');
+    
+    $router->post('getCurrentWritingDatePostRate', 'HomeController@getCurrentWritingDatePostRate');
 
     
     
+    $router->get('resources', 'ResourcesController@index');
     $router->get('colleague', 'ColleagueController@colleaguePost');
     
     $router->post('getPostsDataByType', 'ClassmateController@getPostsDataByType');

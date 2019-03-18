@@ -121,6 +121,23 @@ class HomeController extends Controller
       }
     }
 
+    public function getCurrentWritingDatePostRate(Request $request)
+    {
+      $writingTypesId = $request->get('writing_types_id');
+      $writingDate = $request->get('writing_date');
+
+      $teacher = Teacher::find(Auth::guard("teacher")->id());
+
+      $school = School::find($teacher->schools_id);
+      $teachersNum = Teacher::where("schools_id", "=", $teacher->schools_id)->count();
+      $postsNum = Post::leftJoin('teachers', 'teachers.id', '=', "posts.teachers_id")
+                        ->where('teachers.schools_id', '=', $teacher->schools_id)
+                        ->where('posts.writing_date', '=', $writingDate)
+                        ->where('posts.writing_types_id', '=', $writingTypesId)
+                        ->count();
+      return ($postsNum/$teachersNum)*100;
+    }
+
     public function upload(Request $request)
     {
       $id = auth()->guard("teacher")->id();
@@ -148,7 +165,7 @@ class HomeController extends Controller
         $originalName = $file->getClientOriginalName();
         // $bytes = File::size($filename);
         // 扩展名
-        $ext = $file->getClientOriginalExtension();
+        $ext = strtolower($file->getClientOriginalExtension());
         // $originalName = str_replace($originalName, ".".$ext);
         // MimeType
         $type = $file->getClientMimeType();

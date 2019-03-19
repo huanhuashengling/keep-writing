@@ -1,6 +1,7 @@
 @extends('layouts.teacher')
 
 @section('content')
+<div class="container">
 <input type="hidden" name="" id="base-url" value="{{$baseUrl}}">
 <div class="panel panel-info">
       <div class="panel-heading">
@@ -63,6 +64,7 @@
       </li>
     </ul>
 </nav>
+</div>
 @endsection
 
 @section('scripts')

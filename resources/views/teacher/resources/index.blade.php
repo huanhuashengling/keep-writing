@@ -15,7 +15,7 @@
             preload="auto"
             poster=""
             data-setup='{}'
-            width='350' height=''>
+            width='330' height=''>
           <source src="{{$baseUrl}}/downloads/硬笔书法偏旁部首，月字旁.mp4" type="video/mp4"></source>
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a

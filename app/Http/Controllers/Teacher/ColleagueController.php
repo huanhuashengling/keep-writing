@@ -55,25 +55,27 @@ class ColleagueController extends Controller
         $schoolsId = $this->getSchool()->id;
         $id = \Auth::guard("teacher")->id();
 
-        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', 'writing_types.name as writing_type_name', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
                 ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
+                ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->where('teachers.schools_id', '=', $schoolsId)
                 ->where('teachers.id', '=', $id)
-                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
+                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'writing_types.name')
                 ->orderby("posts.writing_date", "DESC")->paginate(12);
         return $posts;
     }
 
     public function getAllPostsData() {
         $schoolsId = $this->getSchool()->id;
-        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', 'writing_types.name as writing_type_name', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
                 ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
+                ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
                 ->where('teachers.schools_id', '=', $schoolsId)
-                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
+                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'writing_types.name')
                 ->orderby("posts.writing_date", "DESC")->paginate(12);
         return $posts;
     }
@@ -82,14 +84,15 @@ class ColleagueController extends Controller
         $schoolsId = $this->getSchool()->id;
         $id = \Auth::guard("teacher")->id();
         $teacher = Teacher::find($id);
-        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', 'writing_types.name as writing_type_name', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
                 ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
+                ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
                 ->where('teachers.schools_id', '=', $schoolsId)
                 ->where('teachers.subjects_id', '=', $teacher->subjects_id)
                 ->where('marks.state_code', '=', 1)
-                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
+                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'writing_types.name')
                 ->orderby("posts.writing_date", "DESC")->paginate(12);
         return $posts;
     }
@@ -120,14 +123,15 @@ class ColleagueController extends Controller
         $schoolsId = $this->getSchool()->id;
         $id = \Auth::guard("teacher")->id();
 
-        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', 'writing_types.name as writing_type_name', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
                 ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
+                ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
                 ->where('teachers.schools_id', '=', $schoolsId)
                 ->where('marks.teachers_id', '=', $id)
                 ->where('marks.state_code', '=', 1)
-                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
+                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'writing_types.name')
                 ->orderby("posts.writing_date", "DESC")->paginate(12);
                 // dd($posts);
         return $posts;
@@ -152,12 +156,13 @@ class ColleagueController extends Controller
     public function getMostMarkedPostsData() {
         $id = \Auth::guard("teacher")->id();
         $schoolsId = $this->getSchool()->id;
-        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', 'writing_types.name as writing_type_name', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
+                ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->where('teachers.schools_id', '=', $schoolsId)
                 ->where('marks.state_code', '=', 1)
-                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date')
+                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'writing_types.name')
                 ->orderby("mark_num", "DESC")->paginate(12);
         return $posts;
     }

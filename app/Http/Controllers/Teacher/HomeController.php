@@ -48,6 +48,8 @@ class HomeController extends Controller
         }
         
         $post = Post::where(['writing_types_id' => $selectedWritingTypesId, 'teachers_id' => $id, "writing_date" => $selectedWritingDate])->first();
+        // echo $request->session()->has('writingTypesId')."-".$request->session()->get('writingTypesId') . " - " . $selectedWritingTypesId . " - " . $selectedWritingDate;
+        // dd($post);
         if ($post) {
           $post->storage_name = env('APP_URL'). $middir .$post->storage_name;
         };
@@ -144,6 +146,7 @@ class HomeController extends Controller
 
     public function upload(Request $request)
     {
+      $imgTypes = ["jpg", "png", "gif", "jpeg", "bmp"];
       $id = auth()->guard("teacher")->id();
       $teacher = Teacher::find($id);
       $file = $request->file('source');
@@ -161,7 +164,7 @@ class HomeController extends Controller
       $request->session()->put('writingDate', $writingDate);
             
       $tWriteDate = substr($writingDate, 4, 2) . "月" . substr($writingDate, 6, 2) . "日";
-
+      $tWritingType = WritingType::find($writingTypesId);
       $oldPost = Post::where(['writing_types_id' => $writingTypesId, 'teachers_id' => $teachersId, "writing_date" => $writingDate])->orderBy('id', 'desc')->first();
 
       if ($file->isValid()) {
@@ -179,34 +182,24 @@ class HomeController extends Controller
 
         $uniqid = uniqid();
         $filename = $teacher->username . '-' . $uniqid . '.' . $ext;
-        $img = \Image::make($realPath);
-        $img->orientate();
-        // $image = imagecreatefromstring(file_get_contents($realPath));
-        // $exif = @exif_read_data($realPath, 'IFD0');
-        // if(!empty($exif['Orientation'])) {
-        //     switch($exif['Orientation']) {
-        //         case 8:
-        //             $image = imagerotate($image,90,0);
-        //             break;
-        //         case 3:
-        //             $image = imagerotate($image,180,0);
-        //             break;
-        //         case 6:
-        //             $image = imagerotate($image,-90,0);
-        //             break;
-        //     }
-        // }
-        try {
-          $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
-        } catch (\Exception $e) {
-             $e->getMessage();
-            return Redirect::to('teacher')->with('danger', '操作失败，请稍后重试或联系技术支持！');
-             //TODO remove once tested
-             // return false;
+
+        if (in_array($ext, $imgTypes)) {
+          $img = \Image::make($realPath);
+          $img->orientate();
+          try {
+            $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
+          } catch (\Exception $e) {
+               $e->getMessage();
+              return Redirect::to('teacher')->with('danger', '操作失败，请稍后重试或联系技术支持！');
+               //TODO remove once tested
+               // return false;
+           }
+         } else {
+          $bool = Storage::disk($this->getSchoolCode() . 'posts')->put($filename, file_get_contents($realPath)); 
          }
-        // $bool = Storage::disk($this->getSchoolCode() . 'posts')->put($filename, $img); 
+        
         //TDDO update these new or update code
-        if ($img) {
+        // if ($img) {
           if($oldPost) {
             $oldFilename = $oldPost->storage_name;
             $oldPost->storage_name = $filename;
@@ -220,7 +213,7 @@ class HomeController extends Controller
 
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
-              return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
+              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. '打卡成功！');
             } else {
               return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
               // Session::flash('error', '作业提交失败'); 
@@ -238,13 +231,13 @@ class HomeController extends Controller
             if ($post->save()) {
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
-              return Redirect::to('teacher')->with('success', $tWriteDate . '，打卡成功！');
+              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. '打卡成功！');
             } else {
               return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
               // Session::flash('error', '作业提交失败'); 
             }
           }
-        }
+        // }
         
       } else {
         return Redirect::to('teacher')->with('danger', '文件上传失败，请确认是否文件过大？');
@@ -365,7 +358,7 @@ class HomeController extends Controller
                 ->where("posts.writing_types_id", "=", $request->input('writing_types_id'))
                 ->where("teachers.id", "=", $userId)
                 ->first();
-                // return var_dump($post);
+                // return var_dump($request->input('writing_types_id') . $request->input('writing_date'));
         if (isset($post)) {
             return ["filetype"=>"img", 
                     "storage_name" => getThumbnail($post['storage_name'], 300, 500, $this->getSchoolCode(), 'fit', $post['file_ext']), ];

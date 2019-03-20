@@ -6,10 +6,10 @@
 
   <form class="form-inline col-xs-6">
     <div class="form-group">
-        <label>选择书写类型：</label>
-        <select class="form-control" id="writing-type-selection" disabled>
+        <label>选择打卡类型：</label>
+        <select class="form-control" id="writing-type-selection">
           <?php foreach ($writingTypes as $key => $writingType): ?>
-          <option value="{{$writingType->id}}">{{$writingType->name}}</option>
+          <option value="{{$writingType->id}}"  {{($writingType->id == $selectedWritingTypesId)?'selected':''}}>{{$writingType->name}}</option>
           <?php endforeach ?>
         </select>
       </div>

@@ -6,7 +6,7 @@ $(document).ready(function() {
 	});
     $("#input-zh").fileinput({
 		language: "zh", 
-		allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp"], 
+		allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp", "m4a", "mp3", "amr"], 
 		// uploadAsync: true
 		overwriteInitial: true,
 		initialPreview: [
@@ -20,23 +20,28 @@ $(document).ready(function() {
 	getCurrentWritingDatePostRate();
 
     $('#writing-type-selection').on('change', function (e) {
-		$('#writing_types_id').val($('#writing-type-selection').val());
+		$('#writing_types_id').val($(this).val());
+		refreshFileinputState();
     });
 
 	$('#writing-date-selection').on('change', function (e) {
-		$('#writing_types_id').val($('#writing-type-selection').val());
         $('#writing_date').val($(this).val());
-		$.ajax({
+		refreshFileinputState();
+    });
+});
+
+function refreshFileinputState() {
+	$.ajax({
             type: "POST",
             url: '/teacher/getOnePost',
-            data: {writing_date : $(this).val(), writing_types_id : $('#writing-type-selection').val(),},
+            data: {writing_date : $('#writing-date-selection').val(), writing_types_id : $('#writing-type-selection').val(),},
             success: function( data ) {
                 // console.log(data);
                 if ("false" == data) {
                 	$('#input-zh').fileinput('destroy');
                 	$("#input-zh").fileinput({
 						language: "zh", 
-						allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp"], 
+						allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp", "m4a", "mp3", "amr"], 
 						// uploadAsync: true
 						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,
@@ -48,7 +53,7 @@ $(document).ready(function() {
                 	
 				    $("#input-zh").fileinput({
 						language: "zh", 
-						allowedFileExtensions: ["jpg", "png", "gif", "bmp", "jpeg"], 
+						allowedFileExtensions: ["jpg", "png", "gif", "bmp", "jpeg", "m4a", "mp3", "amr"], 
 						// uploadAsync: true
 						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,
@@ -63,8 +68,7 @@ $(document).ready(function() {
         });
 
         getCurrentWritingDatePostRate();
-    });
-});
+}
 
 function getCurrentWritingDatePostRate(){
 	$.ajax({

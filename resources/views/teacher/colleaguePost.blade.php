@@ -3,6 +3,14 @@
 @section('content')
 
 <div class="container" style="padding-left: 0px; padding-right: 0px">
+    <!-- <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-info btn-sm" id="pen-posts-btn">钢笔字</button>
+            <button class="btn btn-info btn-sm" id="chalk-posts-btn">粉笔字</button>
+            <button class="btn btn-info btn-sm" id="brush-posts-btn">毛笔字</button>
+        </div>
+    </div> -->
+
     <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
         <div class="btn-group" role="group" aria-label="...">
             <button class="btn btn-info btn-sm" id="my-posts-btn">我的</button>
@@ -24,7 +32,7 @@
         @php
             $post_storage_name = "posts/" . $schoolCode . "/" .$post->storage_name;
             $writeDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2);
-            
+            $writingType = $post->writing_type_name;
             if ($post->mark_num) {
                 $markstr = $post->mark_num . "赞";
             } else {
@@ -36,7 +44,7 @@
                 <!--<div class="text-center"><img height="140px" value="{{ $post['pid'] }}" src="/imager?src={{$post_storage_name}}"></div>-->
 
                 <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 120, 170, $schoolCode, 'fit', $post->file_ext) }}" alt="">
-                <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{ $markstr}}</small></h5>  </div>
+                <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $markstr}}</small></h5>  </div>
             </div>
         </div>
     @endforeach

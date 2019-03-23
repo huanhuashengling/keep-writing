@@ -13,6 +13,13 @@ $(document).ready(function() {
 	  }
 	});
 
+    $('.writing-type-btn').on('click', function (e) {
+        $("#selected-writing-types-id").val($(this).val());
+        $(".writing-type-btn").removeClass("btn-success");
+        $(this).addClass("btn-success");
+        storeWritingTypesId();
+    });
+
     $("[name='likeCheckBox']").bootstrapSwitch({
         onText: '点赞',
         offText: '点赞',
@@ -61,8 +68,8 @@ $(document).ready(function() {
         top.location='/teacher/colleague?type=all'; 
     });
 
-    $('#same-subject-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=same-subject'; 
+    $('#most-star-posts-btn').on('click', function (e) {
+        top.location='/teacher/colleague?type=most-star'; 
     });
 
     $('#same-grade-posts-btn').on('click', function (e) {
@@ -186,34 +193,13 @@ $(document).ready(function() {
     });
 });
 
-function showScratch(sbPath)
-{
-    var flashvars = {
-      project: sbPath,
-      autostart: 'false'
-    };
-
-    var params = {
-      bgcolor: '#FFFFFF',
-      allowScriptAccess: 'always',
-      allowFullScreen: 'true',
-      wmode: "direct",
-      menu: "false"
-      
-    };
-    var attributes = {};
-
-    swfobject.embedSWF('/scratch/Scratch.swf', 'flashContent', '100%', '600px', '10.2.0','/scratch/expressInstall.swf', flashvars, params, attributes);
-}
-
-function OnCreateUrl(data)
-{
-    // var originalUrl = document.getElementById(OriginalUrlElementId).value;
-    var originalUrl = data;
-
-    var generatedViewUrl = ViewUrlMask.replace(UrlPlaceholder, encodeURIComponent(originalUrl));
-    var generatedEmbedCode = EmbedCodeMask.replace(UrlPlaceholder, encodeURIComponent(originalUrl));
-    return generatedEmbedCode;
-    // document.getElementById(GeneratedViewUrlElementId).value = generatedViewUrl;
-    // document.getElementById(GeneratedEmbedCodeElementId).value = generatedEmbedCode;
+function storeWritingTypesId() {
+    $.ajax({
+        type: "POST",
+        url: '/teacher/storeWritingTypesId',
+        data: {writingTypesId: $("#selected-writing-types-id").val()},
+        success: function( data ) {
+            $("#post-list").html(data);
+        }
+    });
 }

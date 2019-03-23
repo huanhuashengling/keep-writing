@@ -33,14 +33,15 @@ class PostController extends Controller
 
         $id = \Auth::guard("teacher")->id();
         $teacher = Teacher::find($id);
-        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name as writing_type_name', 'teachers.username', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+        $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name as writing_type_name', 'teachers.username', 'post_rates.rate', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
                 ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
+                ->leftjoin('post_rates', 'post_rates.posts_id', '=', 'posts.id')
                 ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->where('teachers.schools_id', '=', $teacher->schools_id)
                 ->where('teachers.id', '=', $id)
-                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name')
+                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name', 'post_rates.rate')
                 ->orderby("posts.writing_date", "DESC")->get();
         // dd($posts);
         return $this->buildPostListHtml($posts);
@@ -73,8 +74,9 @@ class PostController extends Controller
 
         foreach ($posts as $key => $post) {
             $writeDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2) . "日";
-            $markStr = isset($post->mark_num)?$post->mark_num ."个赞":"";
-            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 120, 170, $this->getSchoolCode(), 'fit', $post->file_ext) . "' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $post->writing_type_name." ". $markStr ."</small></h5></div></div></div>";
+            $markStr = isset($post->mark_num)?$post->mark_num ."赞":"";
+            $rateStr = isset($post->rate)?$post->rate ."星":"";
+            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 120, 170, $this->getSchoolCode(), 'fit', $post->file_ext) . "' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $post->writing_type_name." ". $rateStr ." ". $markStr ."</small></h5></div></div></div>";
         }
         return $resultHtml;
     }

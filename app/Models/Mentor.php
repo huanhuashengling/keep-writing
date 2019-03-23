@@ -8,12 +8,12 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Student extends Model implements AuthenticatableContract, CanResetPasswordContract
+class Mentor extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
     
     protected $fillable = [
-        'username', 'email', 'gender', 'sclasses_id', 'level', 'score', 'password', 'groups_id', 'remember_token', 'is_lock'
+        'username', 'email', 'password', 'phone_number', 'remember_token'
         ];
 
     protected $hidden = [

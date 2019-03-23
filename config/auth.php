@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'student',
-        'passwords' => 'students',
+        'guard' => 'teacher',
+        'passwords' => 'teachers',
     ],
 
     /*
@@ -110,8 +110,8 @@ return [
     */
 
     'passwords' => [
-        'students' => [
-            'provider' => 'students',
+        'mentors' => [
+            'provider' => 'mentors',
             'table' => 'password_resets',
             'expire' => 60,
         ],

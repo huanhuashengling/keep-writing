@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Mentor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
-use App\Models\Student;
+use App\Models\WritingType;
 use App\Models\Teacher;
 use App\Models\Sclass;
 use App\Models\School;
@@ -28,42 +28,84 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // dd(auth()->guard('teacher')->user());
+        $writingTypes = WritingType::all();
+        return view('mentor/rate', compact('writingTypes'));
+    }
 
-        $userId = auth()->guard('teacher')->id();
-        $teacher = Teacher::find($userId);
-        // dd($userId);
-        $lessonLog = LessonLog::where(['teachers_id' => $userId, 'status' => 'open'])->first();
-
-        if ($lessonLog) {
-            // dd($lessonLog);die();
-            //If the teacher has one lesson log, only need redirect to route takeclass and load view
-            return redirect('teacher/takeclass');
+    public function getPostsCountByWritingType(Request $request)
+    {
+        $returnHtml = "";
+        $writingTypesId = $request->get('writingTypesId');
+        $teachers = Teacher::select('teachers.username', 'teachers.id as teachersId', DB::raw("COUNT(`post_rates`.`id`) as rate_num"), DB::raw("COUNT(`posts`.`id`) as post_num"))
+                    ->leftJoin("posts", 'posts.teachers_id', '=', 'teachers.id')
+                    ->leftJoin("post_rates", 'post_rates.posts_id', '=', 'posts.id')
+                    ->where("posts.writing_types_id", "=", $writingTypesId)
+                    ->groupBy('teachers.username', 'teachers.id')
+                    ->get();
+        foreach ($teachers as $key => $teacher) {
+            $returnHtml .= "<button class='btn btn-default teacher-btn' value='" . $teacher->teachersId . "'>".$teacher->username . " <span class='badge'>" . $teacher->rate_num . "/" . $teacher->post_num . "</span></button>";
         }
+        return $returnHtml;
+    }
 
+    public function getPostsByWritingTypeAndTeachersId(Request $request)
+    {
+        $schoolCode = $this->getSchoolCode();
+        $returnHtml = "";
+        $teachersId = $request->get('teachersId');
+        $writingTypesId = $request->get('writingTypesId');
 
-        $sclasses = Sclass::where(["is_graduated" => 0, "schools_id" => $teacher->schools_id])->get();
-        $classData = [];
-        array_push($classData, "请选择班级");
-        foreach ($sclasses as $key => $sclass) {
-            $term = Term::where(['enter_school_year' => $sclass['enter_school_year'], 'is_current' => 1])->first();
-            $classData[$sclass['id']] = $term['grade_key'] . $sclass['class_title'] . "班";
+        $posts = Post::select("posts.*", "post_rates.rate", 'post_rates.rate')
+                    ->leftJoin("post_rates", 'post_rates.posts_id', '=', 'posts.id')
+                    ->where('teachers_id', '=', $teachersId)
+                    ->where('writing_types_id', '=', $writingTypesId)
+                    ->orderBy("posts.writing_date", "DESC")
+                    ->get();
+
+        foreach ($posts as $key => $post) {
+            $smallThumbnail = getThumbnail($post->storage_name, 140, 170, $schoolCode, 'fit', $post->file_ext);
+            $bigThumbnail = getThumbnail($post->storage_name, 700, 900, $schoolCode, 'fit', $post->file_ext);
+            $rateStr = isset($post->rate)?($post->rate . "星"):"";
+            $tWriteDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2) . "日";
+
+            $returnHtml .= "<div class='alert alert-success col-md-2 col-xs-4' style='margin:10px;'><img class='img-responsive post-btn center-block' thumbnail='" . $bigThumbnail . "' rate='" . $post->rate . "' value='" .  $post->id . "' src='" . $smallThumbnail . "' alt=''><div><h4 style='margin-top: 10px; ' class='text-center'><small>" . $tWriteDate . " </small> " . $rateStr ."</h4>  </div></div>";
         }
-        $lessons = Lesson::orderBy("lessons.created_at", "DESC")->get();
-        $lessonsData = [];
-        array_push($lessonsData, "请选择课程");
-        $order = 1;
-        foreach ($lessons as $key => $lesson) {
-            $lessonsData[$lesson['id']] = $order . ". " . $lesson['title'] . "(". $lesson['subtitle'] .")";
-            $order++;
+        return $returnHtml;
+
+    }
+
+    public function rateOnePost(Request $request)
+    {
+        $rate = $request->get("rate");
+        $postsId = $request->get("postsId");
+        $userId = auth()->guard('mentor')->id();
+
+        $postRate = PostRate::where("mentors_id", '=', $userId)
+                ->where("posts_id", '=', $postsId)
+                ->first();
+        if(isset($postRate)) {
+            $postRate->rate = $rate;
+            if ($postRate->update()) {
+                return "true";
+            } else {
+                return "false";
+            }
+        } else {
+            $postRate = new PostRate();
+            $postRate->rate = $rate;
+            $postRate->posts_id = $postsId;
+            $postRate->mentors_id = $userId;
+            if ($postRate->save()) {
+                return "true";
+            } else {
+                return "false";
+            }
         }
-        return view('teacher/home', compact('classData', 'lessonsData'));
     }
 
     public function takeClass()
     {
-        $schoolCode = $this->getSchoolCode();
-        // dd($schoolCode);
+        dd(auth()->guard('mentor')->user());
         $userId = auth()->guard('teacher')->id();
         $lessonLog = LessonLog::select('lesson_logs.id', 'lesson_logs.rethink', 'lesson_logs.sclasses_id', 'lessons.title', 'lessons.subtitle', 'sclasses.enter_school_year', 'sclasses.class_title', 'terms.grade_key', 'terms.term_segment')
         ->leftJoin("lessons", 'lessons.id', '=', 'lesson_logs.lessons_id')
@@ -274,8 +316,9 @@ class HomeController extends Controller
 
     public function getSchoolCode()
     {
-      $teacher = Teacher::find(Auth::guard("teacher")->id());
-      $school = School::where('schools.id', '=', $teacher->schools_id)->first();
-      return $school->code;
+      // $teacher = Teacher::find(Auth::guard("teacher")->id());
+      // $school = School::where('schools.id', '=', $teacher->schools_id)->first();
+      // return $school->code;
+      return "ys";
     }
 }

@@ -177,7 +177,10 @@ Route::group(['prefix' => 'mentor','namespace' => 'Mentor'],function ($router)
 Route::group(['middleware' => 'auth.mentor', 'prefix' => 'mentor','namespace' => 'Mentor'],function ($router)
 {
     $router->get('/', 'HomeController@index');
-    $router->get('takeclass', 'HomeController@takeclass');
+    $router->post('getPostsCountByWritingType', 'HomeController@getPostsCountByWritingType');
+    $router->post('getPostsByWritingTypeAndTeachersId', 'HomeController@getPostsByWritingTypeAndTeachersId');
+    $router->post('rateOnePost', 'HomeController@rateOnePost');
+
     $router->resource('lesson', 'LessonController');
     $router->post('getLessonPostPerSclass', 'HomeController@getLessonPostPerSclass');
 
@@ -207,19 +210,6 @@ Route::group(['middleware' => 'auth.mentor', 'prefix' => 'mentor','namespace' =>
     $router->post('getScoreReport', 'ScoreReportController@report');
     $router->post('getSclassTermsList', 'ScoreReportController@getSclassTermsList');
     $router->post('email-out', 'ScoreReportController@emailOut');
-
-
-    $router->get('get-lesson-list', 'LessonController@getLessonList');
-    $router->post('deleteLesson', 'LessonController@deleteLesson');
-    $router->post('getLesson', 'LessonController@getLesson');
-
-    Route::resource('course', 'CourseController');
-    Route::get('get-course-list', 'CourseController@getCourseList');
-
-    Route::resource('unit', 'UnitController');
-    Route::get('get-unit-list', 'UnitController@getUnitList');
-    Route::post('get-unit-list-by-courses-id', 'UnitController@getUnitListByCoursesId');
-
 });
 
 Route::group(['prefix' => 'teacher','namespace' => 'Teacher'],function ($router)
@@ -247,6 +237,7 @@ Route::group(['middleware' => 'auth.teacher', 'prefix' => 'teacher','namespace' 
     $router->post('getMarkNumByPostsId', 'HomeController@getMarkNumByPostsId');
     $router->post('getIsMarkedByMyself', 'HomeController@getIsMarkedByMyself');
     $router->post('updateMarkState', 'HomeController@updateMarkState');
+    $router->post('storeWritingTypesId', 'ColleagueController@storeWritingTypesId');
     
     $router->post('getCurrentWritingDatePostRate', 'HomeController@getCurrentWritingDatePostRate');
 

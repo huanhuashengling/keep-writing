@@ -7,19 +7,19 @@
             <div class="panel panel-default">
                 <div class="panel-heading">导师登陆</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('teacher.login') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('mentor.login') }}">
                         {{ csrf_field() }}
                         
-                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
-                            <label for="phone_number" class="col-md-4 control-label">用户名</label>
-                            <!-- alue="{{ old('phone_number') }}" -->
+                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                            <label for="username" class="col-md-4 control-label">用户名</label>
+                            <!-- alue="{{ old('username') }}" -->
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="" required autofocus>
+                                <input id="username" type="text" class="form-control" name="username" value="刘老师" required autofocus>
 
-                                @if ($errors->has('phone_number'))
+                                @if ($errors->has('username'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('phone_number') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -29,7 +29,7 @@
                             <label for="password" class="col-md-4 control-label">密码</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" value="" required>
+                                <input id="password" type="password" class="form-control" name="password" value="123456" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">

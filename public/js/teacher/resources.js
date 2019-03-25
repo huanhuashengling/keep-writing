@@ -17,6 +17,7 @@ $(document).ready(function() {
 
 		    myPlayer.play();
 		});
+		addResourceLog($(this).attr("resourcesId"), $(this).attr("writingTypesId"));
 	});
 
 	$(".chalkItem").on('click', function (e) {
@@ -30,6 +31,7 @@ $(document).ready(function() {
 
 		    myPlayer.play();
 		});
+		addResourceLog($(this).attr("resourcesId"), $(this).attr("writingTypesId"));
 	});
 
 	$(".brushItem").on('click', function (e) {
@@ -43,5 +45,23 @@ $(document).ready(function() {
 
 		    myPlayer.play();
 		});
+		addResourceLog($(this).attr("resourcesId"), $(this).attr("writingTypesId"));
 	});
 });
+
+function addResourceLog(resourcesId, writingTypesId)
+{
+	$.ajax({
+	        type: "POST",
+	        url: '/teacher/addResourceLog',
+	        data: {resourcesId: resourcesId, writingTypesId: writingTypesId},
+	        success: function( data ) {
+	            console.log(data);
+	            if ("false" == data) {
+
+	            } else {
+	            }
+	        }
+	    });
+}
+

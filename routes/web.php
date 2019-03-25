@@ -238,7 +238,9 @@ Route::group(['middleware' => 'auth.teacher', 'prefix' => 'teacher','namespace' 
     $router->post('getIsMarkedByMyself', 'HomeController@getIsMarkedByMyself');
     $router->post('updateMarkState', 'HomeController@updateMarkState');
     $router->post('storeWritingTypesId', 'ColleagueController@storeWritingTypesId');
-    
+
+    $router->post('addResourceLog', 'ResourcesController@addResourceLog');
+
     $router->post('getCurrentWritingDatePostRate', 'HomeController@getCurrentWritingDatePostRate');
 
     

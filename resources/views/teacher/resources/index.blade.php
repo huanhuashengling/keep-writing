@@ -36,7 +36,7 @@
         </a>
         <ul class="dropdown-menu">
           <?php foreach ($penResources as $key => $resource): ?>
-            <li><a href="#" class="penItem" filename="{{$resource->filename}}">{{$resource->label}}</a></li>
+            <li><a href="#" class="penItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$resource->label}}</a></li>
           <?php endforeach ?>
         </ul>
       </li>
@@ -47,7 +47,7 @@
         </a>
         <ul class="dropdown-menu">
           <?php foreach ($chalkResources as $key => $resource): ?>
-            <li><a href="#" class="chalkItem" filename="{{$resource->filename}}">{{$resource->label}}</a></li>
+            <li><a href="#" class="chalkItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$resource->label}}</a></li>
           <?php endforeach ?>
         </ul>
       </li>
@@ -58,7 +58,7 @@
         </a>
         <ul class="dropdown-menu">
           <?php foreach ($brushResources as $key => $resource): ?>
-            <li><a href="#" class="brushItem" filename="{{$resource->filename}}">{{$resource->label}}</a></li>
+            <li><a href="#" class="brushItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$resource->label}}</a></li>
           <?php endforeach ?>
         </ul>
       </li>

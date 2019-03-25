@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Resource;
+use App\Models\ResourceLog;
 
 class ResourcesController extends Controller
 {
@@ -22,5 +23,18 @@ class ResourcesController extends Controller
         $baseUrl = env('APP_URL');
 
         return view('teacher/resources/index', compact('penResources', 'chalkResources', 'brushResources', 'baseUrl'));
+    }
+
+    public function addResourceLog(Request $request)
+    {
+        $resourceLog = new ResourceLog();
+        $resourceLog->teachers_id = auth()->guard("teacher")->id();
+        $resourceLog->resources_id = $request->get("resourcesId");
+        $resourceLog->writing_types_id = $request->get("writingTypesId");
+        if ($resourceLog->save()) {
+            return "true";
+        } else {
+            return "false";
+        }
     }
 }

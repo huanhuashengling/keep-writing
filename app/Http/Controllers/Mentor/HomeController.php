@@ -57,8 +57,8 @@ class HomeController extends Controller
 
         $posts = Post::select("posts.*", "post_rates.rate", 'post_rates.rate')
                     ->leftJoin("post_rates", 'post_rates.posts_id', '=', 'posts.id')
-                    ->where('teachers_id', '=', $teachersId)
-                    ->where('writing_types_id', '=', $writingTypesId)
+                    ->where('posts.teachers_id', '=', $teachersId)
+                    ->where('posts.writing_types_id', '=', $writingTypesId)
                     ->orderBy("posts.writing_date", "DESC")
                     ->get();
 

@@ -49,8 +49,8 @@ $(document).ready(function() {
         search: "true",
         url: "/school/getKeepRecord",
         pagination:"true",
-        pageList: [50, 30], 
-        pageSize: 50,
+        pageList: [70, 35], 
+        pageSize: 35,
         pageNumber: 1,
         toolbar:"#toolbar",
         showExport: true,                     //是否显示导出
@@ -77,14 +77,10 @@ $(document).ready(function() {
 	
 });
 
-function emailCol(value, row, index) {
-    if (row.email) {
-        return [
-            '<a class="btn btn-info btn-sm email" data-unique-id="', row.users_id, '">发送</a>'
-        ].join('');
-    } else {
-        return "无邮箱";
-    }
+function isFormalCol(value, row, index) {
+    return [
+        '<span>'+(("1" == value)?"正式":"-")+'</span>'
+    ].join('');
 }
 
 window.emailActionEvents = {

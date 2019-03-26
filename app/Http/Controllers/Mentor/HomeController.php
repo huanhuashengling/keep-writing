@@ -63,7 +63,7 @@ class HomeController extends Controller
                     ->get();
 
         foreach ($posts as $key => $post) {
-            $smallThumbnail = getThumbnail($post->storage_name, 140, 170, $schoolCode, 'fit', $post->file_ext);
+            $smallThumbnail = getThumbnail($post->storage_name, 120, 170, $schoolCode, 'fit', $post->file_ext);
             $bigThumbnail = getThumbnail($post->storage_name, 700, 900, $schoolCode, 'fit', $post->file_ext);
             $rateStr = isset($post->rate)?($post->rate . "星"):"";
             $tWriteDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2) . "日";

@@ -13,6 +13,13 @@ $(document).ready(function() {
 	  }
 	});
 
+    $('.writing-type-btn').on('click', function (e) {
+        $("#selected-writing-types-id").val($(this).val());
+        $(".writing-type-btn").removeClass("btn-success");
+        $(this).addClass("btn-success");
+        refreshPostList();
+    });
+
     refreshPostList();
     $(document)
 	   .on('click', '.post-btn', function (e) {
@@ -31,7 +38,6 @@ $(document).ready(function() {
                             $('#post-show').attr("src", data.storage_name);
                             $("#myModalLabel").html("您"+data.writingDate+" "+data.writingType+" 打卡作品");
                             $('#post-download').attr("href", data.filePath);
-                            
                         }
                     }
                 });
@@ -91,7 +97,7 @@ function refreshPostList() {
     $.ajax({
         type: "POST",
         url: '/teacher/getPosts',
-        data: {},
+        data: {writingTypesId: $("#selected-writing-types-id").val()},
         success: function( data ) {
             $("#posts-list").html(data);
             // console.log(data);

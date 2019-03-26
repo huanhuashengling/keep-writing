@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="container">
+    <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
+        <?php foreach ($writingTypes as $key => $writingType): ?>
+            @php
+            $btnCss = ($writingType->id == $tWritingTypesId)?"btn-success":"";
+        @endphp
+                <button class="btn btn-sm writing-type-btn {{$btnCss}}" value="{{$writingType->id}}" > {{$writingType->name}}</button>
+        <?php endforeach ?>
+        <input type="hidden" name="" id="selected-writing-types-id" value="{{$tWritingTypesId}}">
+    </div>
+
     <div class="row">
         <div id="posts-list"></div>
     </div>

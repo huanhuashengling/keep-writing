@@ -29,15 +29,15 @@
             <tr>
               <th data-field="penPostNum" data-sortable="true">打卡数</th>
               <th data-field="penStarNum" data-sortable="true">获得星数</th>
-              <th data-field="penMarkNum" data-sortable="true">点赞数</th>
+              <th data-field="penMarkNum">点赞</th>
               <th data-field="penScore" data-sortable="true">小计</th>
               <th data-field="chalkPostNum" data-sortable="true">打卡数</th>
               <th data-field="chalkStarNum" data-sortable="true">获得星数</th>
-              <th data-field="chalkMarkNum" data-sortable="true">点赞数</th>
+              <th data-field="chalkMarkNum">点赞</th>
               <th data-field="chalkScore" data-sortable="true">小计</th>
               <th data-field="brushPostNum" data-sortable="true">打卡数</th>
               <th data-field="brushStarNum" data-sortable="true">获得星数</th>
-              <th data-field="brushMarkNum" data-sortable="true">点赞数</th>
+              <th data-field="brushMarkNum">点赞</th>
               <th data-field="brushScore" data-sortable="true">小计</th>
             </tr>
         </thead>

@@ -53,6 +53,7 @@ $(document).ready(function() {
         pageSize: 35,
         pageNumber: 1,
         toolbar:"#toolbar",
+        showColumns: "true",
         showExport: true,                     //是否显示导出
         exportDataType: "basic",              //basic', 'all', 'selected'.
     	queryParams: function(params) {

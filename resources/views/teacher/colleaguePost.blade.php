@@ -43,7 +43,7 @@
             <div class="alert alert-info" style="padding: 10px; text-align: center">
                 <!--<div class="text-center"><img height="140px" value="{{ $post['pid'] }}" src="/imager?src={{$post_storage_name}}"></div>-->
 
-                <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 120, 170, $schoolCode, 'fit', $post->file_ext) }}" alt="">
+                <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 120, 170, $schoolCode, 'background', $post->file_ext) }}" alt="">
                 <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $rateStr}} {{ $markStr}}</small></h5>  </div>
             </div>
         </div>

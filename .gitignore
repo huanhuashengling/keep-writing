@@ -16,4 +16,4 @@ bootstrap/cache/
 
 laravel.log
 
-.mp4
+*.mp4

@@ -64,7 +64,7 @@ class PostController extends Controller
         if (isset($post)) {
             $writeDate = substr($post["writing_date"], 4, 2) . "月" . substr($post["writing_date"], 6, 2) . "日";
             return ["filetype"=>"img", 
-                    "storage_name" => getThumbnail($post['storage_name'], 300, 400, $this->getSchoolCode(), 'fit', $post['file_ext']), 
+                    "storage_name" => getThumbnail($post['storage_name'], 301, 401, $this->getSchoolCode(), 'background', $post['file_ext']), 
                     "username" => $post["username"],
                     "writingType" => $post["name"],
                     "writingDate" => $writeDate,
@@ -88,7 +88,7 @@ class PostController extends Controller
                 $rateScore += $post->rate;
             }
 
-            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 120, 170, $this->getSchoolCode(), 'fit', $post->file_ext) . "' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $post->writing_type_name." ". $rateStr ." ". $markStr ."</small></h5></div></div></div>";
+            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 121, 162, $this->getSchoolCode(), 'background', $post->file_ext) . "' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $post->writing_type_name." ". $rateStr ." ". $markStr ."</small></h5></div></div></div>";
         }
         $scoreHtml = "<div class='col-md-12 col-xs-12'><div class='alert alert-info'>您目前" . $tWritingType . "打卡" . $postNum . "次, 共获得" . $rateScore ."颗星, 合计" . ($postNum + $rateScore) . "分</div></div>";
         return $scoreHtml . $resultHtml;

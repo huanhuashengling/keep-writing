@@ -16,7 +16,7 @@
             poster=""
             data-setup='{}'
             width='330' height=''>
-          <source src="{{$baseUrl}}/downloads/硬笔书法偏旁部首，月字旁.mp4" type="video/mp4"></source>
+          <source src="{{$baseUrl}}/downloads/pen/硬笔书法偏旁部首，月字旁.mp4" type="video/mp4"></source>
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a
             web browser that
@@ -34,9 +34,9 @@
         <a class="dropdown-toggle col-xs-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
           钢笔字 <span class="caret"></span>
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" style="height: 300px; overflow: scroll;">
           <?php foreach ($penResources as $key => $resource): ?>
-            <li><a href="#" class="penItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$resource->label}}</a></li>
+            <li><a href="#" class="penItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$key + 1}}. {{$resource->label}}</a></li>
           <?php endforeach ?>
         </ul>
       </li>
@@ -47,7 +47,7 @@
         </a>
         <ul class="dropdown-menu">
           <?php foreach ($chalkResources as $key => $resource): ?>
-            <li><a href="#" class="chalkItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$resource->label}}</a></li>
+            <li><a href="#" class="chalkItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$key + 1}}. {{$resource->label}}</a></li>
           <?php endforeach ?>
         </ul>
       </li>
@@ -56,9 +56,9 @@
         <a class="dropdown-toggle col-xs-4" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
           毛笔字 <span class="caret"></span>
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" style="height: 300px; overflow: scroll;">
           <?php foreach ($brushResources as $key => $resource): ?>
-            <li><a href="#" class="brushItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$resource->label}}</a></li>
+            <li><a href="#" class="brushItem" filename="{{$resource->filename}}" resourcesId="{{$resource->id}}" writingTypesId="{{$resource->writing_types_id}}">{{$key + 1}}. {{$resource->label}}</a></li>
           <?php endforeach ?>
         </ul>
       </li>
@@ -72,6 +72,7 @@
     <script src="//vjs.zencdn.net/7.3.0/video.min.js"></script>
     <script src="/js/teacher/resources.js?v={{rand()}}" type="text/javascript"></script>
     <style type="text/css">
+
       .vjs-paused .vjs-big-play-button,
       .vjs-paused.vjs-has-started .vjs-big-play-button {
           display: block;

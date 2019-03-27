@@ -7,7 +7,7 @@ $(document).ready(function() {
 	});
 
 	$(".penItem").on('click', function (e) {
-		var urlPrefix = $("#base-url").val() + "/downloads/";
+		var urlPrefix = $("#base-url").val() + "/downloads/pen/";
 		$("#video-label").html($(this).attr("filename"));
 		var resourceUrl = urlPrefix + $(this).attr("filename") + ".mp4";
 		videojs("resources-player",{}).ready(function(){
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	});
 
 	$(".chalkItem").on('click', function (e) {
-		var urlPrefix = $("#base-url").val() + "/downloads/";
+		var urlPrefix = $("#base-url").val() + "/downloads/chalk/";
 		$("#video-label").html($(this).attr("filename"));
 		var resourceUrl = urlPrefix + $(this).attr("filename") + ".mp4";
 		videojs("resources-player",{}).ready(function(){
@@ -35,7 +35,7 @@ $(document).ready(function() {
 	});
 
 	$(".brushItem").on('click', function (e) {
-		var urlPrefix = $("#base-url").val() + "/downloads/";
+		var urlPrefix = $("#base-url").val() + "/downloads/brush/";
 		$("#video-label").html($(this).attr("filename"));
 		var resourceUrl = urlPrefix + $(this).attr("filename") + ".mp4";
 		videojs("resources-player",{}).ready(function(){

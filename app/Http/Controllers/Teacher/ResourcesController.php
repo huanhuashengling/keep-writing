@@ -14,11 +14,11 @@ class ResourcesController extends Controller
     {   
         $id = auth()->guard("teacher")->id();
 
-        $penResources = Resource::where("writing_types_id", "=", 1)->where("is_open", "=", 1)->get();
+        $penResources = Resource::where("writing_types_id", "=", 1)->where("is_open", "=", 1)->orderBy("resource_order", "ASC")->get();
 
-        $chalkResources = Resource::where("writing_types_id", "=", 2)->where("is_open", "=", 1)->get();
+        $chalkResources = Resource::where("writing_types_id", "=", 2)->where("is_open", "=", 1)->orderBy("resource_order", "ASC")->get();
 
-        $brushResources = Resource::where("writing_types_id", "=", 3)->where("is_open", "=", 1)->get();
+        $brushResources = Resource::where("writing_types_id", "=", 3)->where("is_open", "=", 1)->orderBy("resource_order", "ASC")->get();
 
         $baseUrl = env('APP_URL');
 

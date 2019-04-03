@@ -39,14 +39,28 @@
             $markStr = isset($post->mark_num)?$post->mark_num ."赞":"";
             $rateStr = isset($post->rate)?$post->rate ."星":"";
         @endphp
-        <div class="col-md-2 col-sm-4 col-xs-6" style="padding-left: 5px; padding-right: 5px;">
-            <div class="alert alert-info" style="padding: 10px; text-align: center">
-                <!--<div class="text-center"><img height="140px" value="{{ $post['pid'] }}" src="/imager?src={{$post_storage_name}}"></div>-->
 
-                <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="">
-                <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $rateStr}} {{ $markStr}}</small></h5>  </div>
+        @if ("普通话" == $post->writing_type_name)
+            <div class="col-md-3 col-sm-6 col-xs-12" style="padding-left: 5px; padding-right: 5px;">
+                <div class="alert alert-info" style="padding: 10px; text-align: center">
+                    <audio controls src="{{ $baseUrl }}{{$post['storage_name'] }}" >
+                    Your browser does not support the audio element.
+                    </audio>
+                    <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $rateStr}} {{ $markStr}}</small></h5>  </div>
+                </div>
             </div>
-        </div>
+        @else
+            <div class="col-md-2 col-sm-4 col-xs-6" style="padding-left: 5px; padding-right: 5px;">
+                <div class="alert alert-info" style="padding: 10px; text-align: center">
+                <!--<div class="text-center"><img height="140px" value="{{ $post['pid'] }}" src="/imager?src={{$post_storage_name}}"></div>-->
+                
+                    
+                    <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="">
+                
+                    <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $rateStr}} {{ $markStr}}</small></h5>  </div>
+                </div>
+            </div>
+        @endif
     @endforeach
     {{ $posts->appends(Illuminate\Support\Facades\Input::except('page'))->links('pagination.limit_links') }}
     </div>

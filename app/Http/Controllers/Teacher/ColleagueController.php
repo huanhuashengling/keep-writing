@@ -21,10 +21,18 @@ class ColleagueController extends Controller
             $tWritingTypesId = $request->session()->get('colleagueWritingTypesId');
         }
 
+        $tFilterType = "my";
+        if ($request->session()->has('colleagueFilterType')) {
+            $tFilterType = $request->session()->get('colleagueFilterType');
+        }
+
         $writingTypes = WritingType::all();
-        $getDataType = ($request->input('type'))?$request->input('type'):"my";
+        $getDataType = ($request->input('type'))?$request->input('type'):$tFilterType;
         $posts = [];
         $schoolCode = $this->getSchool()->code;
+
+        $baseUrl = env('APP_URL') . '/posts/' . $schoolCode . "/";
+
         switch ($getDataType) {
             case 'my':
                 $posts = $this->getMyPostsData($tWritingTypesId);
@@ -54,7 +62,7 @@ class ColleagueController extends Controller
                 break;
         }
         // dd($posts);
-        return view('teacher/colleaguePost', compact('posts', 'schoolCode', 'writingTypes', 'tWritingTypesId'));
+        return view('teacher/colleaguePost', compact('posts', 'schoolCode', 'baseUrl', 'writingTypes', 'tWritingTypesId', 'getDataType'));
     }
 
     public function getMyPostsData($writingTypesId) {
@@ -217,7 +225,13 @@ class ColleagueController extends Controller
 
     public function storeWritingTypesId(Request $request)
     {
+        echo($request->get('writingTypesId'));
         $request->session()->put('colleagueWritingTypesId', $request->get('writingTypesId'));
+    }
+
+    public function storeFilterType(Request $request)
+    {
+        $request->session()->put('colleagueFilterType', $request->get('filterType'));
     }
 
     public function getSchool()

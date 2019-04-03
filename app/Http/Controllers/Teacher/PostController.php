@@ -24,9 +24,10 @@ class PostController extends Controller
 {
     public function index()
     {   
+        $baseUrl = env('APP_URL');
         $tWritingTypesId = 1;
         $writingTypes = WritingType::all();
-        return view('teacher/posts', compact('writingTypes', 'tWritingTypesId'));
+        return view('teacher/posts', compact('writingTypes', 'tWritingTypesId', 'baseUrl'));
     }
 
     public function getPosts(Request $request) {
@@ -76,6 +77,7 @@ class PostController extends Controller
     }
 
     public function buildPostListHtml($posts, $tWritingType) {
+        $middir = "/posts/" . $this->getSchoolCode() . "/";
         $resultHtml = "";
         $rateScore = 0;
         $postNum = count($posts);
@@ -88,7 +90,18 @@ class PostController extends Controller
                 $rateScore += $post->rate;
             }
 
-            $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 121, 162, $this->getSchoolCode(), 'background', $post->file_ext) . "' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $post->writing_type_name." ". $rateStr ." ". $markStr ."</small></h5></div></div></div>";
+            if ("普通话" == $post->writing_type_name) {
+                $sourceUrl = "";
+                $resultHtml .= "<div class='col-md-3 col-sm-6 col-xs-12' style=''><div class='alert alert-info' style='padding: 5px;'>";
+                // <audio src="music.m4a" controls></audio>
+                $resultHtml .= "<audio controls src='" . env('APP_URL'). $middir . $post['storage_name'] . "' >
+                Your browser does not support the audio element.
+                </audio>";
+                $resultHtml .= "<div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $post->writing_type_name." ". $rateStr ." ". $markStr ."</small></h5></div></div></div>";
+
+            } else {
+                $resultHtml  .= "<div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='" . getThumbnail($post->storage_name, 121, 162, $this->getSchoolCode(), 'background', $post->file_ext) . "' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>" . $writeDate ." ". $post->writing_type_name." ". $rateStr ." ". $markStr ."</small></h5></div></div></div>";
+            }
         }
         $scoreHtml = "<div class='col-md-12 col-xs-12'><div class='alert alert-info'>您目前" . $tWritingType . "打卡" . $postNum . "次, 共获得" . $rateScore ."颗星, 合计" . ($postNum + $rateScore) . "分</div></div>";
         return $scoreHtml . $resultHtml;

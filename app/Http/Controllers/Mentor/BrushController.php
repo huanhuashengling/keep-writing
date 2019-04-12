@@ -104,7 +104,7 @@ class BrushController extends Controller
             }
             $tWriteDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2) . "日";
 
-            $returnHtml .= "<div class='alert " . $rateCss . " col-md-2 col-xs-4' style='margin:10px;'><img class='img-responsive post-btn center-block' thumbnail='" . $bigThumbnail . "' rate='" . $post->rate . "' value='" .  $post->id . "' src='" . $smallThumbnail . "' alt=''><div><h4 style='margin-top: 10px; ' class='text-center'><small>" . $tWriteDate . " </small> " . $rateStr ."</h4>  </div></div>";
+            $returnHtml .= "<div class='alert " . $rateCss . " col-md-2 col-xs-4' style='margin:10px;'><img class='img-responsive post-btn center-block' thumbnail='" . $bigThumbnail . "' rate='" . $post->rate . "' value='" .  $post->id . "' src='" . $smallThumbnail . "' alt=''><div><h4 style='margin-top: 10px; ' class='text-center'><small>" . $post->username . " </small> " . $rateStr ."</h4>  </div></div>";
         }
         return $returnHtml;
 

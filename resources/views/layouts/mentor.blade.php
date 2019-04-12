@@ -56,8 +56,11 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/mentor/') }}">作业评优</a></li>
-                    <!-- <li><a href="{{ url('/mentor/lesson') }}">课程管理</a></li> -->
+                    <!-- <li><a href="{{ url('/mentor/') }}">日常评优</a></li> -->
+                    <li><a href="{{ url('/mentor/pen') }}">钢笔字阶段测试</a></li>
+                    <li><a href="{{ url('/mentor/chalk') }}">粉笔字阶段测试</a></li>
+                    <li><a href="{{ url('/mentor/brush') }}">毛笔字阶段测试</a></li>
+                    <li><a href="{{ url('/mentor/mandarin') }}">普通话阶段测试</a></li>
                     <!-- <li><a href="{{ url('/mentor/lessonLog') }}">上课记录</a></li> -->
                     <!-- <li><a href="{{ url('/mentor/scoreReport') }}">成绩报告</a></li> -->
                 </ul>

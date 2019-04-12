@@ -115,6 +115,13 @@ Route::group(['middleware' => 'auth.school:school, school/login', 'prefix' => 's
     $router->post('/getKeepRecord', 'KeepRecordController@getKeepRecord');
     $router->post('/importTeachers', 'TeacherAccountController@importTeachers');
 
+    $router->get('stage-check', 'StageCheckController@index');
+    $router->post('getStageCheckData', 'StageCheckController@getStageCheck');
+    $router->post('createStageCheck', 'StageCheckController@createStageCheck');
+
+    $router->post('getStageReport', 'StageCheckController@getStageReport');
+    // $router->post('createStageCheck', 'StageCheckController@createStageCheck');
+
     // class
     $router->get('sclasses', 'SclassController@index');
     $router->post('getSclassesData', 'SclassController@getSclassesData');
@@ -181,6 +188,22 @@ Route::group(['middleware' => 'auth.mentor', 'prefix' => 'mentor','namespace' =>
     $router->post('getPostsByWritingTypeAndTeachersId', 'HomeController@getPostsByWritingTypeAndTeachersId');
     $router->post('rateOnePost', 'HomeController@rateOnePost');
 
+    $router->get('pen', 'PenController@index');
+    $router->post('getWritingDateByWritingType', 'PenController@getWritingDateByWritingType');
+    $router->post('getPostsByWritingTypeAndDate', 'PenController@getPostsByWritingTypeAndDate');
+
+    $router->get('chalk', 'ChalkController@index');
+    $router->post('getWritingDateByWritingType', 'ChalkController@getWritingDateByWritingType');
+    $router->post('getPostsByWritingTypeAndDate', 'ChalkController@getPostsByWritingTypeAndDate');
+
+    $router->get('brush', 'BrushController@index');
+    $router->post('getWritingDateByWritingType', 'BrushController@getWritingDateByWritingType');
+    $router->post('getPostsByWritingTypeAndDate', 'PenController@getPostsByWritingTypeAndDate');
+
+    $router->get('mandarin', 'MandarinController@index');
+    $router->post('getWritingDateByWritingType', 'MandarinController@getWritingDateByWritingType');
+    $router->post('getPostsByWritingTypeAndDate', 'PenController@getPostsByWritingTypeAndDate');
+
     $router->resource('lesson', 'LessonController');
     $router->post('getLessonPostPerSclass', 'HomeController@getLessonPostPerSclass');
 
@@ -238,6 +261,7 @@ Route::group(['middleware' => 'auth.teacher', 'prefix' => 'teacher','namespace' 
     $router->post('getIsMarkedByMyself', 'HomeController@getIsMarkedByMyself');
     $router->post('updateMarkState', 'HomeController@updateMarkState');
     $router->post('storeWritingTypesId', 'ColleagueController@storeWritingTypesId');
+    $router->post('storeFilterType', 'ColleagueController@storeFilterType');
 
     $router->post('addResourceLog', 'ResourcesController@addResourceLog');
 

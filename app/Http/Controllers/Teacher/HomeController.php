@@ -15,6 +15,7 @@ use App\Models\Post;
 use App\Models\PostRate;
 use App\Models\Comment;
 use App\Models\Mark;
+use App\Models\StageCheck;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Input;
@@ -37,7 +38,7 @@ class HomeController extends Controller
         $carbonNow = Carbon::now('Asia/Shanghai');
         $selectedWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
         $selectedWritingTypesId = 1;
-        
+        $cheerUpStr = $this->checkIsStage($selectedWritingDate, $teacher->schools_id);
 
         if ($request->session()->has('writingTypesId')) {
             $selectedWritingTypesId = $request->session()->get('writingTypesId');
@@ -59,25 +60,36 @@ class HomeController extends Controller
         $carbonNow = Carbon::now('Asia/Shanghai');
         $carbonNow = $carbonNow->subDays(2);
         $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        
+        // $cheerUpStr = $this->checkIsStage($tWritingDate, $teacher->schools_id);
+
         $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "前天 - ".$carbonNow->month . "月" . $carbonNow->day,
                           "value" => $tWritingDate,
-                            "selected" => $selected
+                            "selected" => $selected,
+                            // "cheerUpStr" => $cheerUpStr,
                           ];
 
 
         $carbonNow = Carbon::now('Asia/Shanghai');
         $carbonNow = $carbonNow->subDay();
         $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        
+        // $cheerUpStr = $this->checkIsStage($tWritingDate, $teacher->schools_id);
+
         $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "昨天 - ".$carbonNow->month . "月" . $carbonNow->day,
                           "value" => $tWritingDate,
-                            "selected" => $selected
+                            "selected" => $selected,
+                            // "cheerUpStr" => $cheerUpStr,
                           ];
 
 
         $carbonNow = Carbon::now('Asia/Shanghai');
         $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        
+        // $cheerUpStr = $this->checkIsStage($tWritingDate, $teacher->schools_id);
+        
         $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "今天 - ".$carbonNow->month . "月" . $carbonNow->day,
                   "value" => $tWritingDate,
@@ -87,22 +99,31 @@ class HomeController extends Controller
         $carbonNow = Carbon::now('Asia/Shanghai');
         $carbonNow = $carbonNow->addDay();
         $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        
+        // $cheerUpStr = $this->checkIsStage($tWritingDate, $teacher->schools_id);
+
         $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "明天 - ".$carbonNow->month . "月" . $carbonNow->day,
                           "value" => $tWritingDate,
-                            "selected" => $selected
+                            "selected" => $selected,
+                            // "cheerUpStr" => $cheerUpStr,
                           ];
 
         $carbonNow = Carbon::now('Asia/Shanghai');
         $carbonNow = $carbonNow->addDays(2);
         $tWritingDate = $carbonNow->year . $this->addZero($carbonNow->month) . $this->addZero($carbonNow->day);
+        
+        // $cheerUpStr = $this->checkIsStage($tWritingDate, $teacher->schools_id);
+
         $selected = ($selectedWritingDate == $tWritingDate)?"selected":"";
         $writingDates[] = ["label" => "后天 - ".$carbonNow->month . "月" . $carbonNow->day,
                           "value" => $tWritingDate,
-                            "selected" => $selected
+                            "selected" => $selected,
+                            // "cheerUpStr" => $cheerUpStr,
                           ];
 
-        return view('teacher/home', compact('writingTypes', 'post', 'writingDates', 'selectedWritingTypesId', 'selectedWritingDate'));
+
+        return view('teacher/home', compact('writingTypes', 'post', 'writingDates', 'selectedWritingTypesId', 'selectedWritingDate', 'cheerUpStr'));
     }
 
     public function addZero($str) 
@@ -121,6 +142,17 @@ class HomeController extends Controller
       } else {
         return $str;
       }
+    }
+
+    public function checkIsStage($writingDate, $schoolsId)
+    {
+      $cheerUpStr = "";
+        $stageCheck = StageCheck::where(["check_date" => $writingDate, 'schools_id' => $schoolsId])->first();
+        if (isset($stageCheck)) {
+          $writingType = WritingType::find($stageCheck->writing_types_id);
+          $cheerUpStr = "今天是" . $writingType->name . "主题打卡日，发挥自己最好的水平吧！";
+        }
+      return $cheerUpStr;
     }
 
     public function getCurrentWritingDatePostRate(Request $request)

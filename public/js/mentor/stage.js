@@ -44,6 +44,92 @@ $(document).ready(function() {
         });
     });
 
+    $(".good-detail-btn").on("click", function (e) {
+        e.preventDefault();
+        if ($(this).hasClass("btn-primary")) {
+            $("#bad-detail-" + $(this).val()).attr("disabled", "disabled");
+            $(this).removeClass("btn-primary");
+            $(this).addClass("btn-default");
+
+            $.ajax({
+                type: "POST",
+                url: '/mentor/addRuleComment',
+                data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "good"},
+                success: function( data ) {
+                    console.log(data);
+                }
+            });
+        } else {
+            $("#bad-detail-" + $(this).val()).removeAttr("disabled");
+            $(this).removeClass("btn-default");
+            $(this).addClass("btn-primary");
+
+            $.ajax({
+                type: "POST",
+                url: '/mentor/deleteRuleComment',
+                data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "good"},
+                success: function( data ) {
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $(".detail-btn").on("click", function (e) {
+        e.preventDefault();
+        if ($(this).hasClass("btn-primary")) {
+            $("#good-detail-" + $(this).val()).attr("disabled", "disabled");
+            $(this).removeClass("btn-primary");
+            $(this).addClass("btn-default");
+
+            $.ajax({
+                type: "POST",
+                url: '/mentor/addRuleComment',
+                data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "bad"},
+                success: function( data ) {
+                    console.log(data);
+                }
+            });
+        } else {
+            $("#good-detail-" + $(this).val()).removeAttr("disabled");
+            $(this).removeClass("btn-default");
+            $(this).addClass("btn-primary");
+
+            $.ajax({
+                type: "POST",
+                url: '/mentor/deleteRuleComment',
+                data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "bad"},
+                success: function( data ) {
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    $("#submit-other-comment-content").on("click", function (e) {
+        e.preventDefault();
+        if ("" == $("#other-comment-content").val()) {
+            alert("内容不能为空！");
+            return;
+        }
+        var data = {
+            posts_id: $("#selected-posts-id").val(),
+            other_comment_content: $("#other-comment-content").val(),
+        };
+        $.ajax({
+                type: "POST",
+                url: '/mentor/addOtherComment',
+                data: data,
+                success: function( data ) {
+                    if ("false" == data) {
+
+                    } else {
+
+                    }
+                }
+            });
+    });
+
     $(document)
        .on('click', '.writing-date-btn', function (e) {
             $("#selected-writing-date").val($(this).val());
@@ -53,9 +139,12 @@ $(document).ready(function() {
         })
         .on('click', '.post-btn', function (e) {
             var postsId = $(this).attr("value");
+            var prevPostsId = $(this).attr("prevPostsId");
+            var nextPostsId = $(this).attr("nextPostsId");
+
             $("#selected-posts-id").val($(this).attr("value"));
             $('#post-show').attr("src", $(this).attr("thumbnail"));
-            $('#input-1').rating('update', $(this).attr("rate"));
+            $('#input-1').rating('update', 0);
             $.ajax({
                 type: "POST",
                 url: '/mentor/getPostRate',
@@ -64,12 +153,42 @@ $(document).ready(function() {
                     if ("false" == data) {
 
                     } else {
-                        $("div[name='level-btn-group'] label").each(function(){
-                        if (data == $(this).children().attr("value")) {
-                            $(this).addClass("active");
-                            }
-                        });
+                        $('#input-1').rating('update', data);
                     }
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '/mentor/getRuleComment',
+                data: {posts_id: postsId},
+                success: function( data ) {
+                    var goodDetailIds = data.split(" ")[0].split(",");
+                    var badDetailIds = data.split(" ")[1].split(",");
+                    for (var i = 0; i < goodDetailIds.length; i++) {
+                        if ("" != goodDetailIds[i]) {
+                            $("#good-detail-"+goodDetailIds[i]).removeClass("btn-primary");
+                            $("#good-detail-"+goodDetailIds[i]).addClass("btn-default");
+                            $("#bad-detail-"+goodDetailIds[i]).attr("disabled", "disabled");
+                        }
+                    }
+
+                    for (var i = 0; i < badDetailIds.length; i++) {
+                        if ("" != badDetailIds[i]) {
+                            $("#bad-detail-"+badDetailIds[i]).removeClass("btn-primary");
+                            $("#bad-detail-"+badDetailIds[i]).addClass("btn-default");
+                            $("#good-detail-"+badDetailIds[i]).attr("disabled", "disabled");
+                        }
+                    }
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '/mentor/getOtherComment',
+                data: {posts_id: postsId},
+                success: function( data ) {
+                    $("#other-comment-content").val(data);
                 }
             });
             $('#rateModal').modal();

@@ -123,7 +123,12 @@ Route::group(['middleware' => 'auth.school:school, school/login', 'prefix' => 's
     // $router->post('createStageCheck', 'StageCheckController@createStageCheck');
 
     // class
-    $router->get('sclasses', 'SclassController@index');
+    $router->get('writing-rule', 'WritingRuleController@index');
+    $router->post('getWritingRule', 'WritingRuleController@getWritingRule');
+    $router->post('getWritingDetail', 'WritingRuleController@getWritingDetail');
+    $router->post('createWritingRule', 'WritingRuleController@createWritingRule');
+    $router->post('createWritingDetail', 'WritingRuleController@createWritingDetail');
+
     $router->post('getSclassesData', 'SclassController@getSclassesData');
     $router->post('getTermsData', 'SclassController@getTermsData');
     $router->post('createOneSclass', 'SclassController@createOneSclass');
@@ -183,26 +188,25 @@ Route::group(['prefix' => 'mentor','namespace' => 'Mentor'],function ($router)
 
 Route::group(['middleware' => 'auth.mentor', 'prefix' => 'mentor','namespace' => 'Mentor'],function ($router)
 {
-    $router->get('/', 'HomeController@index');
+    $router->get('/', 'StageController@penIndex');
     $router->post('getPostsCountByWritingType', 'HomeController@getPostsCountByWritingType');
     $router->post('getPostsByWritingTypeAndTeachersId', 'HomeController@getPostsByWritingTypeAndTeachersId');
+
     $router->post('rateOnePost', 'HomeController@rateOnePost');
 
-    $router->get('pen', 'PenController@index');
-    $router->post('getWritingDateByWritingType', 'PenController@getWritingDateByWritingType');
-    $router->post('getPostsByWritingTypeAndDate', 'PenController@getPostsByWritingTypeAndDate');
-
-    $router->get('chalk', 'ChalkController@index');
-    $router->post('getWritingDateByWritingType', 'ChalkController@getWritingDateByWritingType');
-    $router->post('getPostsByWritingTypeAndDate', 'ChalkController@getPostsByWritingTypeAndDate');
-
-    $router->get('brush', 'BrushController@index');
-    $router->post('getWritingDateByWritingType', 'BrushController@getWritingDateByWritingType');
-    $router->post('getPostsByWritingTypeAndDate', 'PenController@getPostsByWritingTypeAndDate');
-
-    $router->get('mandarin', 'MandarinController@index');
-    $router->post('getWritingDateByWritingType', 'MandarinController@getWritingDateByWritingType');
-    $router->post('getPostsByWritingTypeAndDate', 'PenController@getPostsByWritingTypeAndDate');
+    $router->get('pen', 'StageController@penIndex');
+    $router->get('chalk', 'StageController@chalkIndex');
+    $router->get('brush', 'StageController@brushIndex');
+    $router->get('mandarin', 'StageController@mandarinIndex');
+    $router->post('getWritingDateByWritingType', 'StageController@getWritingDateByWritingType');
+    $router->post('getPostsByWritingTypeAndDate', 'StageController@getPostsByWritingTypeAndDate');
+    
+    $router->post('addOtherComment', 'StageController@addOtherComment');
+    $router->post('getOtherComment', 'StageController@getOtherComment');
+    $router->post('getRuleComment', 'StageController@getRuleComment');
+    $router->post('addRuleComment', 'StageController@addRuleComment');
+    $router->post('deleteRuleComment', 'StageController@deleteRuleComment');
+    $router->post('getPrevOrNextPost', 'StageController@getPrevOrNextPost');
 
     $router->resource('lesson', 'LessonController');
     $router->post('getLessonPostPerSclass', 'HomeController@getLessonPostPerSclass');

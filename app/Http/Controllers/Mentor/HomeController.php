@@ -103,46 +103,6 @@ class HomeController extends Controller
         }
     }
 
-    public function takeClass()
-    {
-        dd(auth()->guard('mentor')->user());
-        $userId = auth()->guard('teacher')->id();
-        $lessonLog = LessonLog::select('lesson_logs.id', 'lesson_logs.rethink', 'lesson_logs.sclasses_id', 'lessons.title', 'lessons.subtitle', 'sclasses.enter_school_year', 'sclasses.class_title', 'terms.grade_key', 'terms.term_segment')
-        ->leftJoin("lessons", 'lessons.id', '=', 'lesson_logs.lessons_id')
-        ->leftJoin("sclasses", 'sclasses.id', '=', 'lesson_logs.sclasses_id')
-        ->leftJoin("terms", 'terms.enter_school_year', '=', 'sclasses.enter_school_year')
-        ->where(['lesson_logs.teachers_id' => $userId, 'lesson_logs.status' => 'open', 'terms.is_current' => 1])->first();
-        // dd($lessonLog);die();
-
-        $students = DB::table('students')->select('students.id', 'students.username', 'posts.file_ext', 'posts.storage_name', 'comments.content', 'post_rates.rate', 'posts.id as posts_id', DB::raw("COUNT(`marks`.`id`) as mark_num"))
-        ->leftJoin('posts', 'posts.students_id', '=', 'students.id')
-        ->leftJoin('post_rates', 'post_rates.posts_id', '=', 'posts.id')
-        ->leftJoin('comments', 'comments.posts_id', '=', 'posts.id')
-        ->leftJoin('marks', 'marks.posts_id', '=', 'posts.id')
-        ->where(["students.sclasses_id" => $lessonLog['sclasses_id'], 'posts.lesson_logs_id' => $lessonLog['id']])
-        ->where('students.is_lock', "!=", "1")
-        ->groupBy('students.id', 'students.username', 'posts.storage_name', 'comments.content', 'post_rates.rate', 'posts.id')
-        ->orderBy(DB::raw('convert(students.username using gbk)'), "ASC")->get();
-        // dd($lessonLog);
-        $unPostStudentName = [];
-        
-        $postedStudents = [];
-        $allStudentsList = DB::table('students')->select('students.username')
-        ->where(['students.sclasses_id' => $lessonLog['sclasses_id']])->where('students.is_lock', "!=", "1")->get();
-        foreach ($students as $key => $student) {
-            array_push($postedStudents, $student->username);
-        }
-        foreach ($allStudentsList as $key => $studentsName) {
-            if (!in_array($studentsName->username, $postedStudents)) {
-                array_push($unPostStudentName, $studentsName->username);
-            }
-        }
-        // dd($unPostStudentName);
-        $allCount = count($allStudentsList);
-        $py = new pinyinfirstchar();
-        return view('teacher/takeclass', compact('students', 'lessonLog', 'py', 'allCount', 'unPostStudentName', 'schoolCode'));
-    }
-
     public function updateRate(Request $request)
     {
         $this->validate($request, [

@@ -18,21 +18,59 @@
 <div class="modal fade" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 <input type="hidden" id="posts-id" value="">
 
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header" style="padding-bottom: 0px;padding-top: 5px">
-            <div class="text-center col-md-5 col-md-offset-3">
-                <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="1">
+    <div class="modal-dialog modal-lg" role="document" style="width: 1650px; margin: auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="col-md-6">
+                    <input type="hidden" name="" id="selected-posts-id" />
+                    <input type="hidden" name="" id="selected-teachers-id" />
+            
+                    <img src="" id='post-show' class="img-responsive img-thumbnail center-block" />
+                </div>
+                <div class="col-md-6" style="padding-top: 400px;">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">优点：</label>
+
+                            <?php foreach ($writingDetails as $key => $writingDetail): ?>
+                                <button class="btn btn-primary btn-sm good-detail-btn" id="good-detail-{{$writingDetail->id}}" value="{{$writingDetail->id}}">{{$writingDetail->detail_desc}}</button>
+                            <?php endforeach ?>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">不足：</label>
+
+                            <?php foreach ($writingDetails as $key => $writingDetail): ?>
+                                <button class="btn btn-primary btn-sm detail-btn" id="bad-detail-{{$writingDetail->id}}" value="{{$writingDetail->id}}">{{$writingDetail->detail_desc}}</button>
+                            <?php endforeach ?>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="" name="" class="form-control" id="other-comment-content">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-success" id="submit-other-comment-content">提交其他评价</button>
+                            </btn>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">整体评价：</label>
+                            <input id="input-1" name="input-1" class="rating rating-loading col-md-10" data-min="0" data-max="5" data-step="1">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-success" id="prev-btn"><<往前</button> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <!-- <button type="button" class="btn btn-success" id="next-btn" >往后>></button> -->
+            </div> 
         </div>
-      <div class="modal-body">
-        <input type="hidden" name="" id="selected-posts-id">
-        <input type="hidden" name="" id="selected-teachers-id">
-        <img src="" id='post-show' class="img-responsive img-thumbnail center-block">
-      </div>
-  </div>
-</div>
+    </div>
 </div>
 
 @endsection

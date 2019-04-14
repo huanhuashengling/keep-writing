@@ -31,6 +31,7 @@
                     <img src="" id='post-show' class="img-responsive img-thumbnail center-block" />
                 </div>
                 <div class="col-md-6" style="padding-top: 400px;">
+                    
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label class="col-md-2 control-label">优点：</label>
@@ -62,6 +63,9 @@
                             <input id="input-1" name="input-1" class="rating rating-loading col-md-10" data-min="0" data-max="5" data-step="1">
                         </div>
                     </form>
+                    <div class="alert alert-success hidden" id="success-alert">
+                        <h4>提交评价成功！</h4>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

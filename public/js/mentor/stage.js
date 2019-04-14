@@ -19,6 +19,7 @@ $(document).ready(function() {
         $(this).addClass("btn-info");
         refreshWritingDateList();
         refreshPostList();
+        $("#success-alert").addClass("hidden");
     });
 
     $('#input-1').rating({
@@ -28,6 +29,7 @@ $(document).ready(function() {
     });
 
     $("#input-1").rating().on("rating:change", function(event, value, caption) {
+        $("#success-alert").addClass("hidden");
         $.ajax({
             type: "POST",
             url: '/mentor/rateOnePost',
@@ -39,6 +41,7 @@ $(document).ready(function() {
                 } else {
                     refreshWritingDateList();
                     refreshPostList();
+                    $("#success-alert").removeClass("hidden");
                 }
             }
         });
@@ -46,6 +49,7 @@ $(document).ready(function() {
 
     $(".good-detail-btn").on("click", function (e) {
         e.preventDefault();
+        $("#success-alert").addClass("hidden");
         if ($(this).hasClass("btn-primary")) {
             $("#bad-detail-" + $(this).val()).attr("disabled", "disabled");
             $(this).removeClass("btn-primary");
@@ -56,7 +60,8 @@ $(document).ready(function() {
                 url: '/mentor/addRuleComment',
                 data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "good"},
                 success: function( data ) {
-                    console.log(data);
+                    // console.log(data);
+                    $("#success-alert").removeClass("hidden");
                 }
             });
         } else {
@@ -69,7 +74,8 @@ $(document).ready(function() {
                 url: '/mentor/deleteRuleComment',
                 data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "good"},
                 success: function( data ) {
-                    console.log(data);
+                    // console.log(data);
+                    $("#success-alert").removeClass("hidden");
                 }
             });
         }
@@ -77,6 +83,7 @@ $(document).ready(function() {
 
     $(".detail-btn").on("click", function (e) {
         e.preventDefault();
+        $("#success-alert").addClass("hidden");
         if ($(this).hasClass("btn-primary")) {
             $("#good-detail-" + $(this).val()).attr("disabled", "disabled");
             $(this).removeClass("btn-primary");
@@ -87,7 +94,8 @@ $(document).ready(function() {
                 url: '/mentor/addRuleComment',
                 data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "bad"},
                 success: function( data ) {
-                    console.log(data);
+                    // console.log(data);
+                    $("#success-alert").removeClass("hidden");
                 }
             });
         } else {
@@ -100,7 +108,8 @@ $(document).ready(function() {
                 url: '/mentor/deleteRuleComment',
                 data: {details_id: $(this).val(), posts_id: $("#selected-posts-id").val(), state_flag: "bad"},
                 success: function( data ) {
-                    console.log(data);
+                    // console.log(data);
+                    $("#success-alert").removeClass("hidden");
                 }
             });
         }
@@ -108,6 +117,7 @@ $(document).ready(function() {
 
     $("#submit-other-comment-content").on("click", function (e) {
         e.preventDefault();
+        $("#success-alert").addClass("hidden");
         if ("" == $("#other-comment-content").val()) {
             alert("内容不能为空！");
             return;
@@ -121,6 +131,8 @@ $(document).ready(function() {
                 url: '/mentor/addOtherComment',
                 data: data,
                 success: function( data ) {
+                    $("#success-alert").removeClass("hidden");
+
                     if ("false" == data) {
 
                     } else {

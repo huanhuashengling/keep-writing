@@ -93,7 +93,7 @@ $(document).ready(function() {
 
     $("#detail-btn").click(function(e) {
         $("#add-detail-btn").text("增加");
-        $("#detail-title").text("增加评价细则");
+        // $("#detail-title").text("增加评价细则");
         $("#detail-desc").val("");
         $("#selected-writing-details-id").val("");
         $("#add-writing-detail-modal").modal("show");
@@ -206,7 +206,7 @@ function writingDetailActionCol(value, row, index) {
 window.writingDetailActionEvents = {
     'click .edit': function(e, value, row, index) {
         $("#add-detail-btn").text("更新");
-        $("#detail-title").text("更新评价细则");
+        // $("#detail-title").text("更新评价细则");
         $("#detail-desc").val(row.detail_desc);
         $("#selected-writing-details-id").val(row.id);
         $("#add-writing-detail-modal").modal("show");

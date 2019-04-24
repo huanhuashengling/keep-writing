@@ -154,6 +154,14 @@ $(document).ready(function() {
             var prevPostsId = $(this).attr("prevPostsId");
             var nextPostsId = $(this).attr("nextPostsId");
 
+            $("#good-detail-btn").addClass("btn-primary");
+            $("#good-detail-btn").removeClass("btn-default");
+            $("#good-detail-btn").removeAttr("disabled");
+            
+            $("#bad-detail-btn").addClass("btn-primary");
+            $("#bad-detail-btn").removeClass("btn-default");
+            $("#bad-detail-btn").removeAttr("disabled");
+
             $("#selected-posts-id").val($(this).attr("value"));
             $('#post-show').attr("src", $(this).attr("thumbnail"));
             $('#input-1').rating('update', 0);

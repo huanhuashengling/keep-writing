@@ -26,11 +26,24 @@ $(document).ready(function() {
 
 	$('#writing-date-selection').on('change', function (e) {
         $('#writing_date').val($(this).val());
+        $.ajax({
+	        type: "POST",
+	        url: '/teacher/getCurrentWritingDatePostRate',
+	        data: {writing_date : $('#writing_date').val(), writing_types_id : $('#writing-type-selection').val(),},
+	        success: function( data ) {
+	        	$("#current-date-type-post-progress").attr("style", "width: "+data+"%")
+	            // console.log(data);
+	            if ("false" == data) {
+	            } else {
+	            }
+	        }
+	    });
 		refreshFileinputState();
     });
 });
 
 function refreshFileinputState() {
+	// console.log($('#writing-date-selection').val());
 	$.ajax({
             type: "POST",
             url: '/teacher/getOnePost',

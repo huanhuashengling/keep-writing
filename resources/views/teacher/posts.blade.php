@@ -11,6 +11,12 @@
         <?php endforeach ?>
         <input type="hidden" name="" id="selected-writing-types-id" value="{{$tWritingTypesId}}">
     </div>
+    <hr />
+    
+    <!-- <audio id="audio_example" class="video-js vjs-default-skin" controls preload="auto" 
+      width="600" height="600" poster="/img/awesome-album-art.png" data-setup='{}'>
+      <source src="/audio/awesome-music.mp3" type='audio/mp3'/>
+    </audio> -->
 
     <div class="row">
         <div id="posts-list"></div>
@@ -52,5 +58,9 @@
 
 @section('scripts')
     <script src="/js/teacher/posts.js?v={{rand()}}"></script>
+    <link href="//vjs.zencdn.net/7.3.0/video-js.min.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/7.3.0/video.min.js"></script>
+    <style type="text/css">
 
+    </style>
 @endsection

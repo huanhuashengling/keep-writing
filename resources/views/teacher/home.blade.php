@@ -53,13 +53,13 @@
               <!-- <h4>上传作业</h4> -->
               @if(Session::has('success'))
                 <div class="alert alert-success" style="padding-bottom: 5px; padding-top: 10px">
-                  <h4>{!! Session::get('success') !!}</h4>
+                  <h5>{!! Session::get('success') !!}</h5>
                 </div>
               @endif
 
               @if(Session::has('danger'))
                 <div class="alert alert-danger" style="padding-bottom: 5px; padding-top: 10px">
-                  <h4>{!! Session::get('danger') !!}</h4>
+                  <h5>{!! Session::get('danger') !!}</h5>
                 </div>
               @endif
 

@@ -53,6 +53,9 @@
                 <th data-field="detail_desc">
                     细则
                 </th>
+                <th data-field="score">
+                    分值
+                </th>
                 <th data-field="teachersId" data-formatter="writingDetailActionCol" data-events="writingDetailActionEvents">
                     操作
                 </th> 
@@ -119,6 +122,11 @@
                 <div class="form-group">
                   <label class="col-sm-4 control-label">评价细则</label>
                   <div class="col-sm-8"><input type="text" class="form-control" name="detailDesc" id="detail-desc" required=""></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">分值</label>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="detailScore" id="detail-score" required="" placeholder="占总分5分中的多少"></div>
                 </div>
               </form>
             </div>

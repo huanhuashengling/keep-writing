@@ -62,15 +62,18 @@ class WritingRuleController extends Controller
         $id = $request->get("id");
         $detailDesc = $request->get("detail_desc");
         $writingRulesId = $request->get("writing_rules_id");
+        $detailScore = $request->get("detail_score");
 
         $writingDetail = WritingDetail::find($id);
         if (isset($writingDetail)) {
             $writingDetail->detail_desc = $detailDesc;
+            $writingDetail->score = $detailScore;
             $writingDetail->writing_rules_id = $writingRulesId;
             $writingDetail->update();
         } else {
             $writingDetail = new WritingDetail();
             $writingDetail->detail_desc = $detailDesc;
+            $writingDetail->score = $detailScore;
             $writingDetail->writing_rules_id = $writingRulesId;
             $writingDetail->save();
         }

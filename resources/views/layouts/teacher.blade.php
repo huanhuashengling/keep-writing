@@ -54,6 +54,7 @@
                             <li><a href="{{ url('/teacher') }}">Keep打卡</a></li>
                             <li><a href="{{ url('/teacher/posts') }}">打卡记录</a></li>
                             <li><a href="{{ url('/teacher/colleague') }}">同事打卡</a></li>
+                            <li><a href="{{ url('/teacher/mutual-evaluation') }}">作品互评</a></li>
                             <li><a href="{{ url('/teacher/resources') }}">学习资源</a></li>
                         </ul>
 

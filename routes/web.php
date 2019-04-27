@@ -200,13 +200,6 @@ Route::group(['middleware' => 'auth.mentor', 'prefix' => 'mentor','namespace' =>
     $router->get('mandarin', 'StageController@mandarinIndex');
     $router->post('getWritingDateByWritingType', 'StageController@getWritingDateByWritingType');
     $router->post('getPostsByWritingTypeAndDate', 'StageController@getPostsByWritingTypeAndDate');
-    
-    $router->post('addOtherComment', 'StageController@addOtherComment');
-    $router->post('getOtherComment', 'StageController@getOtherComment');
-    $router->post('getRuleComment', 'StageController@getRuleComment');
-    $router->post('addRuleComment', 'StageController@addRuleComment');
-    $router->post('deleteRuleComment', 'StageController@deleteRuleComment');
-    $router->post('getPrevOrNextPost', 'StageController@getPrevOrNextPost');
 
     $router->resource('lesson', 'LessonController');
     $router->post('getLessonPostPerSclass', 'HomeController@getLessonPostPerSclass');
@@ -271,7 +264,20 @@ Route::group(['middleware' => 'auth.teacher', 'prefix' => 'teacher','namespace' 
 
     $router->post('getCurrentWritingDatePostRate', 'HomeController@getCurrentWritingDatePostRate');
 
+
+    $router->get('mutual-evaluation', 'MutualEvaluationController@index');
+
+    $router->post('addWordComment', 'MutualEvaluationController@addWordComment');
+    $router->post('getWordComment', 'MutualEvaluationController@getWordComment');
+
+    $router->post('addMutualRate', 'MutualEvaluationController@addMutualRate');
+    $router->post('getMutualRate', 'MutualEvaluationController@getMutualRate');
     
+    $router->post('addRuleComment', 'MutualEvaluationController@addRuleComment');
+    $router->post('getRuleComment', 'MutualEvaluationController@getRuleComment');
+
+    $router->post('deleteRuleComment', 'MutualEvaluationController@deleteRuleComment');
+    $router->post('getPrevOrNextPost', 'MutualEvaluationController@getPrevOrNextPost');
     
     $router->get('resources', 'ResourcesController@index');
     $router->get('colleague', 'ColleagueController@colleaguePost');

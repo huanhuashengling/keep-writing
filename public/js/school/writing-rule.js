@@ -107,6 +107,12 @@ $(document).ready(function() {
             return;
         }
 
+        if("" == $("#detail-score").val())
+        {
+            alert("评价分值不能为空！");
+            return;
+        }
+
         if("" == $("#selected-writing-rules-id").val())
         {
             alert("评价标准不能为空！");
@@ -115,6 +121,7 @@ $(document).ready(function() {
         data = {
             'id' : $("#selected-writing-details-id").val(),
             'detail_desc' : $("#detail-desc").val(),
+            'detail_score' : $("#detail-score").val(),
             'writing_rules_id' : $("#selected-writing-rules-id").val(),
         }
         $.ajax({

@@ -245,7 +245,7 @@ class HomeController extends Controller
 
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
-              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");
+              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！有空去<a href='/teacher/mutual-evaluation'>评价同事作品</a>");
             } else {
               return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
               // Session::flash('error', '作业提交失败'); 
@@ -263,7 +263,7 @@ class HomeController extends Controller
             if ($post->save()) {
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
-              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");
+              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！有空去<a href='/teacher/mutual-evaluation'>评价同事作品</a>");
             } else {
               return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
               // Session::flash('error', '作业提交失败'); 

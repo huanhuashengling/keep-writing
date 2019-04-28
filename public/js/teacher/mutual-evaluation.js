@@ -133,7 +133,6 @@ function countRateScore() {
     $(".good-detail-btn").filter(".btn-default").each(function (e) {
         score += parseFloat($(this).attr("score"));
     });
-    console.log(score);
     return score;
 }
 

@@ -188,7 +188,7 @@ $(document).ready(function() {
         // });
 
         $('#posts-id').val(postsId);
-        // $('#post-show').attr("src", filePath);
+        $('#post-download').attr("href", $(this).attr("filePath"));
         $('#classmate-post-modal').modal();
     });
 });

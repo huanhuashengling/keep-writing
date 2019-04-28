@@ -55,7 +55,7 @@
                 <!--<div class="text-center"><img height="140px" value="{{ $post['pid'] }}" src="/imager?src={{$post_storage_name}}"></div>-->
                 
                     
-                    <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="">
+                    <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="" filePath="{{$baseUrl . $post->storage_name}}">
                 
                     <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $rateStr}} {{ $markStr}}</small></h5>  </div>
                 </div>
@@ -86,6 +86,7 @@
       </div>
 
     <div class="modal-footer">
+        <a href="" class="btn btn-primary" style="float: left;" id="post-download">文件下载</a>
         <div class="switch" id="switch-box">
             <input type="checkbox" id="like-check-box" name="likeCheckBox"/>
         </div>

@@ -14,10 +14,12 @@ $(document).ready(function() {
 	});
 
     $('.writing-type-btn').on('click', function (e) {
-        $("#selected-writing-types-id").val($(this).val());
-        $(".writing-type-btn").removeClass("btn-success");
-        $(this).addClass("btn-success");
-        storeWritingTypesId();
+        // $("#selected-writing-types-id").val($(this).val());
+        // storeWritingTypesId();
+        top.location='/teacher/colleague?writingTypesId='+$(this).val();
+        // $(".writing-type-btn").removeClass("btn-success");
+        // $(this).addClass("btn-success");
+        
     });
 
     $("[name='likeCheckBox']").bootstrapSwitch({

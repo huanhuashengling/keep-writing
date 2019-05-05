@@ -16,51 +16,57 @@ class ColleagueController extends Controller
 {
     public function colleaguePost(Request $request)
     {
+        // echo($request->session()->get('colleagueWritingTypesId'));
         $tWritingTypesId = 1;
-        if ($request->session()->has('colleagueWritingTypesId')) {
-            $tWritingTypesId = $request->session()->get('colleagueWritingTypesId');
+        if ($request->input('writingTypesId')) {
+            $tWritingTypesId = $request->input('writingTypesId');
         }
-
-        $tFilterType = "my";
-        if ($request->session()->has('colleagueFilterType')) {
-            $tFilterType = $request->session()->get('colleagueFilterType');
-        }
-
-        $writingTypes = WritingType::all();
-        $getDataType = ($request->input('type'))?$request->input('type'):$tFilterType;
-        $posts = [];
+        // if ($request->session()->has('colleagueWritingTypesId')) {
+            // $tWritingTypesId = $request->session()->get('colleagueWritingTypesId');
+        // }
+        $posts = $this->getAllPostsData($tWritingTypesId);
         $schoolCode = $this->getSchool()->code;
-
         $baseUrl = env('APP_URL') . '/posts/' . $schoolCode . "/";
+        $writingTypes = WritingType::all();
 
-        switch ($getDataType) {
-            case 'my':
-                $posts = $this->getMyPostsData($tWritingTypesId);
-                break;
-            case 'all':
-                $posts = $this->getAllPostsData($tWritingTypesId);
-                break;
-            case 'most-star':
-                $posts = $this->getMostStarPostsData($tWritingTypesId);
-                break;
-            case 'same-sex':
-                $posts = $this->getSameGradePostsData($tWritingTypesId);
-                break;
-            case 'my-marked':
-                $posts = $this->getMyMarkedPostsData($tWritingTypesId);
-                break;
-            case 'most-marked':
-                $posts = $this->getMostMarkedPostsData($tWritingTypesId);
-                break;
-            case 'has-comment':
-                $posts = $this->getHasCommentPostsData($tWritingTypesId);
-                break;
-            default:
-                if ("search-name" == explode("=",$getDataType)[0]) {
-                    $posts = $this->getSearchNamePostsData(explode("=",$getDataType)[1]);
-                }
-                break;
-        }
+
+        // $tFilterType = "all";
+        // if ($request->session()->has('colleagueFilterType')) {
+        //     $tFilterType = $request->session()->get('colleagueFilterType');
+        // }
+
+        // $getDataType = ($request->input('type'))?$request->input('type'):$tFilterType;
+        // $posts = [];
+
+
+        // switch ($getDataType) {
+        //     case 'my':
+        //         $posts = $this->getMyPostsData($tWritingTypesId);
+        //         break;
+        //     case 'all':
+        //         $posts = $this->getAllPostsData($tWritingTypesId);
+        //         break;
+        //     case 'most-star':
+        //         $posts = $this->getMostStarPostsData($tWritingTypesId);
+        //         break;
+        //     case 'same-sex':
+        //         $posts = $this->getSameGradePostsData($tWritingTypesId);
+        //         break;
+        //     case 'my-marked':
+        //         $posts = $this->getMyMarkedPostsData($tWritingTypesId);
+        //         break;
+        //     case 'most-marked':
+        //         $posts = $this->getMostMarkedPostsData($tWritingTypesId);
+        //         break;
+        //     case 'has-comment':
+        //         $posts = $this->getHasCommentPostsData($tWritingTypesId);
+        //         break;
+        //     default:
+        //         if ("search-name" == explode("=",$getDataType)[0]) {
+        //             $posts = $this->getSearchNamePostsData(explode("=",$getDataType)[1]);
+        //         }
+        //         break;
+        // }
         // dd($posts);
         return view('teacher/colleaguePost', compact('posts', 'schoolCode', 'baseUrl', 'writingTypes', 'tWritingTypesId', 'getDataType'));
     }
@@ -87,8 +93,8 @@ class ColleagueController extends Controller
         $schoolsId = $this->getSchool()->id;
         $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'teachers.username', 'writing_types.name as writing_type_name', 'post_rates.rate', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
-                ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
-                ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
+                ->join('teachers', 'posts.teachers_id', '=', 'teachers.id')
+                ->join('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
                 ->leftjoin('post_rates', 'post_rates.posts_id', '=', 'posts.id')
                 ->where('teachers.schools_id', '=', $schoolsId)

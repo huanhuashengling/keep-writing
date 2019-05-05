@@ -9,27 +9,24 @@
         @php
             $btnCss = ($writingType->id == $tWritingTypesId)?"btn-success":"";
         @endphp
-            <button class="btn btn-sm writing-type-btn {{$btnCss}}" value="{{$writingType->id}}" > {{$writingType->name}}</button>
+            <button class="btn btn-sm writing-type-btn" value="{{$writingType->id}}" > {{$writingType->name}}</button>
     <?php endforeach ?>
     <input type="hidden" name="" id="selected-writing-types-id">
 </div>
 
-    <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
+    <!-- <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
         <div class="btn-group" role="group" aria-label="...">
             <button class="btn btn-info btn-sm" id="my-posts-btn">我的</button>
-            <button class="btn btn-info btn-sm" id="most-star-posts-btn">最多星</button>
+            <button class="btn btn-info btn-sm" id="most-star-posts-btn">最多星</button> -->
             <!-- <button class="btn btn-info btn-sm" id="same-grade-posts-btn">同性别</button> -->
             
-            <button class="btn btn-info btn-sm" id="my-marked-posts-btn">我点赞</button>
-            <button class="btn btn-info btn-sm" id="most-marked-posts-btn">最多赞</button>
+            <!-- <button class="btn btn-info btn-sm" id="my-marked-posts-btn">我点赞</button> -->
+            <!-- <button class="btn btn-info btn-sm" id="most-marked-posts-btn">最多赞</button> -->
             <!-- <button class="btn btn-info btn-sm" id="has-comment-posts-btn">有评语</button> -->
-            <button class="btn btn-info btn-sm" id="all-posts-btn">全部</button>
+            <!-- <button class="btn btn-info btn-sm" id="all-posts-btn">全部</button> -->
             <!-- <input type="text" name="" id="search-name" class="form-control input-sm" placeholder="姓名"> -->
-            <!-- <button class="btn btn-info btn-sm" id="name-search-btn">搜索</button> -->
-            <button class="btn btn-default btn-sm">{{ $posts->lastPage() }}页{{ $posts->total() }}份</button>
-            <!-- <button class="btn btn-default btn-sm"></button> -->
-        </div>
-    </div>
+        <!-- </div> -->
+    <!-- </div> -->
     <div class="col-md-12 col-xs-12" id="posts-list" style="padding: 5px">
     @foreach($posts as $key=>$post)
         @php
@@ -62,9 +59,8 @@
             </div>
         @endif
     @endforeach
-    {{ $posts->appends(Illuminate\Support\Facades\Input::except('page'))->links('pagination.limit_links') }}
+    {{ $posts->links() }}
     </div>
-    <!--{!! $posts->render() !!}-->
 </div>
 
 <!-- Modal -->

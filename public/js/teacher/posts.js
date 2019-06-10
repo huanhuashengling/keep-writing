@@ -14,13 +14,9 @@ $(document).ready(function() {
 	});
 
     $('.writing-type-btn').on('click', function (e) {
-        $("#selected-writing-types-id").val($(this).val());
-        $(".writing-type-btn").removeClass("btn-success");
-        $(this).addClass("btn-success");
-        refreshPostList();
+        top.location='/teacher/posts?wtId=' + $(this).val(); 
     });
 
-    refreshPostList();
     $(document)
 	   .on('click', '.post-btn', function (e) {
         // alert($(this).attr("value"));
@@ -99,7 +95,7 @@ function refreshPostList() {
         url: '/teacher/getPosts',
         data: {writingTypesId: $("#selected-writing-types-id").val()},
         success: function( data ) {
-            $("#posts-list").html(data);
+            // $("#posts-list").html(data);
             // console.log(data);
         }
     });

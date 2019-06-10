@@ -4,12 +4,9 @@
 <div class="container">
     <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
         <?php foreach ($writingTypes as $key => $writingType): ?>
-            @php
-            $btnCss = ($writingType->id == $tWritingTypesId)?"btn-success":"";
-        @endphp
-                <button class="btn btn-sm writing-type-btn {{$btnCss}}" value="{{$writingType->id}}" > {{$writingType->name}}</button>
+            <button class="btn btn-sm writing-type-btn" value="{{$writingType->id}}" > {{$writingType->name}}</button>
         <?php endforeach ?>
-        <input type="hidden" name="" id="selected-writing-types-id" value="{{$tWritingTypesId}}">
+        <input type="hidden" name="" id="selected-writing-types-id" value="{{@$writingTypesId}}">
     </div>
     <hr />
     
@@ -19,7 +16,43 @@
     </audio> -->
 
     <div class="row">
-        <div id="posts-list"></div>
+        <div id="posts-list">
+        @if (count(@$posts) > 0)
+            @php
+                $rateScore = 0;
+                $postNum = count($posts);
+                foreach($posts as $key=>$post) {
+                    if (isset($post->rate)) {
+                        $rateScore += $post->rate;
+                    }
+                }
+            @endphp
+            <div class='col-md-12 col-xs-12'><div class='alert alert-info'>您目前{{$tWritingType}}打卡{{$postNum}}次, 共获得{{$rateScore}}颗星, 合计{{($postNum + $rateScore)}}分</div></div>
+            @foreach($posts as $key=>$post)
+                @php
+                    $writeDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2) . "日";
+                    $markStr = isset($post->mark_num)?$post->mark_num ."赞":"";
+                    $rateStr = "";
+                    if (isset($post->rate)) {
+                        $rateStr = $post->rate ."星";
+                        $rateScore += $post->rate;
+                    }
+                @endphp
+                @if("普通话" == $post->writing_type_name)
+                    <div class='col-md-3 col-sm-6 col-xs-12' style=''><div class='alert alert-info' style='padding: 5px;'>
+                        <audio controls src='{{$baseUrl}}$post['storage_name'] . "' >
+                        Your browser does not support the audio element.
+                        </audio>
+                        <div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>{{$writeDate}} {{$post->writing_type_name}} {{$rateStr}} {{$markStr}}</small></h5></div></div></div>
+                @else 
+                    <div class='col-md-2 col-sm-4 col-xs-6' style=''><div class='alert alert-info' style='padding: 5px;'><img class='img-responsive post-btn center-block' value='". $post->pid . "' src='{{getThumbnail($post->storage_name, 121, 162, $schoolCode, 'background', $post->file_ext)}}' alt=''><div><h5 style='margin-bottom:5px; margin-top: 5px; text-align: center'><small>{{$writeDate}} {{$post->writing_type_name}}  {{$rateStr}} {{$markStr}}</small></h5></div></div></div>
+                @endif
+            @endforeach
+            <!-- @if (count($posts) > 0)  -->
+        {{ $posts->appends(request()->input())->render() }}
+    <!-- @endif -->
+        @endif
+        </div>
     </div>
 
 <!-- Modal -->

@@ -52,8 +52,25 @@
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
                             <li><a href="{{ url('/teacher') }}">Keep打卡</a></li>
-                            <li><a href="{{ url('/teacher/posts') }}">打卡记录</a></li>
-                            <li><a href="{{ url('/teacher/colleague') }}">同事打卡</a></li>
+                            <!-- <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">打卡记录 <span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="{{ url('/teacher/posts?wtId=1') }}">钢笔字</a></li>
+                                <li><a href="{{ url('/teacher/posts?wtId=2') }}">粉笔字</a></li>
+                                <li><a href="{{ url('/teacher/posts?wtId=3') }}">毛笔字</a></li>
+                                <li><a href="{{ url('/teacher/posts?wtId=4') }}">普通话</a></li>
+                              </ul>
+                            </li> -->
+
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">打卡记录 <span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="{{ url('/teacher/colleague?wtId=1') }}">钢笔字</a></li>
+                                <li><a href="{{ url('/teacher/colleague?wtId=2') }}">粉笔字</a></li>
+                                <li><a href="{{ url('/teacher/colleague?wtId=3') }}">毛笔字</a></li>
+                                <!-- <li><a href="{{ url('/teacher/colleague?wtId=4') }}">普通话</a></li> -->
+                              </ul>
+                            </li>
                             <li><a href="{{ url('/teacher/mutual-evaluation') }}">作品互评</a></li>
                             <li><a href="{{ url('/teacher/resources') }}">学习资源</a></li>
                         </ul>

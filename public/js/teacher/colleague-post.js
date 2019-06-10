@@ -13,14 +13,14 @@ $(document).ready(function() {
 	  }
 	});
 
-    $('.writing-type-btn').on('click', function (e) {
-        // $("#selected-writing-types-id").val($(this).val());
-        // storeWritingTypesId();
-        top.location='/teacher/colleague?writingTypesId='+$(this).val();
-        // $(".writing-type-btn").removeClass("btn-success");
-        // $(this).addClass("btn-success");
+    // $('.writing-type-btn').on('click', function (e) {
+    //     // $("#selected-writing-types-id").val($(this).val());
+    //     // storeWritingTypesId();
+    //     top.location='/teacher/colleague?wtId='+$(this).val();
+    //     // $(".writing-type-btn").removeClass("btn-success");
+    //     // $(this).addClass("btn-success");
         
-    });
+    // });
 
     $("[name='likeCheckBox']").bootstrapSwitch({
         onText: '点赞',
@@ -63,38 +63,38 @@ $(document).ready(function() {
     });
 
     $('#my-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=my'; 
+        top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=my'; 
     });
 
     $('#all-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=all'; 
+        top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=all'; 
     });
 
     $('#most-star-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=most-star'; 
+        top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=most-star'; 
     });
 
     $('#same-grade-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=same-grade'; 
+        top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=same-grade'; 
     });
 
     $('#my-marked-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=my-marked'; 
+        top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=my-marked'; 
     });
 
     $('#most-marked-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=most-marked'; 
+        top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=most-marked'; 
     });
 
     $('#has-comment-posts-btn').on('click', function (e) {
-        top.location='/teacher/colleague?type=has-comment'; 
+        top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=has-comment'; 
     });
 
     $('#name-search-btn').on('click', function (e) {
         if("" == $("#search-name").val()) {
             alert("姓名不能为空！");
         } else {
-            top.location='/teacher/colleague?type=search-name=' + $("#search-name").val(); 
+            top.location='/teacher/colleague?wtId=' + $("#wtId").val() + '&type=search-name=' + $("#search-name").val(); 
         }
     });
 

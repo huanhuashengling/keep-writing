@@ -3,38 +3,42 @@
 @section('content')
 
 <div class="container" style="padding-left: 0px; padding-right: 0px">
-    <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
+    <input type="hidden" name="" id="wtId" value="{{$tWritingTypesId}}">
+      
 
-    <?php foreach ($writingTypes as $key => $writingType): ?>
-        @php
-            $btnCss = ($writingType->id == $tWritingTypesId)?"btn-success":"";
-        @endphp
-            <button class="btn btn-sm writing-type-btn" value="{{$writingType->id}}" > {{$writingType->name}}</button>
-    <?php endforeach ?>
-    <input type="hidden" name="" id="selected-writing-types-id">
-</div>
-
-    <!-- <div class="col-md-12 col-xs-12" style="margin-bottom: 10px">
-        <div class="btn-group" role="group" aria-label="...">
-            <button class="btn btn-info btn-sm" id="my-posts-btn">我的</button>
-            <button class="btn btn-info btn-sm" id="most-star-posts-btn">最多星</button> -->
-            <!-- <button class="btn btn-info btn-sm" id="same-grade-posts-btn">同性别</button> -->
-            
-            <!-- <button class="btn btn-info btn-sm" id="my-marked-posts-btn">我点赞</button> -->
-            <!-- <button class="btn btn-info btn-sm" id="most-marked-posts-btn">最多赞</button> -->
-            <!-- <button class="btn btn-info btn-sm" id="has-comment-posts-btn">有评语</button> -->
-            <!-- <button class="btn btn-info btn-sm" id="all-posts-btn">全部</button> -->
-            <!-- <input type="text" name="" id="search-name" class="form-control input-sm" placeholder="姓名"> -->
-        <!-- </div> -->
-    <!-- </div> -->
+    <div class="col-md-12 col-xs-12">
+        <!-- <div class="form-group col-md-3 col-xs-3">
+        <h4>{{$writingTypeName}}</h4>
+      </div> -->
+      <div class="form-group col-md-2 col-xs-2">
+        <button class="btn {{("my" == $getDataType)?"btn-info":"btn-default"}} btn-sm" id="my-posts-btn">我的</button>
+      </div>
+      <div class="form-group col-md-2 col-xs-2">
+        <button class="btn {{("all" == $getDataType)?"btn-info":"btn-default"}} btn-sm" id="all-posts-btn">全校</button>
+      </div>
+      <div class="form-group col-md-8 col-xs-8">
+        <label>{{$totalDesc}}</label>
+      </div>
+      <!-- <div class="form-group col-md-3 col-xs-3 col-xs-offset-1">
+        <input type="text" name="" id="search-name" style="width: 120px" class="form-control input-sm" placeholder="姓名">
+      </div>
+      <div class="form-group col-md-2 col-xs-2">
+        <button class="btn btn-success btn-sm" id="name-search-btn">搜索</button>
+      </div> -->
+      
+    </div>
     <div class="col-md-12 col-xs-12" id="posts-list" style="padding: 5px">
     @foreach($posts as $key=>$post)
         @php
-            $post_storage_name = "posts/" . $schoolCode . "/" .$post->storage_name;
             $writeDate = substr($post->writing_date, 4, 2) . "月" . substr($post->writing_date, 6, 2);
-            $writingType = $post->writing_type_name;
             $markStr = isset($post->mark_num)?$post->mark_num ."赞":"";
             $rateStr = isset($post->rate)?$post->rate ."星":"";
+            $descStr = "";
+            if ("my" == $getDataType) {
+                $descStr = $writeDate . " " . $rateStr . " " .  $markStr;
+            } else {
+                $descStr = $post->username . " " . $writeDate . " " . $rateStr . " " .  $markStr;
+            }
         @endphp
 
         @if ("普通话" == $post->writing_type_name)
@@ -43,23 +47,23 @@
                     <audio controls src="{{ $baseUrl }}{{$post['storage_name'] }}" >
                     Your browser does not support the audio element.
                     </audio>
-                    <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $rateStr}} {{ $markStr}}</small></h5>  </div>
+                    <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $descStr }}</small></h5>  </div>
                 </div>
             </div>
         @else
             <div class="col-md-2 col-sm-4 col-xs-6" style="padding-left: 5px; padding-right: 5px;">
                 <div class="alert alert-info" style="padding: 10px; text-align: center">
-                <!--<div class="text-center"><img height="140px" value="{{ $post['pid'] }}" src="/imager?src={{$post_storage_name}}"></div>-->
-                
                     
                     <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="" filePath="{{$baseUrl . $post->storage_name}}">
                 
-                    <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $post->username }} {{$writeDate}} {{$writingType}} {{ $rateStr}} {{ $markStr}}</small></h5>  </div>
+                    <div><h5 style="margin-top: 5px; margin-bottom: 5px; margin-left: 0px; text-align: center"><small>{{ $descStr }}</small></h5>  </div>
                 </div>
             </div>
         @endif
     @endforeach
-    {{ $posts->links() }}
+    @if (count($posts) >0)
+        <div class="col-md-12 col-xs-12">{{ $posts->appends(request()->input())->links() }}</div>
+    @endif
     </div>
 </div>
 

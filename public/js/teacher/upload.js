@@ -12,6 +12,8 @@ $(document).ready(function() {
 		initialPreview: [
 			$("#posted-path").val(),
 	    ],
+	    maxFileCount: 1,
+        minFileCount: 1,
 	    msgPlaceholder: "选择文件或拍照...",
 	    initialPreviewShowDelete: false,
 	    initialPreviewAsData: true, // 特别重要
@@ -57,6 +59,8 @@ function refreshFileinputState() {
 						allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp", "m4a", "mp3", "amr"], 
 						// uploadAsync: true
 						msgPlaceholder: "选择文件或拍照...",
+						maxFileCount: 1,
+        				minFileCount: 1,
 						overwriteInitial: true,
 					    initialPreviewShowDelete: false,
 					    initialPreviewAsData: true, // 特别重要
@@ -73,6 +77,8 @@ function refreshFileinputState() {
 						initialPreview: [
 							data.storage_name,
 					    ],
+					    maxFileCount: 1,
+        				minFileCount: 1,
 					    initialPreviewShowDelete: false,
 					    initialPreviewAsData: true, // 特别重要
 					});

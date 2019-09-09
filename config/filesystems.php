@@ -61,9 +61,9 @@ return [
             'visibility' => 'public',
         ],
 
-        'dtposts' => [
+        'dhposts' => [
             'driver' => 'local',
-            'root' => public_path('posts/dt'),
+            'root' => public_path('posts/dh'),
             // 'url' => 'posts/' . 
             'visibility' => 'public',
         ],

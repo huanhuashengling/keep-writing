@@ -2,12 +2,17 @@
 
 @section('content')
 <div class="container">
-<div class="panel panel-success col-md-12">
+<div class="panel panel-success col-md-6">
   <div class="panel-heading">导入教师账户</div>
   <div class="panel-body">
     {!! Form::open(array('url'=>'school/importTeachers','method'=>'POST','files'=>'true')) !!}
     {!! Form::file('xls', ['id' => 'import-teacher-account', 'type'=>"file", 'class'=>"file-loading"]) !!}
     {!! Form::close() !!}
+  </div>
+</div>
+<div class="panel panel-success col-md-6">
+  <div class="panel-body">
+    <img src="/images/kwteacherimport.png">
   </div>
 </div>
 <div class="panel panel-success col-md-12">

@@ -31,15 +31,17 @@ class KeepRecordController extends Controller
             $tData = [];
             $tData['users_id'] = $teacher->id;
             $tData['username'] = $teacher->username;
+            $birthDateStr = substr($teacher->birth_date, 0, 4) . "-" .  substr($teacher->birth_date, 4, 2) . "-" .  substr($teacher->birth_date, 6, 2);
+            $tData['ageSection'] = $this->countage($birthDateStr);
             $tData['isFormal'] = $teacher->is_formal;
             $tData['allScoreCount'] = 0;
             foreach ($writingTypes as $key => $writingType) {
                 $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name as writing_type_name', 'teachers.username', 'post_rates.rate', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
-                ->leftjoin('teachers', 'posts.teachers_id', '=', 'teachers.id')
+                ->join('teachers', 'posts.teachers_id', '=', 'teachers.id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
                 ->leftjoin('post_rates', 'post_rates.posts_id', '=', 'posts.id')
-                ->leftjoin('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
+                ->join('writing_types', 'writing_types.id', '=', 'posts.writing_types_id')
                 ->where('teachers.schools_id', '=', $userId)
                 ->where('teachers.id', '=', $teacher->id)
                 ->where("writing_types.id", '=', $writingType->id)
@@ -66,5 +68,30 @@ class KeepRecordController extends Controller
 
         }
         return $dataset;
+    }
+
+    function countage($birthday){
+        $year=date('Y');
+        $month=date('m');
+        if(substr($month,0,1)==0){
+            $month=substr($month,1);
+        }
+        $day=date('d');
+        if(substr($day,0,1)==0){
+            $day=substr($day,1);
+        }
+        $arr=explode('-',$birthday);
+
+        $age=$year-$arr[0];
+        if($month<$arr[1]){
+            $age=$age-1;
+
+        }elseif($month==$arr[1]&&$day<$arr[2]){
+            $age=$age-1;
+
+        }
+
+        return $age;
+
     }
 }

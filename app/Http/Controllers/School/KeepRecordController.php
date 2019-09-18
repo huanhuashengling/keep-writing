@@ -91,7 +91,7 @@ class KeepRecordController extends Controller
 
         }
 
-        return $age;
+        return ($age < 35)?"青年":"-";
 
     }
 }

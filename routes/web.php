@@ -23,6 +23,8 @@ Route::post('/term-check-get-post-rate/', 'TermCheckController@getPostRate');
 Route::post('/term-check-get-post/', 'TermCheckController@getPost');
 Route::post('/term-check-get-comment/', 'TermCheckController@getCommentByPostsId');
 
+Route::get('/get-phone-number/', 'TermCheckController@getPhoneNumber');
+
 
 
 

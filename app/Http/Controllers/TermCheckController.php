@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Term;
 use App\Models\Sclass;
 use App\Models\LessonLog;
+use App\Models\Teacher;
 use \DB;
 use App\Models\PostRate;
 use App\Models\Comment;
@@ -173,4 +174,9 @@ class TermCheckController extends Controller
         }
     }
 
+    public function getPhoneNumber()
+    {
+        $phoneNumbers = Teacher::select("phone_number")->get();
+        return $phoneNumbers;
+    }
 }

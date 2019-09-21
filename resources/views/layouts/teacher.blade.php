@@ -20,6 +20,8 @@
     <script src="/js/plugins/canvas-to-blob.min.js" type="text/javascript"></script>
     <script src="/js/plugins/sortable.min.js" type="text/javascript"></script>
     <script src="/js/plugins/purify.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap3-typeahead.min.js"></script>
+
     
 </head>
 <body id="app-layout">

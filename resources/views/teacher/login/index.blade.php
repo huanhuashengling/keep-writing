@@ -15,7 +15,8 @@
                             <label for="phone_number" class="col-md-4 control-label">手机号</label>
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="" required autofocus>
+                                <input id="phone_number" type="text" class="form-control typeahead" name="phone_number" value="" required autofocus data-provide="typeahead" autocomplete="off">
+                                <input type="hidden" id="hidden">
 
                                 @if ($errors->has('phone_number'))
                                     <span class="help-block">
@@ -26,10 +27,10 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">密码</label>
+                            <label for="password" class="col-md-4 control-label">密码 <small>已默认</small></label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" value="" class="form-control" name="password" required>
+                                <input id="password" type="password" value="123456" class="form-control" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -65,4 +66,8 @@
     </div>
     
 </div>
+@endsection
+
+@section('scripts')
+    <script src="/js/teacher/login.js?v={{rand()}}"></script>
 @endsection

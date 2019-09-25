@@ -8,10 +8,10 @@
       <select id="month-selection">
         <option value="">按周筛选</option>
         <option value="20190101-20191231">2019全年</option>
-        <option value="20190301-20190331" selected="selected">201909月</option>
-        <option value="20190401-20190430">201910月</option>
-        <option value="20190501-20190531">201911月</option>
-        <option value="20190601-20190630">201912月</option>
+        <option value="20190901-20190930" selected="selected">201909月</option>
+        <option value="20191001-20191031">201910月</option>
+        <option value="20191101-20191130">201911月</option>
+        <option value="20191201-20191231">201912月</option>
       </select>
       本学期周次
       <select id="week-selection">

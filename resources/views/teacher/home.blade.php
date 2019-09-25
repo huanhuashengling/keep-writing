@@ -1,8 +1,12 @@
 @extends('layouts.teacher')
 
 @section('content')
-
+<?php 
+  $strArr = ["不积跬步，无以至千里。", "不积小流，无以成江海。", "百丈之台，起于垒土。", "锲而不舍，金石可镂。", "锲而舍之，朽木不折。", "水滴石穿", "绳锯木断", "合抱之木，生于毫末。", "千里之行，始于足下。"];
+  $str = $strArr[rand(0, 8)];
+ ?>
 <div class="container">
+        <h4 class="col-md-12"><span class="label label-default">{{$str}}</span></h4>
   <form class="form-inline col-xs-6">
     <div class="form-group">
         <label>选择打卡类型：</label>
@@ -32,7 +36,7 @@
       </div>
     </form>
     
-      <div class="row">
+     <!-- <div class="row">
         <div class="col-md-12 col-xs-12">
           <label>全校打卡进度：</label>
             <div class="progress">
@@ -41,7 +45,8 @@
               </div>
             </div>
            </div>
-        </div>
+        </div>-->
+        <!-- <h4><span class="label label-default">钢笔字完成3天连续打卡</span></h4> -->
       <label class="" id="cheer-label">{{$cheerUpStr}}</label>
 
     <input id="posted-path" value="{{ @$post->storage_name }}" hidden />

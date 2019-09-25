@@ -3,6 +3,23 @@
 @section('content')
 <div class="container">
     <div id="toolbar">
+      
+      月份选择
+      <select id="month-selection">
+        <option value="">按周筛选</option>
+        <option value="20190101-20191231">2019全年</option>
+        <option value="20190301-20190331" selected="selected">201909月</option>
+        <option value="20190401-20190430">201910月</option>
+        <option value="20190501-20190531">201911月</option>
+        <option value="20190601-20190630">201912月</option>
+      </select>
+      本学期周次
+      <select id="week-selection">
+        <option value="">按月筛选</option>
+        <?php foreach ($weekDate as $key => $week): ?>
+          <option value="{{$week['weekStart']}}-{{$week['weekEnd']}}">第{{$week['weekNum']}}周</option>
+        <?php endforeach ?>
+      </select>
     </div>
     <table id="keep-report" class="table table-condensed table-responsive">
         <thead>

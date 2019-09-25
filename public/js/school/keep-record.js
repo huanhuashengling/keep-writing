@@ -57,7 +57,8 @@ $(document).ready(function() {
         showExport: true,                     //是否显示导出
         exportDataType: "basic",              //basic', 'all', 'selected'.
     	queryParams: function(params) {
-    		var temp = { 
+    		var temp = {
+                dayGap : ("" == $('#month-selection').val())?$('#week-selection').val():$('#month-selection').val(),
 		    };
 		    return temp;
     	},
@@ -75,7 +76,16 @@ $(document).ready(function() {
             return res;
         },
     });
+
+    $('#month-selection').on("change", function(e) {
+        $('#week-selection').val("");
+        $('#keep-report').bootstrapTable("refresh");
+    });
 	
+    $('#week-selection').on("change", function(e) {
+        $('#month-selection').val("");
+        $('#keep-report').bootstrapTable("refresh");
+    });
 });
 
 function isFormalCol(value, row, index) {

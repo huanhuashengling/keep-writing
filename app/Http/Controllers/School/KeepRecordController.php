@@ -9,13 +9,27 @@ use App\Models\Teacher;
 use App\Models\WritingType;
 use App\Models\Post;
 use \DB;
+use Carbon\Carbon;
 
 
 class KeepRecordController extends Controller
 {
     public function index() 
     {
-        return view('school/keep-record/index');
+        $weekInfo = $this->getNowTimeInfo('2019-09-25');
+        // var_dump($weekInfo);
+        $currentWeekNum = $weekInfo["week"] - 35;
+        $weekDate = [];
+        // echo $week;
+        for ($i=3; $i >= 0 ; $i--) { 
+        $weekStart = Carbon::now('Asia/Shanghai')->subWeek($i)->startOfWeek()->format('Ymd');
+        $weekEnd =  Carbon::now('Asia/Shanghai')->subWeek($i)->endOfWeek()->format('Ymd');
+        $weekDate[] = ["weekNum" => $currentWeekNum - $i, "weekStart" => $weekStart, "weekEnd" => $weekEnd];
+            
+        }
+        // var_dump($weekDate);   
+
+        return view('school/keep-record/index', compact("weekDate"));
     }
 
     public function getKeepRecord(Request $request) {
@@ -23,7 +37,10 @@ class KeepRecordController extends Controller
         $school = School::find($userId);
         $teachers = Teacher::where("schools_id", "=", $userId)->where("teachers.is_lock", "!=", "1")->get();
         $writingTypes = WritingType::all();
-        
+
+        $dayGap = $request->get("dayGap");
+        $startDay = explode('-', $dayGap)[0];
+        $endDay = explode('-', $dayGap)[1];
         // dd($teachers);
         // order username postednum unpostnum rate1num rate2num rate3num rate4num commentnum marknum scorecount
         $dataset = [];
@@ -45,6 +62,7 @@ class KeepRecordController extends Controller
                 ->where('teachers.schools_id', '=', $userId)
                 ->where('teachers.id', '=', $teacher->id)
                 ->where("writing_types.id", '=', $writingType->id)
+                ->whereBetween("writing_date", [$startDay, $endDay])
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name', 'post_rates.rate')
                 ->orderby("posts.writing_date", "DESC")->get();
 
@@ -92,6 +110,27 @@ class KeepRecordController extends Controller
         }
 
         return ($age < 35)?"青年":"-";
+
+    }
+
+
+    public function getNowTimeInfo($now)
+    {
+        $str = array();
+        //$first =1 表示每周星期一为开始日期 0表示每周日为开始日期
+        $str['year'] = date('Y', strtotime($now));
+        $first = 1;
+        //当日在整年中的第几周
+        $str['week'] = date('W', strtotime($now));
+        //获取当前周的第几天 周日是 0 周一到周六是 1 - 6
+        $w = date('w', strtotime($now));
+        //获取本周开始日期，如果$w是0，则表示周日，减去 6 天
+        $week_start = date('Ymd', strtotime("$now -" . ($w ? $w - $first : 6) . ' days'));
+        $str['week_start'] = $week_start;
+        //本周结束日期
+        $week_end = date('Ymd', strtotime("$week_start +6 days"));
+        $str['week_end'] = $week_end;
+        return $str;
 
     }
 }

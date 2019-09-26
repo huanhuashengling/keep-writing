@@ -36,9 +36,9 @@
                 <th data-field="ageSection" data-sortable="true" rowspan="1">
                     年龄
                 </th>
-                <th colspan="1">钢笔字打卡数</th>
-                <th colspan="1">粉笔字打卡数</th>
-                <th colspan="1">毛笔字打卡数</th>
+                <th data-field="penPostNum">钢笔字打卡数</th>
+                <th data-field="chalkPostNum">粉笔字打卡数</th>
+                <th data-field="brushPostNum">毛笔字打卡数</th>
                 <th data-field="allScoreCount" data-sortable="true" rowspan="1">
                     总分
                 </th>

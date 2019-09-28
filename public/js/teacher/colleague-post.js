@@ -98,9 +98,18 @@ $(document).ready(function() {
         }
     });
 
+    $("#prev-btn").on("click", function(e) {
+        $("#img"+$(this).attr("value")).trigger("click");
+    });
+
+    $("#next-btn").on("click", function(e) {
+        $("#img"+$(this).attr("value")).trigger("click");
+    });
+
     $('.thumb-img').on('click', function (e) {
         e.preventDefault();
         // $("[name='likeCheckBox']").bootstrapSwitch('state', "false");
+        // refreshModalView($(this).attr("value"), $(this).attr("prevId"), $(this).attr("nextId"));
         if ($(".rate-btn").hasClass('active')) {
           setTimeout(function() {
             $(".rate-btn").removeClass('active').find('input').prop('checked', false);
@@ -156,13 +165,14 @@ $(document).ready(function() {
             url: '/teacher/getOnePostById',
             data: {posts_id: postsId},
             success: function( data ) {
-                console.log(data);
+                // console.log(data);
                 if ("false" == data) {
 
                 } else {
                         $('#doc-preview').addClass("hidden");
                         $('#classmate-post-show').removeClass("hidden");
                         $('#flashContent').addClass("hidden");
+                        // $('#classmate-post-show').attr("src", data.filePath);
                         $('#classmate-post-show').attr("src", data.storage_name);
                     // $('#classmate-post-show').attr("src", data.storage_name);
                     $("#classmate-post-modal-label").html(data.username+"老师 "+data.writingDate+""+data.writingType+"作品");
@@ -188,12 +198,24 @@ $(document).ready(function() {
         //         }
         //     }
         // });
-
+        if ($(this).attr("prevId")) {
+            $("#prev-btn").removeClass("hidden");
+            $("#prev-btn").val($(this).attr("prevId"));
+        } else {
+            $("#prev-btn").addClass("hidden");
+        }
+        if ($(this).attr("nextId")) {
+            $("#next-btn").removeClass("hidden");
+            $("#next-btn").val($(this).attr("nextId"));
+        } else {
+            $("#next-btn").addClass("hidden");
+        }
         $('#posts-id').val(postsId);
-        $('#post-download').attr("href", $(this).attr("filePath"));
-        $('#classmate-post-modal').modal();
+        // $('#post-download').attr("href", filePath);
+        $('#colleague-post-modal').modal();
     });
 });
+
 
 function storeWritingTypesId() {
     $.ajax({

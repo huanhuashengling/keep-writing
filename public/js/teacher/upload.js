@@ -21,6 +21,7 @@ $(document).ready(function() {
 
     $('#writing-type-selection').on('change', function (e) {
 		$('#writing_types_id').val($(this).val());
+		$("#colleague-post").attr("href", "teacher/colleague?wtId=" + $(this).val() + "&type=all");
 		refreshFileinputState();
     });
 

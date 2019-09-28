@@ -38,7 +38,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/teacher') }}">
                     {{ trans("layouts.project_name") }}
                     @if (!Auth::guard("teacher")->guest())
                     -<small>{{ Auth::guard("teacher")->user()->username }}</small>

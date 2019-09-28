@@ -6,7 +6,7 @@
   $str = $strArr[rand(0, 8)];
  ?>
 <div class="container">
-        <h4 class="col-md-12"><span class="label label-default">{{$str}}</span></h4>
+        <!-- <h4 class="col-md-12"><span class="label label-default">{{$str}}</span></h4> -->
   <form class="form-inline col-xs-6">
     <div class="form-group">
         <label>选择打卡类型：</label>
@@ -76,7 +76,16 @@
             </div>
         </div>
         
-
+  <nav class="navbar navbar-default navbar-fixed-bottom" style="height: 20px">
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation">
+        <a class="col-xs-6" href="teacher/colleague?wtId=1&type=all" id="colleague-post">同事作品</a>
+      </li>
+      <li role="presentation">
+        <a class="col-xs-6" href="teacher/resources">学习资源</a>
+      </li>
+    </ul>
+  </nav>
 </div>
 @endsection
 

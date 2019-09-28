@@ -59,7 +59,7 @@
 <div class="modal fade" id="myPostModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <input type="hidden" id="posts-id" value="">
 
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document" style="display: inline-block; width: auto;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -71,7 +71,9 @@
         <!-- https://docview.mingdao.com/op/generate.aspx -->
         <!-- <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://www.ccut.edu.tw/teachers/cskuan/downloads/ed01-ch01.ppt' width='800px' height='600px' frameborder='0'> -->
         <!-- <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://www.lf1.cuni.cz/zfisar/psychiatry/Child%20Psychiatry.ppt' width='800px' height='600px' frameborder='0'> -->
-        <!-- </iframe> -->
+        <!-- </iframe> 
+        src="http://localhost:8002/posts/ys/刘娟-5cc010f1ae096.jpg"
+    -->
                     
                     <!-- <h4>该作业被评为:<b><label id="1rate-label"></label></b></h4> -->
                     <!-- <h4>点赞：<small>刘奥，刘胜翔</small></h4> -->

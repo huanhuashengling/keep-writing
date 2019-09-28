@@ -34,11 +34,13 @@ class ColleagueController extends Controller
             case 'my':
                 $posts = $this->getMyPostsData($tWritingTypesId);
                 $score = $this->getMyScore($tWritingTypesId, $posts->total());
-                $totalDesc = $writingTypeName . "共计打卡" . $posts->total() . '次, 得' . $score . "分";
+                // $totalDesc = $writingTypeName . "共计打卡" . $posts->total() . '次, 得' . $score . "分";
+                $totalDesc = $posts->total();
                 break;
             case 'all':
                 $posts = $this->getAllPostsData($tWritingTypesId);
-                $totalDesc = $writingTypeName . "共计打卡" . $posts->total() . '次';
+                // $totalDesc = $writingTypeName . "共计打卡" . $posts->total() . '次';
+                $totalDesc = $posts->total();
                 break;
             case 'most-star':
                 $posts = $this->getMostStarPostsData($tWritingTypesId);
@@ -77,7 +79,7 @@ class ColleagueController extends Controller
                 ->where('posts.writing_types_id', '=', $writingTypesId)
                 ->where('teachers.id', '=', $id)
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'post_rates.rate')
-                ->orderby("posts.writing_date", "DESC")->paginate(12);
+                ->orderby("posts.writing_date", "DESC")->paginate(24);
         return $posts;
     }
 
@@ -112,7 +114,7 @@ class ColleagueController extends Controller
                 ->where('teachers.schools_id', '=', $schoolsId)
                 ->where('posts.writing_types_id', '=', $writingTypesId)
                 ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'post_rates.rate')
-                ->orderby("posts.writing_date", "DESC")->paginate(12);
+                ->orderby("posts.writing_date", "DESC")->paginate(24);
         return $posts;
     }
 

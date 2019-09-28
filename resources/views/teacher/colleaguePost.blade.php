@@ -10,15 +10,26 @@
         <!-- <div class="form-group col-md-3 col-xs-3">
         <h4>{{$writingTypeName}}</h4>
       </div> -->
-      <div class="form-group col-md-2 col-xs-2">
-        <button class="btn {{("my" == $getDataType)?"btn-info":"btn-default"}} btn-sm" id="my-posts-btn">我的</button>
+      <div class="form-group col-md-3 col-xs-3">
+        <button class="btn {{("my" == $getDataType)?"btn-info":"btn-default"}} btn-sm" id="my-posts-btn">我的 <span class="badge">{{("my" == $getDataType)?$totalDesc:""}}</span></button>
       </div>
-      <div class="form-group col-md-2 col-xs-2">
-        <button class="btn {{("all" == $getDataType)?"btn-info":"btn-default"}} btn-sm" id="all-posts-btn">全校</button>
+      <div class="form-group col-md-3 col-xs-3">
+        <button class="btn {{("all" == $getDataType)?"btn-info":"btn-default"}} btn-sm" id="all-posts-btn">全校 <span class="badge">{{("all" == $getDataType)?$totalDesc:""}}</span></button>
       </div>
-      <div class="form-group col-md-8 col-xs-8">
-        <label>{{$totalDesc}}</label>
-      </div>
+      <!-- <div class="form-group col-md-5 col-xs-5 col-xs-offset-1">
+        <div class="input-group">
+        <input type="text" class="form-control input-sm">
+
+        <span class="input-group-btn">
+        <button class="btn btn-default btn-sm" type="button">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+        </span>
+        </div>
+      </div> -->
+      <!-- <div class="form-group col-md-8 col-xs-8"> -->
+        <!-- <label>{{$totalDesc}}</label> -->
+      <!-- </div> -->
       <!-- <div class="form-group col-md-3 col-xs-3 col-xs-offset-1">
         <input type="text" name="" id="search-name" style="width: 120px" class="form-control input-sm" placeholder="姓名">
       </div>
@@ -39,6 +50,15 @@
             } else {
                 $descStr = $post->username . " " . $writeDate . " " . $rateStr . " " .  $markStr;
             }
+            $prevId = "";
+            $nextId = "";
+            if (isset($posts[$key-1])) {
+              $prevId = $posts[$key-1]['pid'];
+            }
+            if (isset($posts[$key+1])) {
+              $nextId = $posts[$key+1]['pid'];
+            }
+            
         @endphp
 
         @if ("普通话" == $post->writing_type_name)
@@ -54,7 +74,7 @@
             <div class="col-md-2 col-sm-4 col-xs-6" style="padding-left: 5px; padding-right: 5px;">
                 <div class="alert alert-info" style="padding: 10px; text-align: center">
                     
-                    <img class="img-responsive thumb-img center-block" value="{{ $post['pid'] }}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="" filePath="{{$baseUrl . $post->storage_name}}">
+                    <img class="img-responsive thumb-img center-block" id="img{{ $post['pid'] }}" value="{{ $post['pid'] }}" prevId="{{$prevId}}" nextId="{{$nextId}}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="" filePath="{{$baseUrl . $post->storage_name}}">
                 
                     <div><h5 style="margin-top: 5px; margin-bottom: 5px; margin-left: 0px; text-align: center"><small>{{ $descStr }}</small></h5>  </div>
                 </div>
@@ -68,7 +88,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="classmate-post-modal" tabindex="-1" role="dialog" aria-labelledby="classmatePostModalLabel">
+<div class="modal fade" id="colleague-post-modal" tabindex="-1" role="dialog" aria-labelledby="classmatePostModalLabel">
 <input type="hidden" id="posts-id" value="">
 <input type="hidden" id="mark-num" value="">
 <input type="hidden" id="is-init" value="true">
@@ -86,10 +106,17 @@
       </div>
 
     <div class="modal-footer">
-        <a href="" class="btn btn-primary" style="float: left;" id="post-download">文件下载</a>
-        <div class="switch" id="switch-box">
-            <input type="checkbox" id="like-check-box" name="likeCheckBox"/>
+      <div>
+        <button class="btn btn-info" style="float: left;" id="prev-btn">上一张</button>
+        <button class="btn btn-info" style="float: right;" id="next-btn">下一张</button>
+      </div>
+        <div>
+          <!-- <a href="" class="btn btn-success  col-xs-offset-1" style="float: left;" id="post-download">下载</a> -->
+          <div class="switch text-center" id="switch-box">
+              <input type="checkbox" id="like-check-box" name="likeCheckBox"/>
+          </div>
         </div>
+
     </div>
   </div>
 </div>

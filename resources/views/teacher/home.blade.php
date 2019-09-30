@@ -47,7 +47,7 @@
            </div>
         </div>-->
         <!-- <h4><span class="label label-default">钢笔字完成3天连续打卡</span></h4> -->
-      <label class="" id="cheer-label">{{$cheerUpStr}}</label>
+      <!-- <label class="" id="cheer-label">{{$cheerUpStr}}</label> -->
 
     <input id="posted-path" value="{{ @$post->storage_name }}" hidden />
     <div class="row">
@@ -57,15 +57,15 @@
                 </div> -->
               <!-- <h4>上传作业</h4> -->
               @if(Session::has('success'))
-                <div class="alert alert-success" style="padding-bottom: 5px; padding-top: 10px">
-                  <h5>{!! Session::get('success') !!}</h5>
-                </div>
+                <!-- <div class="alert alert-success" style="padding-bottom: 5px; padding-top: 10px"> -->
+                  <h5 style="margin-top: 0px">{!! Session::get('success') !!}</h5>
+                <!-- </div> -->
               @endif
 
               @if(Session::has('danger'))
-                <div class="alert alert-danger" style="padding-bottom: 5px; padding-top: 10px">
-                  <h5>{!! Session::get('danger') !!}</h5>
-                </div>
+                <!-- <div class="alert alert-danger" style="padding-bottom: 5px; padding-top: 10px"> -->
+                  <h5 style="margin-top: 0px">{!! Session::get('danger') !!}</h5>
+                <!-- </div> -->
               @endif
 
               {!! Form::open(array('url'=>'teacher/upload','method'=>'POST', 'files'=>true)) !!}
@@ -75,14 +75,18 @@
               {!! Form::close() !!}
             </div>
         </div>
-        
-  <nav class="navbar navbar-default navbar-fixed-bottom" style="height: 20px">
+        <hr />
+  <nav class="navbar navbar-default navbar-fixed-bottom" style="min-height: 0px;">
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation">
-        <a class="col-xs-6" href="teacher/colleague?wtId=1&type=all" id="colleague-post">同事作品</a>
+        <a class="col-xs-6" href="teacher/colleague?wtId=1&type=all" style="line-height: 30px;
+    height: 30px;
+    padding-top: 0;" id="colleague-post">同事作品</a>
       </li>
       <li role="presentation">
-        <a class="col-xs-6" href="teacher/resources">学习资源</a>
+        <a class="col-xs-6" href="teacher/resources" style="line-height: 30px;
+    height: 30px;
+    padding-top: 0;">学习资源</a>
       </li>
     </ul>
   </nav>

@@ -16,15 +16,15 @@ class KeepRecordController extends Controller
 {
     public function index() 
     {
-        $weekInfo = $this->getNowTimeInfo('2019-09-25');
+        $weekInfo = $this->getNowTimeInfo('2019-09-02');
         // var_dump($weekInfo);
-        $currentWeekNum = $weekInfo["week"] - 35;
+        $currentWeekNum = $weekInfo["week"] - 31;
         $weekDate = [];
         // echo $week;
-        for ($i=3; $i >= 0 ; $i--) { 
+        for ($i=$currentWeekNum; $i >= 0 ; $i--) { 
         $weekStart = Carbon::now('Asia/Shanghai')->subWeek($i)->startOfWeek()->format('Ymd');
         $weekEnd =  Carbon::now('Asia/Shanghai')->subWeek($i)->endOfWeek()->format('Ymd');
-        $weekDate[] = ["weekNum" => $currentWeekNum - $i, "weekStart" => $weekStart, "weekEnd" => $weekEnd];
+        $weekDate[] = ["weekNum" => $currentWeekNum - $i + 1, "weekStart" => $weekStart, "weekEnd" => $weekEnd];
             
         }
         // var_dump($weekDate);   

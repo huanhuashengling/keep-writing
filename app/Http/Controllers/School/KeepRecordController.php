@@ -16,9 +16,9 @@ class KeepRecordController extends Controller
 {
     public function index() 
     {
-        $weekInfo = $this->getNowTimeInfo('2019-09-02');
+        $weekInfo = $this->getNowTimeInfo('2019-09-01');
         // var_dump($weekInfo);
-        $currentWeekNum = $weekInfo["week"] - 31;
+        $currentWeekNum = $weekInfo["week"] - 29;
         $weekDate = [];
         // echo $week;
         for ($i=$currentWeekNum; $i >= 0 ; $i--) { 

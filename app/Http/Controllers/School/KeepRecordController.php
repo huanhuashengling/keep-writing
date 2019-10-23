@@ -16,15 +16,17 @@ class KeepRecordController extends Controller
 {
     public function index() 
     {
-        $weekInfo = $this->getNowTimeInfo('2019-09-01');
-        // var_dump($weekInfo);
-        $currentWeekNum = $weekInfo["week"] - 29;
+        $startWeekInfo = $this->getTimeInfo('2019-09-02');
+        $nowWeekInfo = $this->getTimeInfo(Carbon::now('Asia/Shanghai')->format('Ymd'));
+        // var_dump($startWeekInfo);
+        // var_dump($nowWeekInfo);
+        $currentWeekNum = $nowWeekInfo["week"] - $startWeekInfo["week"];
         $weekDate = [];
         // echo $week;
         for ($i=$currentWeekNum; $i >= 0 ; $i--) { 
         $weekStart = Carbon::now('Asia/Shanghai')->subWeek($i)->startOfWeek()->format('Ymd');
         $weekEnd =  Carbon::now('Asia/Shanghai')->subWeek($i)->endOfWeek()->format('Ymd');
-        $weekDate[] = ["weekNum" => $currentWeekNum - $i + 1, "weekStart" => $weekStart, "weekEnd" => $weekEnd];
+        $weekDate[] = ["weekNum" => $currentWeekNum - $i+1, "weekStart" => $weekStart, "weekEnd" => $weekEnd];
             
         }
         // var_dump($weekDate);   
@@ -114,7 +116,7 @@ class KeepRecordController extends Controller
     }
 
 
-    public function getNowTimeInfo($now)
+    public function getTimeInfo($now)
     {
         $str = array();
         //$first =1 表示每周星期一为开始日期 0表示每周日为开始日期

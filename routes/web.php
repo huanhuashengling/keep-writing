@@ -77,8 +77,8 @@ Route::group(['middleware' => 'auth.district:district, district/login', 'prefix'
     $router->get('create-zip', 'ExportPostController@exportPostFiles');
     $router->get('clear-all-zip', 'ExportPostController@clearALlZip');
 
-    $router->get('teachers', 'TeacherAccountController@index');
-    $router->post('createOneTeacherAccount', 'TeacherAccountController@createOneTeacherAccount');
+    // $router->get('teachers', 'TeacherAccountController@index');
+    // $router->post('createOneTeacherAccount', 'TeacherAccountController@createOneTeacher');
 
     $router->get('send-mail', 'SendMailController@index');
     $router->get('get-send-mail-list', 'SendMailController@listAllMails');
@@ -148,8 +148,10 @@ Route::group(['middleware' => 'auth.school:school, school/login', 'prefix' => 's
     // teacher
     $router->get('teachers', 'TeacherAccountController@index');
     $router->post('getTeachersAccountData', 'TeacherAccountController@getTeachersAccountData');
-    $router->post('createOneTeacherAccount', 'TeacherAccountController@createOneTeacherAccount');
+    $router->post('createOneTeacherAccount', 'TeacherAccountController@createOneTeacher');
     $router->post('resetTeacherPassword', 'TeacherAccountController@resetTeacherPassword');
+    $router->post('lockOneTeacherAccount', 'TeacherAccountController@lockOneTeacherAccount');
+    $router->post('unlockOneTeacherAccount', 'TeacherAccountController@unlockOneTeacherAccount');
 
     // export
     $router->get('export-post', 'ExportPostController@index');

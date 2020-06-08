@@ -16,7 +16,7 @@ class KeepRecordController extends Controller
 {
     public function index() 
     {
-        $startWeekInfo = $this->getTimeInfo('2019-09-02');
+        $startWeekInfo = $this->getTimeInfo('2020-02-10');
         $nowWeekInfo = $this->getTimeInfo(Carbon::now('Asia/Shanghai')->format('Ymd'));
         // var_dump($startWeekInfo);
         // var_dump($nowWeekInfo);
@@ -102,7 +102,7 @@ class KeepRecordController extends Controller
         }
         $arr=explode('-',$birthday);
 
-        $age=$year-$arr[0];
+        $age=(int)$year-(int)$arr[0];
         if($month<$arr[1]){
             $age=$age-1;
 

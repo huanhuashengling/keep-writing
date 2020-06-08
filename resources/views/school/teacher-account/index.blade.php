@@ -74,11 +74,11 @@
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">性别</label>
-                  <div class="col-sm-8"><input type="text" class="form-control" name="sex" id="sex" required=""></div>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="sex" id="sex" required="" placeholder="男1/女2"></div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">出生日期</label>
-                  <div class="col-sm-8"><input type="text" class="form-control" name="birthDate" id="birth-date" required=""></div>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="birthDate" id="birth-date" required="" placeholder="例:19910826"></div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">手机号码</label>
@@ -86,7 +86,8 @@
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">任教学科</label>
-                  <div class="col-sm-8"><input type="text" class="form-control" name="subjectName" id="subject-name" required=""></div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="subjectsId" id="subjectsId" required="" placeholder="对照学科表数字"></div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">邮箱地址</label>

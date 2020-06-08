@@ -75,7 +75,7 @@
             uploadBatch: '批量上传',
             uploadExtra: '表单数据上传'
         },
-        dropZoneTitle: '拖拽/拍照/选择文件 &hellip;<br>手机拍照关闭自动横屏',
+        dropZoneTitle: '<small>拖拽/拍照/选择文件 &hellip;<br>手机拍照关闭自动横屏</small>',
         dropZoneClickTitle: '<br>(或点击{files}按钮选择文件)',
         fileActionSettings: {
             removeTitle: '删除文件',

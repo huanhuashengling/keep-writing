@@ -55,10 +55,15 @@ $(document).ready(function() {
         }
         data = {
             'username' : $("#teacher-name").val(),
+            'sex' : $("#sex").val(),
+            'birth_date' : $("#birth-date").val(),
+            'phone_number' : $("#phone-number").val(),
+            'subjects_id' : $("#subjectsId").val(),
             'email' : $("#email").val(),
             'password' : "123456",
             'schools_id' : $("#add-new-btn").val(),
         }
+        // console.log(data);
         $.ajax({
             type: "post",
             url: '/school/createOneTeacherAccount',
@@ -109,6 +114,7 @@ function teacherAccountActionCol(value, row, index) {
 
 window.resetActionEvents = {
 	'click .reset': function(e, value, row, index) {
+
      	$.ajax({
             type: "POST",
             url: '/school/resetTeacherPassword',
@@ -126,11 +132,11 @@ window.resetActionEvents = {
 
 window.teacherAccountActionEvents = {
     'click .lock': function(e, value, row, index) {
-        // console.log(row);
+        console.log(row);
         $.ajax({
             type: "POST",
-            url: '/school/lockOneStudentAccount',
-            data: {users_id: row.teachersId},
+            url: '/school/lockOneTeacherAccount',
+            data: {users_id: row.id},
             success: function( data ) {
                 if("true" == data) {
                     alert(row.username+"已被锁定！")
@@ -144,8 +150,8 @@ window.teacherAccountActionEvents = {
         // console.log(row);
         $.ajax({
             type: "POST",
-            url: '/school/unlockOneStudentAccount',
-            data: {users_id: row.teachersId},
+            url: '/school/unlockOneTeacherAccount',
+            data: {users_id: row.id},
             success: function( data ) {
                 if("true" == data) {
                     alert(row.username+"解锁成功！")

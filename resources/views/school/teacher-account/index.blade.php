@@ -74,7 +74,12 @@
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">性别</label>
-                  <div class="col-sm-8"><input type="text" class="form-control" name="sex" id="sex" required="" placeholder="男1/女2"></div>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="sex" id="sex" required>
+                      <option value="">请选择性别</option>
+                      <option value="1">男</option>
+                      <option value="2">女</option>
+                    </select></div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">出生日期</label>
@@ -87,11 +92,26 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">任教学科</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" name="subjectsId" id="subjectsId" required="" placeholder="对照学科表数字"></div>
+                    <select class="form-control" name="subjectsId" id="subjectsId" required>
+                      <option value="">请选择学科</option>
+                      @foreach($subjects as $subject)
+                        <option value="{{$subject->id}}">{{$subject->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">在编</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="isFormal" id="isFormal" required>
+                      <option value="">请选择是否在编</option>
+                      <option value="1">是</option>
+                      <option value="2">否</option>
+                    </select></div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">邮箱地址</label>
-                  <div class="col-sm-8"><input type="text" class="form-control" name="email" id="email" required=""></div>
+                  <div class="col-sm-8"><input type="text" class="form-control" name="email" id="email" required></div>
                 </div>
               </form>
             </div>

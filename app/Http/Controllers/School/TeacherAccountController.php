@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\School;
 use App\Models\Teacher;
-// use App\Models\Subject;
+use App\Models\Subject;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
@@ -18,8 +18,8 @@ class TeacherAccountController extends Controller
     public function index()
     {
         $schoolsId = \Auth::guard("school")->id();
-        // $subjects = Subject::all();
-        return view('school/teacher-account/index', compact('schoolsId'));
+        $subjects = Subject::all();
+        return view('school/teacher-account/index', compact('schoolsId', 'subjects'));
     }
 
     public function getTeachersAccountData()
@@ -110,9 +110,10 @@ class TeacherAccountController extends Controller
         $data = [];
         $data["username"] = $request->get('username');
         $data["sex"] = $request->get('sex');
-        $data["password"] = $request->get('password');
+        $data["password"] = "123456";
         $data["birth_date"] = $request->get('birth_date');
         $data["subjects_id"] = $request->get('subjects_id');
+        $data["email"] = $request->get('email');
         $data["phone_number"] = $request->get('phone_number');
         $data["is_formal"] = $request->get('is_formal');
         $data["schools_id"] = \Auth::guard("school")->id();
@@ -123,7 +124,7 @@ class TeacherAccountController extends Controller
         try {
             $teacher = Teacher::create([
                 'username' => $data['username'],
-                'email' => "",
+                'email' => isset($data["email"])?$data["email"]:"",
                 'password' => bcrypt($data['password']),
                 'sex' => $data['sex'],
                 'subjects_id' => $data['subjects_id'],

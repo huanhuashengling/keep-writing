@@ -60,8 +60,8 @@ $(document).ready(function() {
             'phone_number' : $("#phone-number").val(),
             'subjects_id' : $("#subjectsId").val(),
             'email' : $("#email").val(),
-            'password' : "123456",
             'schools_id' : $("#add-new-btn").val(),
+            'is_formal' : $("#isFormal").val(),
         }
         // console.log(data);
         $.ajax({
@@ -132,7 +132,7 @@ window.resetActionEvents = {
 
 window.teacherAccountActionEvents = {
     'click .lock': function(e, value, row, index) {
-        console.log(row);
+        // console.log(row);
         $.ajax({
             type: "POST",
             url: '/school/lockOneTeacherAccount',

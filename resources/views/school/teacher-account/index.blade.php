@@ -5,9 +5,9 @@
 <div class="panel panel-success col-md-6">
   <div class="panel-heading">导入教师账户</div>
   <div class="panel-body">
-    {!! Form::open(array('url'=>'school/importTeachers','method'=>'POST','files'=>'true')) !!}
-    {!! Form::file('xls', ['id' => 'import-teacher-account', 'type'=>"file", 'class'=>"file-loading"]) !!}
-    {!! Form::close() !!}
+    <form role="form" method='POST' files=true>
+      <input type="file" class="form-control" name="xls" id="import-teacher-account" class="file-loading">
+    </form>
   </div>
 </div>
 <div class="panel panel-success col-md-6">

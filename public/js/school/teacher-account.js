@@ -8,6 +8,7 @@ $(document).ready(function() {
     $("#import-teacher-account").fileinput({
         showPreview: false,
         language: "zh", 
+        uploadUrl: "/school/importTeachers",
         allowedFileExtensions: ["xls", "xlsx", "csv"],
     });
 

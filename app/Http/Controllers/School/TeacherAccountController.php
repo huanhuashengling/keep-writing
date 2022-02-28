@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\School;
 use App\Models\Teacher;
 use App\Models\Subject;
+use App\Models\TeachersImport;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;

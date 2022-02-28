@@ -19,6 +19,7 @@ class ColleagueController extends Controller
     {
         $getDataType = $request->input('type');
         $tWritingTypesId = $request->input('wtId');
+        $wtId = $tWritingTypesId;
         $writingType = WritingType::find($tWritingTypesId);
         $writingTypeName = $writingType->name;
         $totalDesc = "";

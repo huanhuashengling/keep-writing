@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\School;
 use App\Models\Teacher;
 use App\Models\Subject;
-use App\Models\TeachersImport;
+use App\Imports\TeachersImport;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
@@ -69,18 +69,18 @@ class TeacherAccountController extends Controller
     {
         if($request->hasFile('xls')){
             $path = $request->file('xls')->getRealPath();
-            $data = Excel::load($path, function($reader) {})->get();
-            if(!empty($data) && $data->count()){
-// dd($data);
-                foreach ($data[0]->toArray() as $value) {
-                    // dd($value);
+            Excel::import(new TeachersImport, $request->file('xls'));
+            // $data = Excel::load($path, function($reader) {})->get();
+            // if(!empty($data) && $data->count()){
+            //     foreach ($data[0]->toArray() as $value) {
+            //         // dd($value);
 
-                    if(!empty($value)){
-                        $this->createTeacherAccount($value);
-                        // die();
-                    }
-                }
-            }
+            //         if(!empty($value)){
+            //             $this->createTeacherAccount($value);
+            //             // die();
+            //         }
+            //     }
+            // }
         }
     }
 

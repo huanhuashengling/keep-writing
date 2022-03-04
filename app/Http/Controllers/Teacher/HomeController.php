@@ -223,7 +223,7 @@ class HomeController extends Controller
             $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
             \Image::make(file_get_contents($realPath))
               ->resize(120, 170)->save(public_path(config('definitions.images_path') . '/'.$this->getSchoolCode() .'/' . $uniqid . '_c.png'));
-              echo config('definitions.images_path');
+              // echo config('definitions.images_path');
           // } catch (\Exception $e) {
                // $e->getMessage();
               // return Redirect::to('teacher')->with('danger', '操作失败，请稍后重试或联系技术支持！');

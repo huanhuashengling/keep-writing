@@ -193,9 +193,6 @@ class HomeController extends Controller
       $writingTypesId = $request->get('writing_types_id');
       $writingDate = $request->get('writing_date');
 
-      // echo $writingDate;
-      // dd($writingTypesId);
-
       $request->session()->put('writingTypesId', $writingTypesId);
       $request->session()->put('writingDate', $writingDate);
             
@@ -222,20 +219,22 @@ class HomeController extends Controller
         if (in_array($ext, $imgTypes)) {
           $img = \Image::make($realPath);
           $img->orientate();
-          try {
+          // try {
             $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
             \Image::make(file_get_contents($realPath))
               ->resize(120, 170)->save(public_path(config('definitions.images_path') . '/'.$this->getSchoolCode() .'/' . $uniqid . '_c.png'));
-          } catch (\Exception $e) {
-               $e->getMessage();
+          // } catch (\Exception $e) {
+               // $e->getMessage();
               // return Redirect::to('teacher')->with('danger', '操作失败，请稍后重试或联系技术支持！');
-              return json_encode("{'操作失败，请稍后重试或联系技术支持！'}"); 
+              // return json_encode("{'操作失败，请稍后重试或联系技术支持！'}"); 
 
                //TODO remove once tested
                // return false;
-           }
+           // }
          } else {
           $bool = Storage::disk($this->getSchoolCode() . 'posts')->put($filename, file_get_contents($realPath)); 
+          // echo "236";
+          // dd($bool);
          }
         
         //TDDO update these new or update code
@@ -250,6 +249,7 @@ class HomeController extends Controller
             $oldPost->writing_date = $writingDate;
             if ($oldPost->update()) {
               $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldFilename); 
+              $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldCoverFilename); 
 
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');

@@ -52,7 +52,7 @@ class HomeController extends Controller
         // echo $request->session()->has('writingTypesId')."-".$request->session()->get('writingTypesId') . " - " . $selectedWritingTypesId . " - " . $selectedWritingDate;
         // dd($post);
         if ($post) {
-          $post->storage_name = env('APP_URL'). $middir .$post->storage_name;
+          $post->export_name = env('APP_URL'). $middir .$post->export_name;
         };
         $writingDates = [];
 
@@ -184,13 +184,17 @@ class HomeController extends Controller
       $file = $request->file('source');
       // $redirectUrl = ($request->input('url'))?("/" . $request->input('url')):"";
       if(!$file) {
-        return Redirect::to('teacher')->with('danger', '请重新选择作业提交！');
+        return json_encode("{'请重新选择作业提交！'}");
+        // return Redirect::to('teacher')->with('danger', '请重新选择作业提交！');
       }
 
       $teachersId = Auth::guard("teacher")->id();
       
       $writingTypesId = $request->get('writing_types_id');
       $writingDate = $request->get('writing_date');
+
+      // echo $writingDate;
+      // dd($writingTypesId);
 
       $request->session()->put('writingTypesId', $writingTypesId);
       $request->session()->put('writingDate', $writingDate);
@@ -213,16 +217,20 @@ class HomeController extends Controller
         $realPath = $file->getRealPath();
 
         $uniqid = uniqid();
-        $filename = $teacher->username . '-' . $uniqid . '.' . $ext;
+        $filename = $uniqid . '.' . $ext;
 
         if (in_array($ext, $imgTypes)) {
           $img = \Image::make($realPath);
           $img->orientate();
           try {
             $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
+            \Image::make(file_get_contents($realPath))
+              ->resize(120, 170)->save(public_path(config('definitions.images_path') . '/'.$this->getSchoolCode() .'/' . $uniqid . '_c.png'));
           } catch (\Exception $e) {
                $e->getMessage();
-              return Redirect::to('teacher')->with('danger', '操作失败，请稍后重试或联系技术支持！');
+              // return Redirect::to('teacher')->with('danger', '操作失败，请稍后重试或联系技术支持！');
+              return json_encode("{'操作失败，请稍后重试或联系技术支持！'}"); 
+
                //TODO remove once tested
                // return false;
            }
@@ -233,11 +241,11 @@ class HomeController extends Controller
         //TDDO update these new or update code
         // if ($img) {
           if($oldPost) {
-            $oldFilename = $oldPost->storage_name;
-            $oldPost->storage_name = $filename;
-            $oldPost->original_name = $originalName;
+            $oldCoverFilename = $oldPost->post_code . "_c.png";
+            $oldFilename = $oldPost->export_name;
+            $oldPost->export_name = $filename;
             $oldPost->file_ext = $ext;
-            $oldPost->mime_type = $type;
+            $oldPost->cover_ext = "png";
             $oldPost->post_code = $uniqid;
             $oldPost->writing_date = $writingDate;
             if ($oldPost->update()) {
@@ -245,34 +253,40 @@ class HomeController extends Controller
 
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
-              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");
+              // return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");
+              return json_encode("{'打卡成功！'}"); 
+
             } else {
-              return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
+              // return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
+              return json_encode("{'打卡失败，请重新操作！'}"); 
+
               // Session::flash('error', '作业提交失败'); 
             }
           } else {
             $post = new Post();
             $post->teachers_id = $teachersId;
             $post->writing_types_id = $writingTypesId;
-            $post->storage_name = $filename;
-            $post->original_name = $originalName;
+            $post->export_name = $filename;
             $post->file_ext = $ext;
-            $post->mime_type = $type;
+            $post->cover_ext = "png";
             $post->post_code = $uniqid;
             $post->writing_date = $writingDate;
             if ($post->save()) {
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
-              return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");
+              // return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");
+              return json_encode("{'打卡成功！'}"); 
+
             } else {
-              return Redirect::to('teacher')->with('danger', '打卡失败，请重新操作！');
+              return json_encode("{'打卡失败，请重新操作！'}"); 
+
               // Session::flash('error', '作业提交失败'); 
             }
           }
         // }
         
       } else {
-        return Redirect::to('teacher')->with('danger', '文件上传失败，请确认是否文件过大？');
+        return json_encode("{'文件上传失败，请确认是否文件过大？'}"); 
       }
     }
 
@@ -393,7 +407,7 @@ class HomeController extends Controller
                 // return var_dump($request->input('writing_types_id') . $request->input('writing_date'));
         if (isset($post)) {
             return ["filetype"=>"img", 
-                    "storage_name" => getThumbnail($post['storage_name'], 300, 500, $this->getSchoolCode(), 'fit', $post['file_ext']), ];
+                    "export_name" => getThumbnail($post['export_name'], 300, 500, $this->getSchoolCode(), 'fit', $post['file_ext']), ];
         } else {
             return "false";
         }

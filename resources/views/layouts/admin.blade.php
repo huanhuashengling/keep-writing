@@ -50,7 +50,7 @@
                 <ul class="nav navbar-nav">
                     <!-- <li><a href="{{ url('/school/dashboard') }}">数据报表</a></li> -->
                     <li><a href="{{ url('/school/teachers') }}">教师账户</a></li>
-                    <li><a href="{{ url('/school/stage-check') }}">主题打卡</a></li>
+                    <!-- <li><a href="{{ url('/school/stage-check') }}">主题打卡</a></li> -->
                     <li><a href="{{ url('/school/keep-record') }}">打卡统计</a></li>
                     <li><a href="{{ url('/school/writing-rule') }}">评价标准</a></li>
                 </ul>

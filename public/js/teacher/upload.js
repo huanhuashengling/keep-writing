@@ -16,6 +16,7 @@ $(document).ready(function() {
 	    msgPlaceholder: "选择文件或拍照...",
 	    initialPreviewShowDelete: false,
 	    initialPreviewAsData: true, // 特别重要
+      uploadExtraData: {writing_types_id: $("#writing_types_id").val(), writing_date: $("#writing_date").val()},
 	});
 
 	getCurrentWritingDatePostRate();
@@ -62,6 +63,7 @@ function refreshFileinputState() {
 						overwriteInitial: true,
 					    initialPreviewShowDelete: false,
 					    initialPreviewAsData: true, // 特别重要
+              uploadExtraData: {writing_types_id: $("#writing_types_id").val(), writing_date: $("#writing_date").val()},
 					});
                 } else {
                 	$('#input-zh').fileinput('destroy');
@@ -77,6 +79,7 @@ function refreshFileinputState() {
 					    ],
 					    initialPreviewShowDelete: false,
 					    initialPreviewAsData: true, // 特别重要
+              uploadExtraData: {writing_types_id: $("#writing_types_id").val(), writing_date: $("#writing_date").val()},
 					});
                 }
             }

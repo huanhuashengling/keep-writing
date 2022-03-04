@@ -64,7 +64,7 @@
         @if ("普通话" == $post->writing_type_name)
             <div class="col-md-3 col-sm-6 col-xs-12" style="padding-left: 5px; padding-right: 5px;">
                 <div class="alert alert-info" style="padding: 10px; text-align: center">
-                    <audio controls src="{{ $baseUrl }}{{$post['storage_name'] }}" >
+                    <audio controls src="{{ $baseUrl }}{{$post['export_name'] }}" >
                     Your browser does not support the audio element.
                     </audio>
                     <div><h5 style="margin-top: 5px; margin-bottom: 5px; text-align: center"><small>{{ $descStr }}</small></h5>  </div>
@@ -73,8 +73,9 @@
         @else
             <div class="col-md-2 col-sm-4 col-xs-6" style="padding-left: 5px; padding-right: 5px;">
                 <div class="alert alert-info" style="padding: 10px; text-align: center">
-                    
-                    <img class="img-responsive thumb-img center-block" id="img{{ $post['pid'] }}" value="{{ $post['pid'] }}" prevId="{{$prevId}}" nextId="{{$nextId}}" src="{{ getThumbnail($post->storage_name, 121, 171, $schoolCode, 'background', $post->file_ext) }}" alt="" filePath="{{$baseUrl . $post->storage_name}}">
+                    <!-- /posts/yuying3/{{$post->post_code}}_c.{{$post->cover_ext}} -->
+                    <!-- {{ getThumbnail($post->post_code, 121, 171, $schoolCode, 'background', $post->file_ext) }} -->
+                    <img class="img-responsive thumb-img center-block" id="img{{ $post['pid'] }}" value="{{ $post['pid'] }}" prevId="{{$prevId}}" nextId="{{$nextId}}" src="{{$baseUrl . $post->post_code . '_c.png'}}" alt="" filePath="{{$baseUrl . $post->export_name}}">
                 
                     <div><h5 style="margin-top: 5px; margin-bottom: 5px; margin-left: 0px; text-align: center"><small>{{ $descStr }}</small></h5>  </div>
                 </div>

@@ -61,6 +61,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'yuying3posts' => [
+            'driver' => 'local',
+            'root' => public_path('posts/yuying3'),
+            // 'url' => 'posts/' . 
+            'visibility' => 'public',
+        ],
+
         'dhposts' => [
             'driver' => 'local',
             'root' => public_path('posts/dh'),

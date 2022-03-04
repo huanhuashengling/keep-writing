@@ -16,7 +16,7 @@ class KeepRecordController extends Controller
 {
     public function index() 
     {
-        $startWeekInfo = $this->getTimeInfo('2020-02-10');
+        $startWeekInfo = $this->getTimeInfo('2022-02-14');
         $nowWeekInfo = $this->getTimeInfo(Carbon::now('Asia/Shanghai')->format('Ymd'));
         // var_dump($startWeekInfo);
         // var_dump($nowWeekInfo);
@@ -55,7 +55,7 @@ class KeepRecordController extends Controller
             $tData['isFormal'] = $teacher->is_formal;
             $tData['allScoreCount'] = 0;
             foreach ($writingTypes as $key => $writingType) {
-                $posts = Post::select('posts.id as pid', 'posts.file_ext', 'posts.storage_name', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name as writing_type_name', 'teachers.username', 'post_rates.rate', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
+                $posts = Post::select('posts.id as pid', 'posts.post_code', 'posts.export_name', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name as writing_type_name', 'teachers.username', 'post_rates.rate', DB::raw("SUM(`marks`.`state_code`) as mark_num"))
                 // ->where('posts.students_id', '<>', $id)
                 ->join('teachers', 'posts.teachers_id', '=', 'teachers.id')
                 ->leftjoin('marks', 'marks.posts_id', '=', 'posts.id')
@@ -65,7 +65,7 @@ class KeepRecordController extends Controller
                 ->where('teachers.id', '=', $teacher->id)
                 ->where("writing_types.id", '=', $writingType->id)
                 ->whereBetween("writing_date", [$startDay, $endDay])
-                ->groupBy('posts.id', 'posts.file_ext', 'posts.storage_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name', 'post_rates.rate')
+                ->groupBy('posts.id', 'posts.post_code', 'posts.export_name', 'teachers.username', 'posts.writing_date', 'posts.writing_types_id', 'writing_types.name', 'post_rates.rate')
                 ->orderby("posts.writing_date", "DESC")->get();
 
                 $tData[$writingType->code . 'PostNum'] = count($posts);

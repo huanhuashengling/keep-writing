@@ -21,12 +21,12 @@
       月份选择
       <select id="month-selection">
         <option value="">按周筛选</option>
-        <option value="20190101-20191231">2019全年</option>
-        <option value="20200101-20201231" selected="selected">2020全年</option>
-        <option value="20200901-20200930">202006月</option>
-        <option value="20200601-20200631">202006月</option>
-        <option value="20200701-20200730">202007月</option>
-        <option value="20200801-20200831">202008月</option>
+        <option value="20220101-20221231" selected="selected">2022全年</option>
+        <option value="20200301-20200331">202003月</option>
+        <option value="20200401-20200430">202004月</option>
+        <option value="20200501-20200531">202005月</option>
+        <option value="20200601-20200630">202006月</option>
+        <option value="20200701-20200731">202007月</option>
       </select>
       本学期周次
       <select id="week-selection">
@@ -51,9 +51,9 @@
                 <th data-field="ageSection" data-sortable="true" rowspan="2">
                     年龄
                 </th>
-                <th colspan="4" class="penclass">钢笔字</th>
-                <th colspan="4" class="chalkclass">粉笔字</th>
-                <th colspan="4" class="brushclass">毛笔字</th>
+                <th colspan="3" class="penclass">钢笔字</th>
+                <th colspan="3" class="chalkclass">粉笔字</th>
+                <th colspan="3" class="brushclass">毛笔字</th>
                 <th data-field="allScoreCount" data-sortable="true" rowspan="2">
                     总分
                 </th>
@@ -63,15 +63,15 @@
             </tr>
             <tr>
               <th data-field="penPostNum" data-sortable="true" class="penclass">打卡数</th>
-              <th data-field="penStarNum" data-sortable="true" class="penclass">星数</th>
+              <!-- <th data-field="penStarNum" data-sortable="true" class="penclass">星数</th> -->
               <th data-field="penMarkNum" class="penclass">点赞</th>
               <th data-field="penScore" data-sortable="true" class="penclass">分数</th>
               <th data-field="chalkPostNum" data-sortable="true" class="chalkclass">打卡数</th>
-              <th data-field="chalkStarNum" data-sortable="true" class="chalkclass">星数</th>
+              <!-- <th data-field="chalkStarNum" data-sortable="true" class="chalkclass">星数</th> -->
               <th data-field="chalkMarkNum" class="chalkclass">点赞</th>
               <th data-field="chalkScore" data-sortable="true" class="chalkclass">分数</th>
               <th data-field="brushPostNum" data-sortable="true" class="brushclass">打卡数</th>
-              <th data-field="brushStarNum" data-sortable="true" class="brushclass">星数</th>
+              <!-- <th data-field="brushStarNum" data-sortable="true" class="brushclass">星数</th> -->
               <th data-field="brushMarkNum" class="brushclass">点赞</th>
               <th data-field="brushScore" data-sortable="true" class="brushclass">分数</th>
             </tr>

@@ -173,7 +173,7 @@ $(document).ready(function() {
                         $('#classmate-post-show').removeClass("hidden");
                         $('#flashContent').addClass("hidden");
                         // $('#classmate-post-show').attr("src", data.filePath);
-                        $('#classmate-post-show').attr("src", data.storage_name);
+                        $('#classmate-post-show').attr("src", data.filePath);
                     // $('#classmate-post-show').attr("src", data.storage_name);
                     $("#classmate-post-modal-label").html(data.username+"老师 "+data.writingDate+""+data.writingType+"作品");
                 }

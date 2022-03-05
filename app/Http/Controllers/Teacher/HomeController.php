@@ -52,7 +52,8 @@ class HomeController extends Controller
         // echo $request->session()->has('writingTypesId')."-".$request->session()->get('writingTypesId') . " - " . $selectedWritingTypesId . " - " . $selectedWritingDate;
         // dd($post);
         if ($post) {
-          $post->export_name = env('APP_URL'). $middir .$post->export_name;
+          // $post->export_name = env('APP_URL'). $middir .$post->export_name;
+          $post->preview_path = env('APP_URL'). $middir .$post->post_code . '_c.png';
         };
         $writingDates = [];
 
@@ -187,7 +188,6 @@ class HomeController extends Controller
         return json_encode("{'请重新选择作业提交！'}");
         // return Redirect::to('teacher')->with('danger', '请重新选择作业提交！');
       }
-      echo "out of valid";
       $teachersId = Auth::guard("teacher")->id();
       
       $writingTypesId = $request->get('writing_types_id');
@@ -217,7 +217,6 @@ class HomeController extends Controller
         $filename = $uniqid . '.' . $ext;
 
         if (in_array($ext, $imgTypes)) {
-      echo "in of in_array";
 
           $img = \Image::make($realPath);
           $img->orientate();
@@ -239,7 +238,6 @@ class HomeController extends Controller
           // echo "236";
           // dd($bool);
          }
-      echo "after of valid";
         //TDDO update these new or update code
         // if ($img) {
           if($oldPost) {
@@ -253,8 +251,7 @@ class HomeController extends Controller
             if ($oldPost->update()) {
               $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldFilename); 
               $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldCoverFilename); 
-        dd("oldPost->update");
-              
+
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
               // return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");
@@ -409,9 +406,11 @@ class HomeController extends Controller
                 ->where("teachers.id", "=", $userId)
                 ->first();
                 // return var_dump($request->input('writing_types_id') . $request->input('writing_date'));
+                // env('APP_URL'). $middir .$post->export_name;
         if (isset($post)) {
             return ["filetype"=>"img", 
-                    "export_name" => getThumbnail($post['export_name'], 300, 500, $this->getSchoolCode(), 'fit', $post['file_ext']), ];
+                    // "export_name" => getThumbnail($post['export_name'], 300, 500, $this->getSchoolCode(), 'fit', $post['file_ext']), ];
+                    "export_name" => env('APP_URL'). $middir .$post->export_name;
         } else {
             return "false";
         }

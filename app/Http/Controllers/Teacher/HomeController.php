@@ -410,7 +410,9 @@ class HomeController extends Controller
         if (isset($post)) {
             return ["filetype"=>"img", 
                     // "export_name" => getThumbnail($post['export_name'], 300, 500, $this->getSchoolCode(), 'fit', $post['file_ext']), ];
-                    "export_name" => env('APP_URL'). $middir .$post->export_name, ];
+                    // "export_name" => env('APP_URL'). $middir .$post->export_name,
+                    "preview_path" => env('APP_URL'). $middir .$post->post_code . "_c.png",
+                     ];
         } else {
             return "false";
         }

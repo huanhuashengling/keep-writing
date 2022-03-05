@@ -75,7 +75,7 @@ function refreshFileinputState() {
 						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,
 						initialPreview: [
-							data.storage_name,
+							data.export_name,
 					    ],
 					    initialPreviewShowDelete: false,
 					    initialPreviewAsData: true, // 特别重要

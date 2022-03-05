@@ -67,6 +67,8 @@
                   <h5 style="margin-top: 0px">{!! Session::get('danger') !!}</h5>
                 <!-- </div> -->
               @endif
+              <div id="file-errors"></div>
+                <div id="caption-info"></div>
               <form role="form" method='POST' files=true>
                 <input type="hidden" name="writing_types_id" id="writing_types_id" value="{{$selectedWritingTypesId}}">
                 <input type="hidden" name="writing_date" id="writing_date" value="{{$selectedWritingDate}}">

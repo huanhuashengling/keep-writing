@@ -22,11 +22,11 @@
       <select id="month-selection">
         <option value="">按周筛选</option>
         <option value="20220101-20221231" selected="selected">2022全年</option>
-        <option value="20200301-20200331">202003月</option>
-        <option value="20200401-20200430">202004月</option>
-        <option value="20200501-20200531">202005月</option>
-        <option value="20200601-20200630">202006月</option>
-        <option value="20200701-20200731">202007月</option>
+        <option value="20220301-20220331">202203月</option>
+        <option value="20220401-20220430">202204月</option>
+        <option value="20220501-20220531">202205月</option>
+        <option value="20220601-20220630">202206月</option>
+        <option value="20220701-20220731">202207月</option>
       </select>
       本学期周次
       <select id="week-selection">

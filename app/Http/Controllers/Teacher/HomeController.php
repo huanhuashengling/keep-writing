@@ -187,7 +187,7 @@ class HomeController extends Controller
         return json_encode("{'请重新选择作业提交！'}");
         // return Redirect::to('teacher')->with('danger', '请重新选择作业提交！');
       }
-
+      echo "out of valid";
       $teachersId = Auth::guard("teacher")->id();
       
       $writingTypesId = $request->get('writing_types_id');
@@ -217,6 +217,8 @@ class HomeController extends Controller
         $filename = $uniqid . '.' . $ext;
 
         if (in_array($ext, $imgTypes)) {
+      echo "in of in_array";
+
           $img = \Image::make($realPath);
           $img->orientate();
           // try {
@@ -237,7 +239,7 @@ class HomeController extends Controller
           // echo "236";
           // dd($bool);
          }
-        
+      echo "after of valid";
         //TDDO update these new or update code
         // if ($img) {
           if($oldPost) {
@@ -251,7 +253,8 @@ class HomeController extends Controller
             if ($oldPost->update()) {
               $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldFilename); 
               $bool = Storage::disk($this->getSchoolCode() . 'posts')->delete($oldCoverFilename); 
-
+        dd("oldPost->update");
+              
               // Session::flash('success', '打卡成功！'); 
               // return Redirect::to('teacher');
               // return Redirect::to('teacher')->with('success', $tWriteDate . '，' .$tWritingType->name. "打卡成功！");

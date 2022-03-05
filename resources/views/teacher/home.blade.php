@@ -49,7 +49,7 @@
         <!-- <h4><span class="label label-default">钢笔字完成3天连续打卡</span></h4> -->
       <!-- <label class="" id="cheer-label">{{$cheerUpStr}}</label> -->
 
-    <input id="posted-path" value="{{ @$post->export_name }}" hidden />
+    <input id="posted-path" value="{{ @$post->post_code . '_c.png' }}" hidden />
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <!-- <div class="alert alert-success" style="padding-bottom: 5px; padding-top: 10px">

@@ -221,9 +221,17 @@ class HomeController extends Controller
           $img = \Image::make($realPath);
           $img->orientate();
           // try {
-            $img->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
-            \Image::make(file_get_contents($realPath))
-              ->resize(120, 170)->save(public_path(config('definitions.images_path') . '/'.$this->getSchoolCode() .'/' . $uniqid . '_c.png'));
+            $img->resize(3000, null, function ($constraint) {   
+                $constraint->aspectRatio();   // 按比例调整图片大小
+                $constraint->upsize();  // 这里如果宽度不足 300 时，保持原来尺寸
+            })->save(public_path(config('definitions.images_path') . "/" . $this->getSchoolCode() . "/" . $filename));
+            // \Image::make(file_get_contents($realPath))
+            // $img->resize(120, 170)->save(public_path(config('definitions.images_path') . '/'.$this->getSchoolCode() .'/' . $uniqid . '_c.png'));
+            $img->resize(120, null, function ($constraint) {   
+                $constraint->aspectRatio();   // 按比例调整图片大小
+                $constraint->upsize();  // 这里如果宽度不足 300 时，保持原来尺寸
+            })->save(public_path(config('definitions.images_path') . '/'.$this->getSchoolCode() .'/' . $uniqid . '_c.png'));
+
               // echo config('definitions.images_path');
           // } catch (\Exception $e) {
                // $e->getMessage();

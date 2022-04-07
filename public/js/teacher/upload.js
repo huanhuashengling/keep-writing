@@ -58,6 +58,7 @@ function refreshFileinputState() {
                 	$("#input-zh").fileinput({
 						language: "zh", 
 						allowedFileExtensions: ["jpg", "png", "gif", "jpeg", "bmp", "m4a", "mp3", "amr"], 
+            uploadUrl: "/teacher/upload",
 						// uploadAsync: true
 						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,
@@ -71,6 +72,7 @@ function refreshFileinputState() {
 				    $("#input-zh").fileinput({
 						language: "zh", 
 						allowedFileExtensions: ["jpg", "png", "gif", "bmp", "jpeg", "m4a", "mp3", "amr"], 
+            uploadUrl: "/teacher/upload",
 						// uploadAsync: true
 						msgPlaceholder: "选择文件或拍照...",
 						overwriteInitial: true,
